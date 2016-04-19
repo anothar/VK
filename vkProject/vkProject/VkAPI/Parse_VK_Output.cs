@@ -9,13 +9,13 @@ namespace VkAPI
 {
     public class Parse_Vk_Output
     {
-        Parse_Vk_Output(vkAPI api)
+        public Parse_Vk_Output(vkAPI api)
         {
             this.api = api;
             getFriends();
         }
 
-        void getFriends()
+        public void getFriends()
         {
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(api.get(VkAPI.Methods.Friends.Get_Xml, ""));
@@ -38,7 +38,7 @@ namespace VkAPI
                 }
             }
         }
-        void getPostsDocument()
+        public void getPostsDocument()
         {
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(api.get(VkAPI.Methods.Wall.Get_Xml, "count=1"));
@@ -51,7 +51,7 @@ namespace VkAPI
                 getPosts(doc);
             }
         }
-        void getPosts(XmlDocument doc)
+        public void getPosts(XmlDocument doc)
         {
             foreach (XmlNode it in doc.DocumentElement)
                 if (it.Name == "items")
@@ -63,7 +63,7 @@ namespace VkAPI
                             Posts.Add(getPost(item));
                 }
         }
-        Post getPost(XmlNode Node)
+        public Post getPost(XmlNode Node)
         {
             Post post = new Post();
             foreach (XmlNode item in Node.ChildNodes)
@@ -83,7 +83,7 @@ namespace VkAPI
             }
             return new Post();
         }
-        void getAttachments(XmlNode node, ref Post post)
+        public void getAttachments(XmlNode node, ref Post post)
         {
             if (node.Attributes[0].Value == "true") ;
         }

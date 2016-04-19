@@ -31,6 +31,16 @@ namespace vkProject
 			user_id = brouser.user_id;
 		}
 		string  access_token;
-		int     user_id;
+		uint     user_id;
+
+		private void button_Click(object sender, RoutedEventArgs e)
+		{
+			VkAPI.Parse_Vk_Output d = new VkAPI.Parse_Vk_Output(new VkAPI.vkAPI(access_token, user_id, new VkAPI.Scope() { friends = true, wall = true }));
+			d.getFriends();
+			foreach (var k in d.Friends)
+			{
+				listBox.Items.Add(k.user_id);
+			}
+		}
 	}
 }
