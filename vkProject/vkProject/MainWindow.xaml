@@ -8,7 +8,5 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="400" Width="600" MinHeight="300" MinWidth="300"
         Loaded="Window_Loaded">
-    <Grid>
-        <Controls:Photo HorizontalAlignment="Left" Margin="92,65,0,0" VerticalAlignment="Top" Width="264" Height="249" Text="gdfgghsjdkghjsdfgsdkfhgsdlkjfsfggdsfghdsjkfgdksfjghdfjlgsdfghdfgkjdfgdfgsdjkfgsdkskdgdfgskdjgdfghdjgskjhghskdfghsddskjfgdkfgdkfgdksfj" Background="Aqua"/>
-    </Grid>
+    <Grid/>
 </Window>

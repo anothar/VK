@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -33,8 +34,6 @@ namespace VkAPI.Controls
 			da.To = 0.0;
 			text.BeginAnimation(OpacityProperty, da);
 		}
-
-
 		private void text_MouseLeave(object sender, MouseEventArgs e)
 		{
 			DoubleAnimation da = new DoubleAnimation();
@@ -50,6 +49,17 @@ namespace VkAPI.Controls
 			set
 			{
 				text.Text = value;
+			}
+		}
+		public string Image
+		{
+			get
+			{
+				return image.Source.ToString();
+			}
+			set
+			{
+				image.Source = new BitmapImage(new Uri(value));
 			}
 		}
 	}
