@@ -95,79 +95,79 @@ namespace VkAPI
 			first_name = name;
 			last_name = surname;
 		}
-		public uint user_id { get; private set; }
-		public string first_name { get; private set; }
-		public string last_name { get; private set; }
+		public uint user_id             { get; private set; }
+		public string first_name        { get; private set; }
+		public string last_name         { get; private set; }
 	}
 
 	namespace Media
 	{
 		public class Photo
 		{
-			public uint Id { get; set; }
-			public uint Date { get; set; }
-			public uint Width { get; set; }
-			public uint Heght { get; set; }
-			public uint Album_id { get; set; }
-			public uint Owner_id { get; set; }
-			public uint User_id { get; set; }
+			public uint Id                  { get; set; }
+			public uint Date                { get; set; }
+			public uint Width               { get; set; }
+			public uint Heght               { get; set; }
+			public uint Album_id            { get; set; }
+			public uint Owner_id            { get; set; }
+			public uint User_id             { get; set; }
 
-			public string Text { get; set; }
-			public string Photo_75 { get; set; }
-			public string Photo_130 { get; set; }
-			public string Photo_604 { get; set; }
-			public string Photo_807 { get; set; }
-			public string Photo_1280 { get; set; }
-			public string Photo_2560 { get; set; }
+			public string Text              { get; set; }
+			public string Photo_75          { get; set; }
+			public string Photo_130         { get; set; }
+			public string Photo_604         { get; set; }
+			public string Photo_807         { get; set; }
+			public string Photo_1280        { get; set; }
+			public string Photo_2560        { get; set; }
 
 		}
 		public class Posted_photo
 		{
-			public uint Id { get; set; }
-			public uint Owner_id { get; set; }
+			public uint Id              { get; set; }
+			public uint Owner_id        { get; set; }
 
-			public string Photo_130 { get; set; }
-			public string Photo_604 { get; set; }
+			public string Photo_130     { get; set; }
+			public string Photo_604     { get; set; }
 		}
 		public class Video
 		{
-			public uint Id { get; set; }
-			public uint Date { get; set; }
-			public uint Owner_id { get; set; }
-			public uint Duration { get; set; }
-			public uint Views { get; set; }
+			public uint Id              { get; set; }
+			public uint Date            { get; set; }
+			public uint Owner_id        { get; set; }
+			public uint Duration        { get; set; }
+			public uint Views           { get; set; }
 
-			public string Title { get; set; }
-			public string Desription { get; set; }
-			public string Photo_130 { get; set; }
-			public string Photo_320 { get; set; }
-			public string Photo_604 { get; set; }
-			public string Player { get; set; }
+			public string Title         { get; set; }
+			public string Desription    { get; set; }
+			public string Photo_130     { get; set; }
+			public string Photo_320     { get; set; }
+			public string Photo_604     { get; set; }
+			public string Player        { get; set; }
 		}
 		public class Audio
 		{
-			public uint Owner_id { get; set; }
-			public uint Date { get; set; }
-			public uint Duration { get; set; }
-			public uint Id { get; set; }
+			public uint Owner_id        { get; set; }
+			public uint Date            { get; set; }
+			public uint Duration        { get; set; }
+			public uint Id              { get; set; }
 
-			public string Artist { get; set; }
-			public string Title { get; set; }
-			public string Url { get; set; }
+			public string Artist        { get; set; }
+			public string Title         { get; set; }
+			public string Url           { get; set; }
 		}
 		public class Document
 		{
-			public uint Id { get; set; }
-			public uint Owner_id { get; set; }
-			public uint Size { get; set; }
-			public uint Date { get; set; }
-			public uint Type { get; set; }
+			public uint Id              { get; set; }
+			public uint Owner_id        { get; set; }
+			public uint Size            { get; set; }
+			public uint Date            { get; set; }
+			public uint Type            { get; set; }
 
-			public string Title { get; set; }
-			public string Ext { get; set; }
-			public string Url { get; set; }
-			public string Photo_100 { get; set; }
-			public string Photo_130 { get; set; }
+			public string Title         { get; set; }
+			public string Ext           { get; set; }
+			public string Url           { get; set; }
+			public string Photo_100     { get; set; }
+			public string Photo_130     { get; set; }
 		}
 	}
 }
