@@ -9,7 +9,7 @@ namespace VkAPI
 {
     public class Parse_Vk_Output
     {
-        Parse_Vk_Output(VkAPI.vkAPI api)
+        Parse_Vk_Output(vkAPI api)
         {
             this.api = api;
             getFriends();
@@ -63,10 +63,30 @@ namespace VkAPI
                             Posts.Add(getPost(item));
                 }
         }
-        Post getPost(XmlNode node)
+        Post getPost(XmlNode Node)
+        {
+            Post post = new Post();
+            foreach (XmlNode item in Node.ChildNodes)
+            {
+                switch(item.Name)
+                {
+                    case "id":                  post.Id = Convert.ToUInt32(item.Value);             break;
+                    case "from_id":             post.From_id = Convert.ToUInt32(item.Value);        break;
+                    case "owner_id":            post.Owner_id = Convert.ToUInt32(item.Value);       break;
+                    case "date":                post.Date = Convert.ToUInt32(item.Value);           break;
+                    case "post_type":           post.Post_type = item.Value;                        break;
+                    case "text":                post.Text = item.Value;                             break;
+                    case "attachments":
+                        getAttachments(item, out post);
+                        break;
+                }
+            }
+            return new Post();
+        }
+        void getAttachments(XmlNode node, out Post post)
         {
 
-            return new Post();
+            post = new Post();
         }
 
         VkAPI.vkAPI api;

@@ -7,11 +7,15 @@ using System.Threading.Tasks;
 namespace VkAPI
 {
 	public class Post
-	{
-		/// <summary>
-		/// текст записи (null, если нет)
-		/// </summary>
-		public string description { get; set; }
+	{     
+        public uint Id                  { get; set; }
+        public uint Owner_id            { get; set; }
+        public uint From_id             { get; set; }
+        public uint Date                { get; set; }
+        public string Text              { get; set; } // текст записи (null, если нет)
+        public string Post_type         { get; set; }
+
+
 		/// <summary>
 		/// массив ссылок на фотографии (null, если нет)
 		/// </summary>
