@@ -13,7 +13,7 @@ namespace VkAPI
         public uint Owner_id            { get; set; }
         public uint From_id             { get; set; }
         public uint Date                { get; set; }
-        public string Text              { get; set; } // текст записи (null, если нет)
+        public string Text              { get; set; }
         public string Post_type         { get; set; }
 
 		public Photo[] Photos { get; set; }

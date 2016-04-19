@@ -16,9 +16,6 @@ using System.Windows.Shapes;
 
 namespace VkAPI.Controls
 {
-	/// <summary>
-	/// Логика взаимодействия для Photo.xaml
-	/// </summary>
 	public partial class Photo : UserControl
 	{
 		public Photo()
@@ -29,7 +26,7 @@ namespace VkAPI.Controls
 		private void text_MouseEnter(object sender, MouseEventArgs e)
 		{
 			DoubleAnimation da = new DoubleAnimation();
-			da.Duration = new Duration(TimeSpan.FromMilliseconds(100));
+			da.Duration = new Duration(TimeSpan.FromMilliseconds(200));
 			da.From = 1.0;
 			da.To = 0.0;
 			text.BeginAnimation(OpacityProperty, da);
@@ -37,7 +34,7 @@ namespace VkAPI.Controls
 		private void text_MouseLeave(object sender, MouseEventArgs e)
 		{
 			DoubleAnimation da = new DoubleAnimation();
-			da.Duration = new Duration(TimeSpan.FromMilliseconds(100));
+			da.Duration = new Duration(TimeSpan.FromMilliseconds(200));
 			da.From = 0.0;
 			da.To = 1.0;
 			text.BeginAnimation(OpacityProperty, da);
