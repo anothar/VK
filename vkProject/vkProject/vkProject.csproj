@@ -56,16 +56,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Parse_VK_Output.cs" />
-    <Compile Include="Photo.xaml.cs">
+    <Compile Include="VkAPI\Parse_VK_Output.cs" />
+    <Compile Include="Controls\Photo.xaml.cs">
       <DependentUpon>Photo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Post.cs" />
-    <Compile Include="vkAPI.cs" />
-    <Compile Include="WebGetter.xaml.cs">
+    <Compile Include="VkAPI\Post.cs" />
+    <Compile Include="VkAPI\vkAPI.cs" />
+    <Compile Include="Windows\WebGetter.xaml.cs">
       <DependentUpon>WebGetter.xaml</DependentUpon>
     </Compile>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -73,15 +73,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Photo.xaml">
+    <Page Include="Controls\Photo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WebGetter.xaml">
+    <Page Include="Windows\WebGetter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
