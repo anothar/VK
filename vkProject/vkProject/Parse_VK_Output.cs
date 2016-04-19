@@ -77,16 +77,15 @@ namespace VkAPI
                     case "post_type":           post.Post_type = item.Value;                        break;
                     case "text":                post.Text = item.Value;                             break;
                     case "attachments":
-                        getAttachments(item, out post);
+                        getAttachments(item, ref post);
                         break;
                 }
             }
             return new Post();
         }
-        void getAttachments(XmlNode node, out Post post)
+        void getAttachments(XmlNode node, ref Post post)
         {
-
-            post = new Post();
+            if (node.Attributes[0].Value == "true") ;
         }
 
         VkAPI.vkAPI api;
