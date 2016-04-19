@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VkAPI.Media;
 
 namespace VkAPI
 {
@@ -15,74 +16,15 @@ namespace VkAPI
         public string Text              { get; set; } // текст записи (null, если нет)
         public string Post_type         { get; set; }
 
-
-		/// <summary>
-		/// массив ссылок на фотографии (null, если нет)
-		/// </summary>
-		public string[] pictures
-		{
-			get
-			{
-				return pictures;
-			}
-			set
-			{
-				if(value.Length > 10)
-					throw new PostException("Слишком много прикрепленных изображений!");
-				int now = 0;
-				pictures = new string[10];
-				for(; now < value.Length; ++now)
-					pictures[now] = value[now];
-				for(; now < 10; ++now)
-					pictures[now] = null;
-			}
-		}
-		/// <summary>
-		/// массив ссылок на видеозаписи (null, если нет)
-		/// </summary>
-		public string[] videos
-		{
-			get
-			{
-				return videos;
-			}
-			set
-			{
-				if(value.Length > 10)
-					throw new PostException("Слишком много прикрепленных видеозаписей!");
-				int now = 0;
-				videos = new string[10];
-				for(; now < value.Length; ++now)
-					videos[now] = value[now];
-				for(; now < 10; ++now)
-					videos[now] = null;
-			}
-		}
-		/// <summary>
-		/// массив ссылок на аудиозаписи (null, если нет)
-		/// </summary>
-		public string[] audios
-		{
-			get
-			{
-				return audios;
-			}
-			set
-			{
-				if(value.Length > 10)
-					throw new PostException("Слишком много прикрепленных видеозаписей!");
-				int now = 0;
-				audios = new string[10];
-				for(; now < value.Length; ++now)
-					audios[now] = value[now];
-				for(; now < 10; ++now)
-					audios[now] = null;
-			}
-		}
-		/// <summary>
-		/// опрос (null, если нет)
-		/// </summary>
-		public KeyValuePair<string, int>[] interview { get; set; }
+		public Photo[] Photos { get; set; }
+		public Posted_photo[] Posted_photos { get; set; }
+		public Video[] Videos { get; set; }
+		public Audio[] Audios { get; set; }
+		public Document[] Documents { get; set; }
+		public Graffity[] Graffities { get; set; }
+		public Link[] Links { get; set; }
+		public Node[] Nodes { get; set; }
+		public Poll Poll { get; set; }
 	}
 	public class PostException : Exception
 	{
@@ -172,6 +114,46 @@ namespace VkAPI
 			public string Url           { get; set; }
 			public string Photo_100     { get; set; }
 			public string Photo_130     { get; set; }
+		}
+		public class Graffity
+		{
+			public uint			Id { get; set; }
+			public uint			Owner_id { get; set; }
+			
+			public string Photo_200 { get; set; }
+			public string Photo_586 { get; set; }
+		}
+		public class Link
+		{
+			public string Url { get; set; }
+			public string Title { get; set; }
+			public string Caption { get; set; }
+			public string Description { get; set; }
+			public Photo Photo { get; set; }
+			public bool is_external { get; set; }
+		}
+		public class Node
+		{
+			public uint Id { get; set; }
+			public uint Owner_id { get; set; }
+			public string Title { get; set; }
+			public string Text { get; set; }
+		}
+		public class Answer
+		{
+			public uint Id { get; set; }
+			public string Text { get; set; }
+			public uint Votes { get; set; }
+			public uint Rate { get; set; }
+		}
+		public class Poll
+		{
+			public uint Id { get; set; }
+			public uint Owner_id { get; set; }
+			public string Question { get; set; }
+			public uint Votes { get; set; }
+			public uint Answer_id { get; set; }
+			public Answer[] Answers { get; set; }
 		}
 	}
 }
