@@ -39,7 +39,7 @@ namespace vkProject
 			d.getFriends();
 			foreach (var k in d.Friends)
 			{
-				listBox.Items.Add(k.user_id);
+				listBox.Items.Add(k.User_id);
 			}
 		}
 	}
