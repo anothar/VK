@@ -15,14 +15,22 @@ using System.Windows.Shapes;
 
 namespace vkProject
 {
-	/// <summary>
-	/// Логика взаимодействия для MainWindow.xaml
-	/// </summary>
+
 	public partial class MainWindow : Window
 	{
 		public MainWindow()
 		{
 			InitializeComponent();
 		}
+
+		private void Window_Loaded(object sender, RoutedEventArgs e)
+		{
+			WebGetter brouser = new WebGetter();
+			brouser.ShowDialog();
+			access_token = brouser.access_token;
+			user_id = brouser.user_id;
+		}
+		string  access_token;
+		int     user_id;
 	}
 }
