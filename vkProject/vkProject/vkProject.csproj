@@ -65,10 +65,17 @@
     </Compile>
     <Compile Include="VkAPI\Post.cs" />
     <Compile Include="VkAPI\vkAPI.cs" />
+    <Compile Include="Windows\Browser.xaml.cs">
+      <DependentUpon>Browser.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\WebGetter.xaml.cs">
       <DependentUpon>WebGetter.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\ctrVideo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Browser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

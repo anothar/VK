@@ -11,8 +11,10 @@ using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Threading;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using vkProject;
 
 namespace VkAPI.Controls
 {
@@ -44,8 +46,8 @@ namespace VkAPI.Controls
 		}
 		public string Url
 		{
-			get { return Url; }
-			set { Url = value; }
+			get { return url; }
+			set { url = value; }
 		}
 		public string Photo
 		{
@@ -53,6 +55,7 @@ namespace VkAPI.Controls
 			set { photo.Source = new BitmapImage(new Uri(value)); }
 		}
 
+		private string url;
 		private void StackPanel_MouseEnter(object sender, MouseEventArgs e)
 		{
 			DoubleAnimation da = new DoubleAnimation();
@@ -91,13 +94,9 @@ namespace VkAPI.Controls
 
 		private void play_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
-			DoubleAnimation da = new DoubleAnimation();
-			da.Duration = new Duration(TimeSpan.FromMilliseconds(200));
-			da.From = 1.0;
-			da.To = 0.0;
-			play.BeginAnimation(OpacityProperty, da);
-			player.Visibility = Visibility.Visible;
 			play.Visibility = Visibility.Hidden;
+			Browser video = new Browser(Url);
+			video.Show();
 		}
 	}
 }
