@@ -37,7 +37,8 @@ namespace vkProject
 		private void button_Click(object sender, RoutedEventArgs e)
 		{
 			Parse_Vk_Output vk = new Parse_Vk_Output(new vkAPI(access_token, user_id, new Scope() { wall = true, friends = true }));
-			List<Post> posts = vk.Wall;
+			vk.getWall();
+			List<Post> wall = vk.Wall;
 		}
 	}
 }
