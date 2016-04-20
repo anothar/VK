@@ -35,9 +35,9 @@ namespace vkProject
 
 		private void button_Click(object sender, RoutedEventArgs e)
 		{
-			VkAPI.Parse_Vk_Output d = new VkAPI.Parse_Vk_Output(new VkAPI.vkAPI(access_token, user_id, new VkAPI.Scope() { friends = true, wall = true }));
-			d.getFriends();
-			foreach (var k in d.Friends)
+			VkAPI.vkAPI d = new VkAPI.vkAPI(access_token, user_id, new VkAPI.Scope() { friends = true, wall = true });
+            List<VkAPI.User> arr = d.getFriends();
+			foreach (var k in arr)
 			{
 				listBox.Items.Add(k.User_id);
 			}
