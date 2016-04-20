@@ -15,12 +15,10 @@ using System.Threading;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using vkProject;
+using VkAPI.Media;
 
 namespace VkAPI.Controls
 {
-	/// <summary>
-	/// Логика взаимодействия для ctrVideo.xaml
-	/// </summary>
 	public partial class ctrVideo : UserControl
 	{
 		public ctrVideo()
@@ -28,6 +26,17 @@ namespace VkAPI.Controls
 			InitializeComponent();
 			description.Opacity = 0.0;
 			panel.Opacity = 0.0;
+		}
+		public ctrVideo(Video video)
+		{
+			InitializeComponent();
+			description.Opacity = 0.0;
+			panel.Opacity = 0.0;
+			Title = video.Title;
+			Views = video.Views;
+			Description = video.Description;
+			Url = video.Player;
+			Photo = video.Photo_640;
 		}
 		public string Title
 		{

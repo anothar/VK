@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VkAPI.Media;
 
 namespace VkAPI.Controls
 {
@@ -22,7 +23,12 @@ namespace VkAPI.Controls
 		{
 			InitializeComponent();
 		}
-
+		public ctrPhoto(Photo photo)
+		{
+			InitializeComponent();
+			Text = photo.Text;
+			Image = photo.Photo_604;
+		}
 		private void text_MouseEnter(object sender, MouseEventArgs e)
 		{
 			DoubleAnimation da = new DoubleAnimation();

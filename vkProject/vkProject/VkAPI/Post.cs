@@ -97,7 +97,7 @@ namespace VkAPI
 			public int Views           { get; set; }
 
 			public string Title         { get; set; }
-			public string Desription    { get; set; }
+			public string Description    { get; set; }
 			public string Photo_130     { get; set; }
 			public string Photo_320     { get; set; }
 			public string Photo_640     { get; set; }
