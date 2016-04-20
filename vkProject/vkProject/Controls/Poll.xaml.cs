@@ -22,18 +22,29 @@ namespace VkAPI.Controls
 		{
 			InitializeComponent();
 		}
+		public ctrPoll(Poll poll)
+		{
+			InitializeComponent();
+			AnsId = poll.Answer_id;
+			foreach(var d in poll.Answers)
+			{
+				AddAnswer(d);
+			}
+			Question = poll.Question;
+		}
 
-		public string Qestion
+		public string Question
 		{
 			get { return qestion.Text; }
 			set { qestion.Text = value; }
 		}
+		public uint AnsId { get; set; }
 
 		public void AddAnswer(Answer ans)
 		{
 			Lanswers.Add(ans);
 			DockPanel answ = new DockPanel();
-			answ.Children.Add(new TextBlock() { Text = ans.Text, Margin = new Thickness(2, 2, 2, 2) });
+			answ.Children.Add(new TextBlock() { Text = ans.Text, Margin = new Thickness(2, 2, 2, 2)});
 			answ.Children.Add(new TextBlock() { Text = Convert.ToString(ans.Rate) + '%', Margin = new Thickness(2, 2, 2, 2) });
 			answers.Children.Add(answ);
 		}

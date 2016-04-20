@@ -256,7 +256,7 @@ namespace VkAPI
                     case "duration": video.Duration = Convert.ToUInt32(item.Value); break;
                     case "views": video.Views = Convert.ToUInt32(item.Value); break;
                     case "date": video.Date = Convert.ToUInt32(item.Value); break;
-                    case "description": video.Desription = item.Value; break;
+                    case "description": video.Description = item.Value; break;
                     case "photo_130": video.Photo_130 = item.Value; break;
                     case "photo_320": video.Photo_320 = item.Value; break;
                     case "photo_640": video.Photo_640 = item.Value; break;
