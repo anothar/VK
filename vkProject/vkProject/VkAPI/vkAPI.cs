@@ -84,6 +84,23 @@ namespace VkAPI
             }
             return Wall;
         }
+        public List<VkAPI.User> getLikes(VkAPI.Post post)
+        {
+            List<VkAPI.User> whoLiked = new List<VkAPI.User>();
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(this.get(VkAPI.Methods.Likes.GetList_Xml, "type=post&friends_only=1&owner_id=" + post.Owner_id + "&item_id" + post.Id));
+            int count = Convert.ToInt32(doc.DocumentElement.FirstChild.Value), offset = 0;
+            while(count > 0)
+            {
+                doc.LoadXml(this.get(VkAPI.Methods.Likes.GetList_Xml, "type=post&friends_only=1&owner_id=" + post.Owner_id + "&item_id" + post.Id + "&count=100&offset=" + offset.ToString()));
+                foreach (XmlNode item in doc.DocumentElement.ChildNodes[1])
+                    if (item.Name == "user_id")
+                        whoLiked.Add(new VkAPI.User(Convert.ToUInt32(item.Value), null, null));
+                count -= 100;
+                offset += 100;
+            }
+            return whoLiked;
+        }
 
         #region GetWallHelpFunctions
         void getPosts(XmlDocument doc, ref List<VkAPI.Post> Wall)
