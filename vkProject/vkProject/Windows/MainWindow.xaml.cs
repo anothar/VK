@@ -32,7 +32,7 @@ namespace vkProject
 			user_id = brouser.user_id;
 		}
 		string  access_token;
-		uint     user_id;
+		int     user_id;
 
 		private void button_Click(object sender, RoutedEventArgs e)
 		{

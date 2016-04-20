@@ -38,12 +38,12 @@ namespace vkProject
 			{
 				string[] data = e.Uri.ToString().Split(new char[] { '=', '&' }); // data[0] = "api.vk.com/....#access_token", data[1] = access_token, data[2] = "expires_in"
 				access_token = data[1];                                          // data[3] = expires_in, data[4] = "user_id", data[5] = user_id
-				user_id = Convert.ToUInt32(data[5]);
+				user_id = Convert.ToInt32(data[5]);
 				Close();
 			}
 		}
 
 		public string access_token { get; private set; }
-		public uint user_id { get; private set; }
+		public int user_id { get; private set; }
 	}
 }
