@@ -12,31 +12,47 @@ namespace VkAPI
 		public Parse_Vk_Output(vkAPI api)
 		{
 			this.api = api;
-			getFriends();
 		}
 
 		public void getFriends()
 		{
-			XmlDocument doc = new XmlDocument();
-			doc.LoadXml(api.get(VkAPI.Methods.Friends.Get_Xml, ""));
-			foreach(XmlNode item in doc.DocumentElement)
-			{
-				if(item.Name == "user")
-				{
-					uint id = 0;
-					string name = "", surname = "";
-					foreach(XmlNode it in item.ChildNodes)
-					{
-						switch(it.Name)
-						{
-							case "id": id = Convert.ToUInt32(it.FirstChild.Value); break;
-							case "first_name": name = it.FirstChild.Value; break;
-							case "second_name": surname = it.FirstChild.Value; break;
-						}
-					}
-					Friends.Add(new VkAPI.User(id, name, surname));
-				}
-			}
+            Friends = new List<VkAPI.User>();
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(api.get(VkAPI.Methods.Friends.Get_Xml, ""));
+            int count = Convert.ToInt32(doc.DocumentElement.FirstChild.FirstChild.Value), offset = 0;
+            while (count > 0)
+            {
+                doc.LoadXml(api.get(VkAPI.Methods.Friends.Get_Xml, "fields=online&offset="+offset.ToString()));
+                XmlNode node = null;
+                foreach (XmlNode item in doc.DocumentElement)
+                {
+                    if (item.Name == "items" && item.Attributes.Count == 1 && item.Attributes[0].Value == "true")
+                    {
+                        node = item;
+                        break;
+                    }
+                }
+                foreach (XmlNode item in node.ChildNodes)
+                {
+                    if (item.Name == "user")
+                    {
+                        uint id = 0;
+                        string name = "", surname = "";
+                        foreach (XmlNode it in item.ChildNodes)
+                        {
+                            switch (it.Name)
+                            {
+                                case "id": id = Convert.ToUInt32(it.FirstChild.Value); break;
+                                case "first_name": name = it.FirstChild.Value; break;
+                                case "last_name": surname = it.FirstChild.Value; break;
+                            }
+                        }
+                        Friends.Add(new VkAPI.User(id, name, surname));
+                    }
+                }
+                count -= 5000;
+                offset += 5000;
+            }
 		}
 		void getWall()
 		{
