@@ -9,8 +9,7 @@
         Title="MainWindow" Height="400" Width="600" MinHeight="300" MinWidth="300"
         Loaded="Window_Loaded">
     <Grid>
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="146,232,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
-        <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="167" Margin="408,85,0,0" VerticalAlignment="Top" Width="146"/>
-        <Controls:ctrVideo HorizontalAlignment="Left" Margin="99,66,0,0" VerticalAlignment="Top" Height="112" Width="155"/>
+        <Controls:Poll x:Name="poll1" HorizontalAlignment="Left" Margin="102,47,0,0" VerticalAlignment="Top" Width="259" Height="213"/>
+        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="113,292,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
     </Grid>
 </Window>

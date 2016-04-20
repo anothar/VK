@@ -35,12 +35,8 @@ namespace vkProject
 
 		private void button_Click(object sender, RoutedEventArgs e)
 		{
-			VkAPI.Parse_Vk_Output d = new VkAPI.Parse_Vk_Output(new VkAPI.vkAPI(access_token, user_id, new VkAPI.Scope() { friends = true, wall = true }));
-			d.getFriends();
-			foreach (var k in d.Friends)
-			{
-				listBox.Items.Add(k.User_id);
-			}
+			poll1.Qestion = "fdsfsd?";
+			poll1.AddAnswer(new VkAPI.Media.Answer() { Rate = 20, Votes = 100, Text = "fsdfafdasfasd" });
 		}
 	}
 }

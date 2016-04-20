@@ -59,6 +59,9 @@
     <Compile Include="Controls\ctrVideo.xaml.cs">
       <DependentUpon>ctrVideo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Poll.xaml.cs">
+      <DependentUpon>Poll.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VkAPI\Parse_VK_Output.cs" />
     <Compile Include="Controls\Photo.xaml.cs">
       <DependentUpon>Photo.xaml</DependentUpon>
@@ -72,6 +75,10 @@
       <DependentUpon>WebGetter.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\ctrVideo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Poll.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
