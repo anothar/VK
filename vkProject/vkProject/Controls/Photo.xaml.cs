@@ -16,9 +16,9 @@ using System.Windows.Shapes;
 
 namespace VkAPI.Controls
 {
-	public partial class Photo : UserControl
+	public partial class ctrPhoto : UserControl
 	{
-		public Photo()
+		public ctrPhoto()
 		{
 			InitializeComponent();
 		}

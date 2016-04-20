@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VkAPI;
 
 namespace vkProject
 {
@@ -35,12 +36,8 @@ namespace vkProject
 
 		private void button_Click(object sender, RoutedEventArgs e)
 		{
-			VkAPI.Parse_Vk_Output d = new VkAPI.Parse_Vk_Output(new VkAPI.vkAPI(access_token, user_id, new VkAPI.Scope() { friends = true, wall = true }));
-			d.getFriends();
-			foreach (var k in d.Friends)
-			{
-				listBox.Items.Add(k.User_id);
-			}
+			Parse_Vk_Output vk = new Parse_Vk_Output(new vkAPI(access_token, user_id, new Scope() { wall = true, friends = true }));
+			List<Post> posts = vk.Wall;
 		}
 	}
 }

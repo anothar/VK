@@ -16,9 +16,9 @@ using VkAPI.Media;
 
 namespace VkAPI.Controls
 {
-	public partial class Poll : UserControl
+	public partial class ctrPoll : UserControl
 	{
-		public Poll()
+		public ctrPoll()
 		{
 			InitializeComponent();
 		}
