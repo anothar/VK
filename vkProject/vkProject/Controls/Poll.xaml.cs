@@ -38,7 +38,7 @@ namespace VkAPI.Controls
 			get { return qestion.Text; }
 			set { qestion.Text = value; }
 		}
-		public uint AnsId { get; set; }
+		public int AnsId { get; set; }
 
 		public void AddAnswer(Answer ans)
 		{

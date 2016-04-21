@@ -252,7 +252,7 @@ namespace VkAPI
                     case "duration": video.Duration = Convert.ToInt32(item.FirstChild.Value); break;
                     case "views": video.Views = Convert.ToInt32(item.FirstChild.Value); break;
                     case "date": video.Date = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "description": video.Desription = (item.OuterXml == "<description />" ? "" : item.FirstChild.Value); break;
+                    case "description": video.Description = (item.OuterXml == "<description />" ? "" : item.FirstChild.Value); break;
                     case "photo_130": video.Photo_130 = item.FirstChild.Value; break;
                     case "photo_320": video.Photo_320 = item.FirstChild.Value; break;
                     case "photo_640": video.Photo_640 = item.FirstChild.Value; break;

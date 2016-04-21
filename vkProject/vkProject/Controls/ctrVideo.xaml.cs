@@ -43,9 +43,9 @@ namespace VkAPI.Controls
 			get { return title.Content.ToString(); }
 			set { title.Content = value; }
 		}
-		public uint Views
+		public int Views
 		{
-			get { return Convert.ToUInt32(views.Content.ToString()); }
+			get { return Convert.ToInt32(views.Content.ToString()); }
 			set { views.Content = Convert.ToString(value); }
 		}
 		public string Description
