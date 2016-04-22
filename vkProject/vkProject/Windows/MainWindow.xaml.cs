@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.IO;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -36,7 +37,17 @@ namespace vkProject
 
 		private void button_Click(object sender, RoutedEventArgs e)
 		{
+			post1.AddPhoto(new VkAPI.Media.Photo() { Photo_604 = "https://upload.wikimedia.org/wikipedia/commons/a/a0/Nintendo-DS-Lite-Black-Open.jpg", Text = "fffdsfasfdasdfsadfsdfsadfasdfasdfasd" });
+		}
 
+		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			
+			if (Global.temporary != null)
+			{
+				foreach(var file in Global.temporary)
+					File.Delete(file);
+			}
 		}
 	}
 }

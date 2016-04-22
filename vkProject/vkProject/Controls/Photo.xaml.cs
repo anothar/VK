@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -12,23 +12,33 @@ using System.Windows.Media.Animation;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Net;
+using System.IO;
+using System.Windows.Interop;
+using System.Drawing;
 using VkAPI.Media;
 
 namespace VkAPI.Controls
 {
 	public partial class ctrPhoto : UserControl
 	{
+		BitmapSource _source;
+		Bitmap _bitmap;
+		WebClient web1;
+
 		public ctrPhoto()
 		{
 			InitializeComponent();
+			text.Visibility = Visibility.Hidden;
 		}
 		public ctrPhoto(Photo photo)
 		{
 			InitializeComponent();
+			text.Visibility = Visibility.Hidden;
 			Text = photo.Text;
 			Image = photo.Photo_604;
 		}
+
 		private void text_MouseEnter(object sender, MouseEventArgs e)
 		{
 			DoubleAnimation da = new DoubleAnimation();
@@ -58,12 +68,72 @@ namespace VkAPI.Controls
 		{
 			get
 			{
-				return image.Source.ToString();
+				return path_img;
 			}
 			set
 			{
-				image.Source = new BitmapImage(new Uri(value));
+				GetImg(value);
 			}
+		}
+
+		void GetImg(string url)
+		{
+			//начать загрузку
+			web1 = new WebClient();
+			string path_temp = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Temp\\" + Path.GetFileName(url);
+			web1.DownloadFileAsync(new Uri(url), path_temp);
+			path_img = path_temp;
+			web1.DownloadFileCompleted += Web1_DownloadFileCompleted;
+
+			//начать крутить картинку загрузку
+			_source = GetSource();
+			loading.Source = _source;
+			ImageAnimator.Animate(_bitmap, OnFrameChanged);
+		}
+
+		private void Web1_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+		{
+			//stopping loading animating
+			ImageAnimator.StopAnimate(_bitmap, OnFrameChanged);
+
+			//writing image;
+			var stream = File.OpenRead(path_img);
+			BitmapImage im = new BitmapImage();
+			im.BeginInit();
+			im.CacheOption = BitmapCacheOption.OnLoad;
+			im.StreamSource = stream;
+			im.EndInit();
+			stream.Close();
+
+			vkProject.Global.temporary.Add(path_img);
+			loading.Visibility = Visibility.Hidden;
+			text.Visibility = Visibility.Visible;
+			image.Source = im;
+		}
+		private string path_img;
+		private BitmapSource GetSource()
+		{
+			if(_bitmap == null)
+			{
+				_bitmap = new Bitmap("712.gif");
+			}
+			IntPtr handle = IntPtr.Zero;
+			handle = _bitmap.GetHbitmap();
+			return Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+		}
+		private void FrameUpdatedCallback()
+		{
+			ImageAnimator.UpdateFrames();
+			if(_source != null)
+				_source.Freeze();
+			_source = GetSource();
+			loading.Source = _source;
+			InvalidateVisual();
+		}
+		private void OnFrameChanged(object sender, EventArgs e)
+		{
+			Dispatcher.BeginInvoke(DispatcherPriority.Normal,
+									new Action(FrameUpdatedCallback));
 		}
 	}
 }

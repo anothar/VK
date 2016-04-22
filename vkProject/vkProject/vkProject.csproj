@@ -42,6 +42,7 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.2.0.1.61\lib\net45\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
@@ -73,6 +74,7 @@
     <Compile Include="Controls\Poll.xaml.cs">
       <DependentUpon>Poll.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Global.cs" />
     <Compile Include="VkAPI\Parse_VK_Output.cs" />
     <Compile Include="Controls\Photo.xaml.cs">
       <DependentUpon>Photo.xaml</DependentUpon>
@@ -149,6 +151,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Media\712.gif" />
+    <Resource Include="Media\play.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

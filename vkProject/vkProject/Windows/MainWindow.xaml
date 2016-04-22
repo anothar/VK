@@ -1,5 +1,6 @@
 ﻿<Window 
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    x:Name="mainwindow"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -7,15 +8,17 @@
         xmlns:Controls="clr-namespace:VkAPI.Controls" x:Class="vkProject.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="400" Width="600" MinHeight="300" MinWidth="300"
-        Loaded="Window_Loaded">
+        Loaded="Window_Loaded"
+        Closing="Window_Closing">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="160"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        
+
         <ScrollViewer Grid.Column="1" Visibility="Visible">
-            
+            <Controls:ctrPost x:Name="post1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </ScrollViewer>
+        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="19,20,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
     </Grid>
 </Window>
