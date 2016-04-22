@@ -90,25 +90,26 @@ namespace VkAPI
 		}
 		public class Video
 		{
-			public int Id              { get; set; }
-			public int Date            { get; set; }
-			public int Owner_id        { get; set; }
-			public int Duration        { get; set; }
-			public int Views           { get; set; }
+			public int Id               { get; set; }
+			public int Date             { get; set; }
+			public int Owner_id         { get; set; }
+			public int Duration         { get; set; }
+			public int Views            { get; set; }
 
 			public string Title         { get; set; }
-			public string Description    { get; set; }
+			public string Description   { get; set; }
 			public string Photo_130     { get; set; }
 			public string Photo_320     { get; set; }
 			public string Photo_640     { get; set; }
 			public string Player        { get; set; }
-		}
+            public string Access_key    { get; set; }
+        }
 		public class Audio
 		{
-			public int Owner_id        { get; set; }
-			public int Date            { get; set; }
-			public int Duration        { get; set; }
-			public int Id              { get; set; }
+			public int Owner_id         { get; set; }
+			public int Date             { get; set; }
+			public int Duration         { get; set; }
+			public int Id               { get; set; }
 
 			public string Artist        { get; set; }
 			public string Title         { get; set; }

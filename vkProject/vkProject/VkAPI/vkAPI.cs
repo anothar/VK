@@ -258,6 +258,7 @@ namespace VkAPI
                     case "photo_640": video.Photo_640 = item.FirstChild.Value; break;
                     case "title": video.Title = (item.OuterXml == "<title />" ? "" : item.FirstChild.Value); break;
                     case "player": video.Player = item.FirstChild.Value; break;
+                    case "access_key": video.Access_key = item.FirstChild.Value; break;
                 }
             }
             return video;
