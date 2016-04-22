@@ -33,7 +33,6 @@ namespace VkAPI
                 }
             }
         }
-        publi
 
 		VkAPI.vkAPI api;
 		public List<VkAPI.User> Friends { get; private set; }
