@@ -8,10 +8,14 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="400" Width="600" MinHeight="300" MinWidth="300"
         Loaded="Window_Loaded">
-    <ScrollViewer>
-        <Grid>
-            <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="56,299,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
-            <Controls:ctrPost HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="post1"/>
-        </Grid>
-    </ScrollViewer>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="160"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <ScrollViewer Grid.Column="1" Visibility="Visible">
+            
+        </ScrollViewer>
+    </Grid>
 </Window>

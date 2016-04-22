@@ -39,6 +39,12 @@ namespace VkAPI.Controls
 			wall.Children.Add(ph);
 			videos.Add(video);
 		}
+		public void SetPoll(Poll poll)
+		{
+			ctrPoll p = new ctrPoll(poll);
+			wall.Children.Add(p);
+			this.poll = poll; 
+		}
 		List<Photo> photos = new List<Photo>();
 		List<Video> videos = new List<Video>();
 		Poll poll = new Poll();
