@@ -43,7 +43,7 @@ namespace VkAPI
             return video.Player;
         }
 
-		VkAPI.vkAPI api;
+        VkAPI.vkAPI api;
 		public List<VkAPI.User> Friends { get; private set; }
         public SortedDictionary<VkAPI.User, uint> whoLiked { get; private set; }
 		public List<VkAPI.Post> Wall { get; private set; }
