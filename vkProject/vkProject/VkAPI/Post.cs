@@ -9,10 +9,22 @@ namespace VkAPI
 {
 	public class Post
 	{     
-        public uint Id                  { get; set; }
-        public uint Owner_id            { get; set; }
-        public uint From_id             { get; set; }
-        public uint Date                { get; set; }
+        public Post()
+        {
+            Photos              = new List<Photo>();
+            Posted_photos       = new List<Posted_photo>();
+            Videos              = new List<Video>();
+            Audios              = new List<Audio>();
+            Documents           = new List<Document>();
+            Graffities          = new List<Graffity>();
+            Links               = new List<Link>();
+            Nodes               = new List<Node>();
+            Poll                = new Poll();
+        }
+        public int Id                  { get; set; }
+        public int Owner_id            { get; set; }
+        public int From_id             { get; set; }
+        public int Date                { get; set; }
         public string Text              { get; set; }
         public string Post_type         { get; set; }
 
@@ -25,8 +37,9 @@ namespace VkAPI
 		public List<Link> Links                 { get; set; }
 		public List<Node> Nodes                 { get; set; }
 		public Poll Poll                        { get; set; }
-	}
-	public class PostException : Exception
+        public Post Copied_Post                 { get; set; }
+    }
+    public class PostException : Exception
 	{
 		public PostException(string message) : base(message)
 		{
@@ -35,13 +48,13 @@ namespace VkAPI
 	}
 	public class User
 	{
-		public User(uint id, string name, string surname)
+		public User(int id, string name, string surname)
 		{
 			User_id = id;
 			First_name = name;
 			Last_name = surname;
 		}
-		public uint User_id             { get; private set; }
+		public int User_id             { get; private set; }
 		public string First_name        { get; private set; }
 		public string Last_name         { get; private set; }
 	}
@@ -50,13 +63,13 @@ namespace VkAPI
 	{
 		public class Photo
 		{
-			public uint Id                  { get; set; }
-			public uint Date                { get; set; }
-			public uint Width               { get; set; }
-			public uint Heght               { get; set; }
-			public uint Album_id            { get; set; }
-			public uint Owner_id            { get; set; }
-			public uint User_id             { get; set; }
+			public int Id                  { get; set; }
+			public int Date                { get; set; }
+			public int Width               { get; set; }
+			public int Heght               { get; set; }
+			public int Album_id            { get; set; }
+			public int Owner_id            { get; set; }
+			public int User_id             { get; set; }
 
 			public string Text              { get; set; }
 			public string Photo_75          { get; set; }
@@ -69,19 +82,19 @@ namespace VkAPI
 		}
 		public class Posted_photo
 		{
-			public uint Id              { get; set; }
-			public uint Owner_id        { get; set; }
+			public int Id              { get; set; }
+			public int Owner_id        { get; set; }
 
 			public string Photo_130     { get; set; }
 			public string Photo_604     { get; set; }
 		}
 		public class Video
 		{
-			public uint Id              { get; set; }
-			public uint Date            { get; set; }
-			public uint Owner_id        { get; set; }
-			public uint Duration        { get; set; }
-			public uint Views           { get; set; }
+			public int Id              { get; set; }
+			public int Date            { get; set; }
+			public int Owner_id        { get; set; }
+			public int Duration        { get; set; }
+			public int Views           { get; set; }
 
 			public string Title         { get; set; }
 			public string Description    { get; set; }
@@ -92,10 +105,10 @@ namespace VkAPI
 		}
 		public class Audio
 		{
-			public uint Owner_id        { get; set; }
-			public uint Date            { get; set; }
-			public uint Duration        { get; set; }
-			public uint Id              { get; set; }
+			public int Owner_id        { get; set; }
+			public int Date            { get; set; }
+			public int Duration        { get; set; }
+			public int Id              { get; set; }
 
 			public string Artist        { get; set; }
 			public string Title         { get; set; }
@@ -103,11 +116,11 @@ namespace VkAPI
 		}
 		public class Document
 		{
-			public uint Id              { get; set; }
-			public uint Owner_id        { get; set; }
-			public uint Size            { get; set; }
-			public uint Date            { get; set; }
-			public uint Type            { get; set; }
+			public int Id              { get; set; }
+			public int Owner_id        { get; set; }
+			public int Size            { get; set; }
+			public int Date            { get; set; }
+			public int Type            { get; set; }
 
 			public string Title         { get; set; }
 			public string Ext           { get; set; }
@@ -117,8 +130,8 @@ namespace VkAPI
 		}
 		public class Graffity
 		{
-			public uint	Id                  { get; set; }
-			public uint	Owner_id            { get; set; }
+			public int	Id                  { get; set; }
+			public int	Owner_id            { get; set; }
 			
 			public string Photo_200         { get; set; }
 			public string Photo_586         { get; set; }
@@ -134,27 +147,27 @@ namespace VkAPI
 		}
 		public class Node
 		{
-			public uint Id              { get; set; }
-            public uint Owner_id        { get; set; }
-            public uint Date            { get; set; }
+			public int Id              { get; set; }
+            public int Owner_id        { get; set; }
+            public int Date            { get; set; }
 			public string Title         { get; set; }
 			public string Text          { get; set; }
 		}
 		public class Answer
 		{
-			public uint Id              { get; set; }
+			public int Id              { get; set; }
 			public string Text          { get; set; }
-			public uint Votes           { get; set; }
-			public uint Rate            { get; set; }
+			public int Votes           { get; set; }
+			public int Rate            { get; set; }
 		}
 		public class Poll
 		{
-			public uint Id              { get; set; }
-			public uint Owner_id        { get; set; }
-            public uint Created         { get; set; }
+			public int Id              { get; set; }
+			public int Owner_id        { get; set; }
+            public int Created         { get; set; }
             public string Question      { get; set; }
-			public uint Votes           { get; set; }
-			public uint Answer_id       { get; set; }
+			public int Votes           { get; set; }
+			public int Answer_id       { get; set; }
 			public List<Answer> Answers     { get; set; }
 		}
 	}
