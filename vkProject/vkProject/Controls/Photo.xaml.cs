@@ -12,6 +12,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using System.Configuration;
 using System.Net;
 using System.IO;
 using System.Windows.Interop;
@@ -80,12 +81,15 @@ namespace VkAPI.Controls
 		{
 			//начать загрузку
 			web1 = new WebClient();
-			string path_temp = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Temp\\" + Path.GetFileName(url);
+			string path_temp = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + 
+														ConfigurationManager.AppSettings["tempDirectory"] + 
+														vkProject.Global.temporary_name + Path.GetExtension(url);
+
 			web1.DownloadFileAsync(new Uri(url), path_temp);
 			path_img = path_temp;
 			web1.DownloadFileCompleted += Web1_DownloadFileCompleted;
 
-			//начать крутить картинку загрузку
+			//начать крутить картинку загрузки
 			_source = GetSource();
 			loading.Source = _source;
 			ImageAnimator.Animate(_bitmap, OnFrameChanged);
