@@ -27,10 +27,10 @@ namespace vkProject
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
-			WebGetter brouser = new WebGetter();
-			brouser.ShowDialog();
-			access_token = brouser.access_token;
-			user_id = brouser.user_id;
+			//WebGetter brouser = new WebGetter();
+			//brouser.ShowDialog();
+			//access_token = brouser.access_token;
+			//user_id = brouser.user_id;
 		}
 		string  access_token;
 		int     user_id;

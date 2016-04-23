@@ -19,6 +19,6 @@
         <ScrollViewer Grid.Column="1" Visibility="Visible">
             <Controls:ctrPost x:Name="post1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </ScrollViewer>
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="19,20,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
+        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
     </Grid>
 </Window>

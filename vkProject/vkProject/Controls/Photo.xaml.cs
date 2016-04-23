@@ -23,14 +23,12 @@ namespace VkAPI.Controls
 {
 	public partial class ctrPhoto : UserControl
 	{
-		BitmapSource _source;
-		Bitmap _bitmap;
-		WebClient web1;
 
 		public ctrPhoto()
 		{
 			InitializeComponent();
 			text.Visibility = Visibility.Hidden;
+			web1 = new WebClient();
 		}
 		public ctrPhoto(Photo photo)
 		{
@@ -38,6 +36,7 @@ namespace VkAPI.Controls
 			text.Visibility = Visibility.Hidden;
 			Text = photo.Text;
 			Image = photo.Photo_604;
+			web1 = new WebClient();
 		}
 
 		private void text_MouseEnter(object sender, MouseEventArgs e)
@@ -77,7 +76,7 @@ namespace VkAPI.Controls
 			}
 		}
 
-		void GetImg(string url)
+		private void GetImg(string url)
 		{
 			//начать загрузку
 			web1 = new WebClient();
@@ -94,7 +93,6 @@ namespace VkAPI.Controls
 			loading.Source = _source;
 			ImageAnimator.Animate(_bitmap, OnFrameChanged);
 		}
-
 		private void Web1_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
 		{
 			//stopping loading animating
@@ -139,5 +137,8 @@ namespace VkAPI.Controls
 			Dispatcher.BeginInvoke(DispatcherPriority.Normal,
 									new Action(FrameUpdatedCallback));
 		}
+		private BitmapSource _source;
+		private Bitmap _bitmap;
+		private WebClient web1;
 	}
 }
