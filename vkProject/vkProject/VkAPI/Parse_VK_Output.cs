@@ -9,7 +9,9 @@ namespace VkAPI
 {
 	public class Parse_Vk_Output
 	{
-		public Parse_Vk_Output(vkAPI api)
+
+
+        public Parse_Vk_Output(vkAPI api)
 		{
 			this.api = api;
 		}
@@ -22,14 +24,19 @@ namespace VkAPI
 		{
             Wall = api.getWall();
 		}
-        public void getFuns()
+        public void getLikes()
         {
+            whoLiked = new Dictionary<VkAPI.User, int>();
+
             foreach (var item in Wall)
             {
-                List<VkAPI.User> likers = api.getLikes(item);
-                foreach (var it in likers)
+                List<VkAPI.User> likes = api.getLikes(item);
+                foreach (var it in likes)
                 {
-                    
+                    if (whoLiked.ContainsKey(it))
+                        whoLiked[it]++;
+                    else
+                        whoLiked.Add(it, 1);
                 }
             }
         }
@@ -45,7 +52,7 @@ namespace VkAPI
 
         VkAPI.vkAPI api;
 		public List<VkAPI.User> Friends { get; private set; }
-        public SortedDictionary<VkAPI.User, uint> whoLiked { get; private set; }
+        public Dictionary<VkAPI.User, int> whoLiked { get; private set; }
 		public List<VkAPI.Post> Wall { get; private set; }
 	}
 }

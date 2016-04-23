@@ -57,6 +57,11 @@ namespace VkAPI
 		public int User_id             { get; private set; }
 		public string First_name        { get; private set; }
 		public string Last_name         { get; private set; }
+
+        override public int GetHashCode()
+        {
+            return User_id.GetHashCode() & First_name.GetHashCode() & Last_name.GetHashCode();
+        }
 	}
 
 	namespace Media

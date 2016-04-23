@@ -37,7 +37,11 @@ namespace vkProject
 
 		private void button_Click(object sender, RoutedEventArgs e)
 		{
-			post1.AddPhoto(new VkAPI.Media.Photo() { Photo_604 = "https://upload.wikimedia.org/wikipedia/commons/a/a0/Nintendo-DS-Lite-Black-Open.jpg", Text = "fffdsfasfdasdfsadfsdfsadfasdfasdfasd" });
+            Parse_Vk_Output vk = new Parse_Vk_Output(new vkAPI(access_token, user_id, new Scope { wall = true, friends = true }));
+            vk.getFriends();
+            vk.getWall();
+            vk.getLikes();
+			//post1.AddPhoto(new VkAPI.Media.Photo() { Photo_604 = "https://upload.wikimedia.org/wikipedia/commons/a/a0/Nintendo-DS-Lite-Black-Open.jpg", Text = "fffdsfasfdasdfsadfsdfsadfasdfasdfasd" });
 		}
 
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
