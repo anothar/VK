@@ -33,7 +33,7 @@ namespace VkAPI
             List<VkAPI.User> Friends = new List<VkAPI.User>();
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(this.get(VkAPI.Methods.Friends.Get_Xml, ""));
-            int count = Convert.ToInt32(doc.DocumentElement.FirstChild.FirstChild.Value), offset = 0;
+            int count = Convert.ToInt32(doc.DocumentElement.FirstChild.InnerText), offset = 0;
             while (count > 0)
             {
                 doc.LoadXml(this.get(VkAPI.Methods.Friends.Get_Xml, "fields=online&offset=" + offset.ToString()));
@@ -56,9 +56,9 @@ namespace VkAPI
                         {
                             switch (it.Name)
                             {
-                                case "id": id = Convert.ToInt32(it.FirstChild.Value); break;
-                                case "first_name": name = it.FirstChild.Value; break;
-                                case "last_name": surname = it.FirstChild.Value; break;
+                                case "id": id = Convert.ToInt32(it.InnerText); break;
+                                case "first_name": name = it.InnerText; break;
+                                case "last_name": surname = it.InnerText; break;
                             }
                         }
                         Friends.Add(new VkAPI.User(id, name, surname));
@@ -69,12 +69,42 @@ namespace VkAPI
             }
             return Friends;
         }
+        public List<VkAPI.User> getLikes(VkAPI.Post post)
+        {
+            List<VkAPI.User> whoLiked = new List<VkAPI.User>();
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(this.get(VkAPI.Methods.Likes.GetList_Xml, "type=post&friends_only=1&owner_id=" + post.Owner_id + "&item_id=" + post.Id));
+            int count = Convert.ToInt32(doc.DocumentElement.FirstChild.InnerText), offset = 0;
+            while (count > 0)
+            {
+                doc.LoadXml(this.get(VkAPI.Methods.Likes.GetList_Xml, "type=post&friends_only=1&extended=1&owner_id=" + post.Owner_id + "&item_id=" + post.Id + "&count=100&offset=" + offset.ToString()));
+                foreach (XmlNode item in doc.DocumentElement.ChildNodes[1])
+                    if (item.Name == "user")
+                    {
+                        int id = 0;
+                        string name = null, surname = null;
+                        foreach (XmlNode it in item.ChildNodes)
+                        {
+                            switch(it.Name)
+                            {
+                                case "id": id = Convert.ToInt32(it.InnerText); break;
+                                case "first_name": name = it.InnerText; break;
+                                case "last_name": surname = it.InnerText; break;
+                            }
+                        }
+                        whoLiked.Add(new VkAPI.User(id, name, surname));
+                    }
+                count -= 100;
+                offset += 100;
+            }
+            return whoLiked;
+        }
         public List<VkAPI.Post> getWall()
         {
             List<VkAPI.Post> Wall = new List<VkAPI.Post>();
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(this.get(VkAPI.Methods.Wall.Get_Xml, "count=1"));
-            int count_of_posts = Convert.ToInt32(doc.DocumentElement.FirstChild.FirstChild.Value), offset = 0;
+            int count_of_posts = Convert.ToInt32(doc.DocumentElement.FirstChild.InnerText), offset = 0;
             while (count_of_posts > 0)
             {
                 doc.LoadXml(this.get(VkAPI.Methods.Wall.Get_Xml, "count=100&offset=" + offset.ToString()));
@@ -83,23 +113,6 @@ namespace VkAPI
                 getPosts(doc, ref Wall);
             }
             return Wall;
-        }
-        public List<VkAPI.User> getLikes(VkAPI.Post post)
-        {
-            List<VkAPI.User> whoLiked = new List<VkAPI.User>();
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(this.get(VkAPI.Methods.Likes.GetList_Xml, "type=post&friends_only=1&owner_id=" + post.Owner_id + "&item_id" + post.Id));
-            int count = Convert.ToInt32(doc.DocumentElement.FirstChild.Value), offset = 0;
-            while(count > 0)
-            {
-                doc.LoadXml(this.get(VkAPI.Methods.Likes.GetList_Xml, "type=post&friends_only=1&owner_id=" + post.Owner_id + "&item_id" + post.Id + "&count=100&offset=" + offset.ToString()));
-                foreach (XmlNode item in doc.DocumentElement.ChildNodes[1])
-                    if (item.Name == "user_id")
-                        whoLiked.Add(new VkAPI.User(Convert.ToInt32(item.FirstChild.Value), null, null));
-                count -= 100;
-                offset += 100;
-            }
-            return whoLiked;
         }
 
         #region GetWallHelpFunctions
@@ -122,12 +135,12 @@ namespace VkAPI
             {
                 switch (item.Name)
                 {
-                    case "id": post.Id = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "from_id": post.From_id = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "owner_id": post.Owner_id = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "date": post.Date = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "post_type": post.Post_type = item.FirstChild.Value; break;
-                    case "text": post.Text = (item.OuterXml == "<text />" ? "" : item.FirstChild.Value); break;
+                    case "id": post.Id = Convert.ToInt32(item.InnerText); break;
+                    case "from_id": post.From_id = Convert.ToInt32(item.InnerText); break;
+                    case "owner_id": post.Owner_id = Convert.ToInt32(item.InnerText); break;
+                    case "date": post.Date = Convert.ToInt32(item.InnerText); break;
+                    case "post_type": post.Post_type = item.InnerText; break;
+                    case "text": post.Text = (item.OuterXml == "<text />" ? "" : item.InnerText); break;
                     case "attachments": getAttachments(item, ref post); break;
                     case "copy_history": post.Copied_Post = getPost(item.FirstChild); break;
                 }
@@ -140,7 +153,7 @@ namespace VkAPI
                 return;
             foreach (XmlNode item in node.ChildNodes)
             {
-                string type = item.FirstChild.FirstChild.Value;
+                string type = item.FirstChild.InnerText;
                 switch (type)
                 {
                     case "audio": post.Audios.Add(getAudio(item.LastChild)); break;
@@ -163,13 +176,13 @@ namespace VkAPI
             {
                 switch (item.Name)
                 {
-                    case "id": audio.Id = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "owner_id": audio.Owner_id = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "duration": audio.Duration = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "date": audio.Date = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "artist": audio.Artist = item.FirstChild.Value; break;
-                    case "title": audio.Title = (item.OuterXml == "<title />" ? "" : item.FirstChild.Value); break;
-                    case "url": audio.Url = (item.OuterXml == "<url />" ? "" : item.FirstChild.Value); break;
+                    case "id": audio.Id = Convert.ToInt32(item.InnerText); break;
+                    case "owner_id": audio.Owner_id = Convert.ToInt32(item.InnerText); break;
+                    case "duration": audio.Duration = Convert.ToInt32(item.InnerText); break;
+                    case "date": audio.Date = Convert.ToInt32(item.InnerText); break;
+                    case "artist": audio.Artist = item.InnerText; break;
+                    case "title": audio.Title = (item.OuterXml == "<title />" ? "" : item.InnerText); break;
+                    case "url": audio.Url = (item.OuterXml == "<url />" ? "" : item.InnerText); break;
                 }
             }
             return audio;
@@ -181,16 +194,16 @@ namespace VkAPI
             {
                 switch (item.Name)
                 {
-                    case "id": document.Id = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "owner_id": document.Owner_id = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "size": document.Size = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "date": document.Date = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "type": document.Type = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "ext": document.Ext = item.FirstChild.Value; break;
-                    case "title": document.Title = (item.OuterXml == "<title />" ? "" : item.FirstChild.Value); break;
-                    case "url": document.Url = (item.OuterXml == "<url />" ? "" : item.FirstChild.Value); break;
-                    case "photo_100": document.Photo_100 = item.FirstChild.Value; break;
-                    case "photo_130": document.Photo_130 = item.FirstChild.Value; break;
+                    case "id": document.Id = Convert.ToInt32(item.InnerText); break;
+                    case "owner_id": document.Owner_id = Convert.ToInt32(item.InnerText); break;
+                    case "size": document.Size = Convert.ToInt32(item.InnerText); break;
+                    case "date": document.Date = Convert.ToInt32(item.InnerText); break;
+                    case "type": document.Type = Convert.ToInt32(item.InnerText); break;
+                    case "ext": document.Ext = item.InnerText; break;
+                    case "title": document.Title = (item.OuterXml == "<title />" ? "" : item.InnerText); break;
+                    case "url": document.Url = (item.OuterXml == "<url />" ? "" : item.InnerText); break;
+                    case "photo_100": document.Photo_100 = item.InnerText; break;
+                    case "photo_130": document.Photo_130 = item.InnerText; break;
                 }
             }
             return document;
@@ -202,24 +215,24 @@ namespace VkAPI
             {
                 switch (item.Name)
                 {
-                    case "id": photo.Id = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "owner_id": photo.Owner_id = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "album_id": photo.Album_id = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "date": photo.Date = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "width": photo.Width = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "height": photo.Heght = Convert.ToInt32(item.FirstChild.Value); break;
+                    case "id": photo.Id = Convert.ToInt32(item.InnerText); break;
+                    case "owner_id": photo.Owner_id = Convert.ToInt32(item.InnerText); break;
+                    case "album_id": photo.Album_id = Convert.ToInt32(item.InnerText); break;
+                    case "date": photo.Date = Convert.ToInt32(item.InnerText); break;
+                    case "width": photo.Width = Convert.ToInt32(item.InnerText); break;
+                    case "height": photo.Heght = Convert.ToInt32(item.InnerText); break;
                     case "user_id":
-                        photo.User_id = Convert.ToInt32(item.FirstChild.Value);
+                        photo.User_id = Convert.ToInt32(item.InnerText);
                         if (photo.User_id == 100)
                             photo.User_id = photo.Owner_id;
                         break;
-                    case "text": photo.Text = (item.OuterXml == "<text />" ? "" : item.FirstChild.Value); break;
-                    case "photo_75": photo.Photo_75 = item.FirstChild.Value; break;
-                    case "photo_130": photo.Photo_130 = item.FirstChild.Value; break;
-                    case "photo_604": photo.Photo_604 = item.FirstChild.Value; break;
-                    case "photo_807": photo.Photo_807 = item.FirstChild.Value; break;
-                    case "photo_1280": photo.Photo_1280 = item.FirstChild.Value; break;
-                    case "photo_2560": photo.Photo_2560 = item.FirstChild.Value; break;
+                    case "text": photo.Text = (item.OuterXml == "<text />" ? "" : item.InnerText); break;
+                    case "photo_75": photo.Photo_75 = item.InnerText; break;
+                    case "photo_130": photo.Photo_130 = item.InnerText; break;
+                    case "photo_604": photo.Photo_604 = item.InnerText; break;
+                    case "photo_807": photo.Photo_807 = item.InnerText; break;
+                    case "photo_1280": photo.Photo_1280 = item.InnerText; break;
+                    case "photo_2560": photo.Photo_2560 = item.InnerText; break;
                 }
             }
             return photo;
@@ -231,10 +244,10 @@ namespace VkAPI
             {
                 switch (item.Name)
                 {
-                    case "id": photo.Id = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "owner_id": photo.Owner_id = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "photo_130": photo.Photo_130 = item.FirstChild.Value; break;
-                    case "photo_604": photo.Photo_604 = item.FirstChild.Value; break;
+                    case "id": photo.Id = Convert.ToInt32(item.InnerText); break;
+                    case "owner_id": photo.Owner_id = Convert.ToInt32(item.InnerText); break;
+                    case "photo_130": photo.Photo_130 = item.InnerText; break;
+                    case "photo_604": photo.Photo_604 = item.InnerText; break;
                 }
             }
 
@@ -247,18 +260,18 @@ namespace VkAPI
             {
                 switch (item.Name)
                 {
-                    case "id": video.Id = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "owner_id": video.Owner_id = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "duration": video.Duration = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "views": video.Views = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "date": video.Date = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "description": video.Description = (item.OuterXml == "<description />" ? "" : item.FirstChild.Value); break;
-                    case "photo_130": video.Photo_130 = item.FirstChild.Value; break;
-                    case "photo_320": video.Photo_320 = item.FirstChild.Value; break;
-                    case "photo_640": video.Photo_640 = item.FirstChild.Value; break;
-                    case "title": video.Title = (item.OuterXml == "<title />" ? "" : item.FirstChild.Value); break;
-                    case "player": video.Player = item.FirstChild.Value; break;
-                    case "access_key": video.Access_key = item.FirstChild.Value; break;
+                    case "id": video.Id = Convert.ToInt32(item.InnerText); break;
+                    case "owner_id": video.Owner_id = Convert.ToInt32(item.InnerText); break;
+                    case "duration": video.Duration = Convert.ToInt32(item.InnerText); break;
+                    case "views": video.Views = Convert.ToInt32(item.InnerText); break;
+                    case "date": video.Date = Convert.ToInt32(item.InnerText); break;
+                    case "description": video.Description = (item.OuterXml == "<description />" ? "" : item.InnerText); break;
+                    case "photo_130": video.Photo_130 = item.InnerText; break;
+                    case "photo_320": video.Photo_320 = item.InnerText; break;
+                    case "photo_640": video.Photo_640 = item.InnerText; break;
+                    case "title": video.Title = (item.OuterXml == "<title />" ? "" : item.InnerText); break;
+                    case "player": video.Player = item.InnerText; break;
+                    case "access_key": video.Access_key = item.InnerText; break;
                 }
             }
             return video;
@@ -270,10 +283,10 @@ namespace VkAPI
             {
                 switch (item.Name)
                 {
-                    case "id": graffity.Id = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "owner_id": graffity.Owner_id = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "photo_200 ": graffity.Photo_200 = item.FirstChild.Value; break;
-                    case "photo_586 ": graffity.Photo_586 = item.FirstChild.Value; break;
+                    case "id": graffity.Id = Convert.ToInt32(item.InnerText); break;
+                    case "owner_id": graffity.Owner_id = Convert.ToInt32(item.InnerText); break;
+                    case "photo_200 ": graffity.Photo_200 = item.InnerText; break;
+                    case "photo_586 ": graffity.Photo_586 = item.InnerText; break;
                 }
             }
             return graffity;
@@ -285,12 +298,12 @@ namespace VkAPI
             {
                 switch (item.Name)
                 {
-                    case "is_external ": link.is_external = Convert.ToBoolean(Convert.ToInt32(item.FirstChild.Value)); break;
-                    case "caption": link.Caption = item.FirstChild.Value; break;
-                    case "description": link.Description = (item.OuterXml == "<description />" ? "" : item.FirstChild.Value); break;
+                    case "is_external ": link.is_external = Convert.ToBoolean(Convert.ToInt32(item.InnerText)); break;
+                    case "caption": link.Caption = item.InnerText; break;
+                    case "description": link.Description = (item.OuterXml == "<description />" ? "" : item.InnerText); break;
                     case "photo": link.Photo = getPhoto(item); break;
-                    case "url": link.Url = (item.OuterXml == "<url />" ? "" : item.FirstChild.Value); break;
-                    case "title": link.Title = (item.OuterXml == "<title />" ? "" : item.FirstChild.Value); break;
+                    case "url": link.Url = (item.OuterXml == "<url />" ? "" : item.InnerText); break;
+                    case "title": link.Title = (item.OuterXml == "<title />" ? "" : item.InnerText); break;
                 }
             }
             return link;
@@ -302,11 +315,11 @@ namespace VkAPI
             {
                 switch (item.Name)
                 {
-                    case "id": _node.Id = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "owner_id": _node.Owner_id = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "date": _node.Date = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "text": _node.Text = (item.OuterXml == "<text />" ? "" : item.FirstChild.Value); break;
-                    case "title": _node.Title = (item.OuterXml == "<title />" ? "" : item.FirstChild.Value); break;
+                    case "id": _node.Id = Convert.ToInt32(item.InnerText); break;
+                    case "owner_id": _node.Owner_id = Convert.ToInt32(item.InnerText); break;
+                    case "date": _node.Date = Convert.ToInt32(item.InnerText); break;
+                    case "text": _node.Text = (item.OuterXml == "<text />" ? "" : item.InnerText); break;
+                    case "title": _node.Title = (item.OuterXml == "<title />" ? "" : item.InnerText); break;
                 }
             }
             return _node;
@@ -319,12 +332,12 @@ namespace VkAPI
             {
                 switch (item.Name)
                 {
-                    case "id": poll.Id = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "owner_id": poll.Owner_id = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "votes": poll.Votes = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "answer_id": poll.Answer_id = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "created": poll.Created = Convert.ToInt32(item.FirstChild.Value); break;
-                    case "question": poll.Question = item.FirstChild.Value; break;
+                    case "id": poll.Id = Convert.ToInt32(item.InnerText); break;
+                    case "owner_id": poll.Owner_id = Convert.ToInt32(item.InnerText); break;
+                    case "votes": poll.Votes = Convert.ToInt32(item.InnerText); break;
+                    case "answer_id": poll.Answer_id = Convert.ToInt32(item.InnerText); break;
+                    case "created": poll.Created = Convert.ToInt32(item.InnerText); break;
+                    case "question": poll.Question = item.InnerText; break;
                     case "answers":
                         foreach (XmlNode it in item.ChildNodes)
                         {
@@ -336,7 +349,7 @@ namespace VkAPI
                                     case "id": answer.Id = Convert.ToInt32(i.Value); break;
                                     case "rate": answer.Rate = Convert.ToInt32(i.Value); break;
                                     case "votes": answer.Votes = Convert.ToInt32(i.Value); break;
-                                    case "text": answer.Text = (item.OuterXml == "<text />" ? "" : item.FirstChild.Value); break;
+                                    case "text": answer.Text = (item.OuterXml == "<text />" ? "" : item.InnerText); break;
                                 }
                             }
                             poll.Answers.Add(answer);
@@ -349,8 +362,8 @@ namespace VkAPI
         #endregion
 
         const string            Url_Api = "https://api.vk.com/method/";
-        int                    client_id = Convert.ToInt32(ConfigurationManager.AppSettings["client_id"]);
-        int                    user_id;
+        int                     client_id = Convert.ToInt32(ConfigurationManager.AppSettings["client_id"]);
+        int                     user_id;
         string                  access_token;
         Scope                   scope;
     }
