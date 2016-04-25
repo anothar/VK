@@ -28,15 +28,26 @@ namespace VkAPI.Controls
 		{
 			InitializeComponent();
 			text.Visibility = Visibility.Hidden;
-			web1 = new WebClient();
 		}
 		public ctrPhoto(Photo photo)
 		{
 			InitializeComponent();
 			text.Visibility = Visibility.Hidden;
 			Text = photo.Text;
-			Image = photo.Photo_604;
-			web1 = new WebClient();
+			smallImage = photo.Photo_604;
+			bigImage = photo.Photo_2560 != null ? photo.Photo_2560 : photo.Photo_1280;
+
+			if (bigImage != null)
+			{
+				image.Cursor = Cursors.Hand;
+				image.MouseLeftButtonUp += Image_MouseLeftButtonUp;
+			}
+		}
+
+		private void Image_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+		{
+			vkProject.Browser bIm = new vkProject.Browser(bigImage, "Фотография");
+			bIm.Show();
 		}
 
 		private void text_MouseEnter(object sender, MouseEventArgs e)
@@ -64,7 +75,7 @@ namespace VkAPI.Controls
 				text.Text = value;
 			}
 		}
-		public string Image
+		public string smallImage
 		{
 			get
 			{
@@ -75,6 +86,7 @@ namespace VkAPI.Controls
 				GetImg(value);
 			}
 		}
+		public string bigImage { get; set; }
 
 		private void GetImg(string url)
 		{

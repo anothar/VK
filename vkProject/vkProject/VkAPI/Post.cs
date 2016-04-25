@@ -161,20 +161,19 @@ namespace VkAPI
 		}
 		public class Answer
 		{
-			public int Id              { get; set; }
+			public int Id               { get; set; }
 			public string Text          { get; set; }
-			public int Votes           { get; set; }
-			public int Rate            { get; set; }
+			public uint Votes           { get; set; }
+			public double Rate          { get; set; }
 		}
 		public class Poll
 		{
-			public int Id              { get; set; }
-			public int Owner_id        { get; set; }
-            public int Created         { get; set; }
+			public int Id               { get; set; }
+			public int Owner_id         { get; set; }
             public string Question      { get; set; }
-			public int Votes           { get; set; }
-			public int Answer_id       { get; set; }
-			public List<Answer> Answers     { get; set; }
+			public int Votes            { get; set; }
+			public int Answer_id        { get; set; }
+			public List<Answer> Answers { get; set; }
 		}
 	}
 }

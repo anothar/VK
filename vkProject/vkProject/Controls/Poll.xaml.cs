@@ -35,18 +35,15 @@ namespace VkAPI.Controls
 
 		public string Question
 		{
-			get { return qestion.Text; }
-			set { qestion.Text = value; }
+			get { return question.Text; }
+			set { question.Text = value; }
 		}
 		public int AnsId { get; set; }
 
 		public void AddAnswer(Answer ans)
 		{
 			Lanswers.Add(ans);
-			DockPanel answ = new DockPanel();
-			answ.Children.Add(new TextBlock() { Text = ans.Text, Margin = new Thickness(2, 2, 2, 2)});
-			answ.Children.Add(new TextBlock() { Text = Convert.ToString(ans.Rate) + '%', Margin = new Thickness(2, 2, 2, 2) });
-			answers.Children.Add(answ);
+			answers.Children.Add(new ctrPollAnswer(ans, AnsId));
 		}
 
 		List<Answer> Lanswers = new List<Answer>();

@@ -61,6 +61,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\ctrPollAnswer.xaml.cs">
+      <DependentUpon>ctrPollAnswer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ctrPost.xaml.cs">
       <DependentUpon>ctrPost.xaml</DependentUpon>
     </Compile>
@@ -83,6 +86,10 @@
     <Compile Include="Windows\WebGetter.xaml.cs">
       <DependentUpon>WebGetter.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\ctrPollAnswer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\ctrPost.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

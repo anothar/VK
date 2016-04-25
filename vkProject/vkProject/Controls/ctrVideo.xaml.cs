@@ -53,18 +53,13 @@ namespace VkAPI.Controls
 			get { return description.Text; }
 			set { description.Text = value; }
 		}
-		public string Url
-		{
-			get { return url; }
-			set { url = value; }
-		}
+		public string Url { get; set; }
 		public string Photo
 		{
 			get { return photo.Source.ToString(); }
 			set { photo.Source = new BitmapImage(new Uri(value)); }
 		}
 
-		private string url;
 		private void StackPanel_MouseEnter(object sender, MouseEventArgs e)
 		{
 			DoubleAnimation da = new DoubleAnimation();
@@ -100,11 +95,9 @@ namespace VkAPI.Controls
 			da.Duration = new Duration(TimeSpan.FromMilliseconds(200));
 			play.BeginAnimation(OpacityProperty, da);
 		}
-
 		private void play_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
-			play.Visibility = Visibility.Hidden;
-			Browser video = new Browser(Url);
+			Browser video = new Browser(Url, "Видеозапись");
 			video.Show();
 		}
 	}

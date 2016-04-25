@@ -8,7 +8,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid Margin="5, 5, 5, 5">
         <Image x:Name="image" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-        <TextBlock x:Name="text" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Bottom" Mouse.MouseEnter="text_MouseEnter" Mouse.MouseLeave="text_MouseLeave"/>
+        <TextBlock x:Name="text" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Bottom" Mouse.MouseEnter="text_MouseEnter" Mouse.MouseLeave="text_MouseLeave" Margin="5, 5, 5, 5"/>
         <Image x:Name="loading" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="30" Width="30"/>
     </Grid>
 </UserControl>

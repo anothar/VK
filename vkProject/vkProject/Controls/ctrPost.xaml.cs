@@ -26,6 +26,18 @@ namespace VkAPI.Controls
 		public ctrPost(Post post)
 		{
 			InitializeComponent();
+			this.Text = post.Text;
+		}
+		public string Text
+		{
+			get
+			{
+				return text.Text;
+			}
+			set
+			{
+				text.Text = value;
+			}
 		}
 		public void AddPhoto(Photo photo)
 		{
@@ -39,14 +51,11 @@ namespace VkAPI.Controls
 			wall.Children.Add(ph);
 			videos.Add(video);
 		}
-		public void SetPoll(Poll poll)
+		public void AddPoll(ctrPoll poll)
 		{
-			ctrPoll p = new ctrPoll(poll);
-			wall.Children.Add(p);
-			this.poll = poll;
+			wall.Children.Add(poll);
 		}
 		List<Photo> photos = new List<Photo>();
 		List<Video> videos = new List<Video>();
-		Poll poll = new Poll();
 	}
 }

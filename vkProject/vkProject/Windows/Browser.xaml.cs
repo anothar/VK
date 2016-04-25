@@ -16,10 +16,11 @@ namespace vkProject
 {
 	public partial class Browser : Window
 	{
-		public Browser(string url)
+		public Browser(string url, string title)
 		{
 			InitializeComponent();
 			player.Source = new Uri(url);
+			Title = title;
 		}
 	}
 }

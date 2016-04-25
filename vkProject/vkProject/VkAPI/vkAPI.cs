@@ -336,7 +336,6 @@ namespace VkAPI
                     case "owner_id": poll.Owner_id = Convert.ToInt32(item.InnerText); break;
                     case "votes": poll.Votes = Convert.ToInt32(item.InnerText); break;
                     case "answer_id": poll.Answer_id = Convert.ToInt32(item.InnerText); break;
-                    case "created": poll.Created = Convert.ToInt32(item.InnerText); break;
                     case "question": poll.Question = item.InnerText; break;
                     case "answers":
                         foreach (XmlNode it in item.ChildNodes)
@@ -348,7 +347,7 @@ namespace VkAPI
                                 {
                                     case "id": answer.Id = Convert.ToInt32(i.Value); break;
                                     case "rate": answer.Rate = Convert.ToInt32(i.Value); break;
-                                    case "votes": answer.Votes = Convert.ToInt32(i.Value); break;
+                                    case "votes": answer.Votes = Convert.ToUInt32(i.Value); break;
                                     case "text": answer.Text = (item.OuterXml == "<text />" ? "" : item.InnerText); break;
                                 }
                             }

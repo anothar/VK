@@ -7,6 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <StackPanel x:Name="wall" Margin="10, 10, 10, 10">
-            
+        <TextBlock Margin="5, 5, 5, 5" TextWrapping="Wrap" x:Name="text"/>
     </StackPanel>
 </UserControl>
