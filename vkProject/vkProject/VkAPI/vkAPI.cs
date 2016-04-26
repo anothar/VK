@@ -143,6 +143,7 @@ namespace VkAPI
                     case "text": post.Text = (item.OuterXml == "<text />" ? "" : item.InnerText); break;
                     case "attachments": getAttachments(item, ref post); break;
                     case "copy_history": post.Copied_Post = getPost(item.FirstChild); break;
+                    case "likes": post.Likes = Convert.ToInt32(item.FirstChild.InnerText); break;
                 }
             }
             return post;

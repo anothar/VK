@@ -9,7 +9,13 @@ namespace VkAPI
 {
 	public class Parse_Vk_Output
 	{
-
+        class Comp : IComparer<User>
+    {
+        public int Compare(User a, User b)
+        {
+            return a.Last_name.CompareTo(b.Last_name);
+        }
+    }
 
         public Parse_Vk_Output(vkAPI api)
 		{
@@ -26,14 +32,16 @@ namespace VkAPI
 		}
         public void getLikes()
         {
-            whoLiked = new Dictionary<VkAPI.User, int>();
+            whoLiked = new SortedDictionary<VkAPI.User, int>(new Comp());
 
             foreach (var item in Wall)
             {
+                if (item.Likes == 0)
+                    continue;
                 List<VkAPI.User> likes = api.getLikes(item);
                 foreach (var it in likes)
                 {
-                    if (whoLiked.ContainsKey(it))
+                    if(whoLiked.ContainsKey(it))
                         whoLiked[it]++;
                     else
                         whoLiked.Add(it, 1);
@@ -52,7 +60,7 @@ namespace VkAPI
 
         VkAPI.vkAPI api;
 		public List<VkAPI.User> Friends { get; private set; }
-        public Dictionary<VkAPI.User, int> whoLiked { get; private set; }
+        public SortedDictionary<VkAPI.User, int> whoLiked { get; private set; }
 		public List<VkAPI.Post> Wall { get; private set; }
 	}
 }
