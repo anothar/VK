@@ -41,7 +41,7 @@ namespace vkProject
 			//vk.getFriends();
 			//vk.getWall();
 			//vk.getLikes();
-			post1.AddPoll(new VkAPI.Controls.ctrPoll(new VkAPI.Media.Poll() { Answers = new List<VkAPI.Media.Answer>() { new VkAPI.Media.Answer() { Text = "gdfgsdfgs", Id = 0, Rate = 44, Votes = 44 }, new VkAPI.Media.Answer() { Text = "fdfdаыфврпафыоафылафыолваполывпалофыпварфывпадфываолывапвоаывпаволаыфваафывафывафывфаывafsa", Rate = 33, Id = 1, Votes = 3 } }, Answer_id=1, Question="gdfsgdfgsdfhgffdgdfshdfghdfsgfdsgdfgdg" }));
+			post1.AddPoll(new VkAPI.Controls.ctrPoll(new VkAPI.Media.Poll() { Answers = new List<VkAPI.Media.Answer>() { new VkAPI.Media.Answer() { Text = "вариант1", Id = 0, Rate = 44, Votes = 44 }, new VkAPI.Media.Answer() { Text = "вариант2", Rate = 93, Id = 1, Votes = 3 } }, Answer_id = 0, Question="вопрос" }));
         }
 
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
