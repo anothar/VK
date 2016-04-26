@@ -27,10 +27,10 @@ namespace vkProject
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
-			//WebGetter brouser = new WebGetter();
-			//brouser.ShowDialog();
-			//access_token = brouser.access_token;
-			//user_id = brouser.user_id;
+            WebGetter brouser = new WebGetter();
+            brouser.ShowDialog();
+            access_token = brouser.access_token;
+            user_id = brouser.user_id;
 		}
 		string  access_token;
 		int     user_id;
@@ -41,7 +41,7 @@ namespace vkProject
 			//vk.getFriends();
 			//vk.getWall();
 			//vk.getLikes();
-			post1.AddPoll(new VkAPI.Controls.ctrPoll(new VkAPI.Media.Poll() { Answers = new List<VkAPI.Media.Answer>() { new VkAPI.Media.Answer() { Text = "вариант1", Id = 0, Rate = 44, Votes = 44 }, new VkAPI.Media.Answer() { Text = "вариант2", Rate = 93, Id = 1, Votes = 3 } }, Answer_id = 0, Question="вопрос" }));
+			post1.AddPoll(new VkAPI.Controls.ctrPoll(new VkAPI.Media.Poll() { Answers = new List<VkAPI.Media.Answer>() { new VkAPI.Media.Answer() { Text = "gdfgsdfgs", Id = 0, Rate = 44, Votes = 44 }, new VkAPI.Media.Answer() { Text = "fdfdаыфврпафыоафылафыолваполывпалофыпварфывпадфываолывапвоаывпаволаыфваафывафывафывфаывafsa", Rate = 33, Id = 1, Votes = 3 } }, Answer_id=1, Question="gdfsgdfgsdfhgffdgdfshdfghdfsgfdsgdfgdg" }));
         }
 
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
