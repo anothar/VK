@@ -38,13 +38,23 @@ namespace vkProject
 		private void button_Click(object sender, RoutedEventArgs e)
 		{
 			Parse_Vk_Output vk = new Parse_Vk_Output(new vkAPI(access_token, user_id, new Scope { wall = true, friends = true }));
-            textBlock.Text = "";
-			vk.getFriends();
-			vk.getWall();
-			vk.getLikes();
+            textBox.Text = "";
+
+            Task gettingFriends = new Task(vk.getFriends);
+            gettingFriends.Start();
+
+            Task gettingWall = new Task(vk.getWall);
+            gettingWall.Start();
+            gettingWall.Wait();
+
+            Task gettingLikes = new Task(vk.getLikes);
+            gettingLikes.Start();
+
+            gettingFriends.Wait();
+            gettingLikes.Wait();
             foreach (var item in vk.whoLiked)
             {
-                this.textBlock.Text += item.Key.First_name + " " + item.Key.Last_name + " " + item.Value.ToString() + '\n';
+                this.textBox.Text += item.Value.First_name + " " + item.Value.Last_name + " " + item.Key.ToString() + '\n';
             }
 			//post1.AddPoll(new VkAPI.Controls.ctrPoll(new VkAPI.Media.Poll() { Answers = new List<VkAPI.Media.Answer>() { new VkAPI.Media.Answer() { Text = "gdfgsdfgs", Id = 0, Rate = 44, Votes = 44 }, new VkAPI.Media.Answer() { Text = "fdfdаыфврпафыоафылафыолваполывпалофыпварфывпадфываолывапвоаывпаволаыфваафывафывафывфаывafsa", Rate = 33, Id = 1, Votes = 3 } }, Answer_id=1, Question="gdfsgdfgsdfhgffdgdfshdfghdfsgfdsgdfgdg" }));
         }
