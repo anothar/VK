@@ -30,13 +30,16 @@ namespace VkAPI.Controls
 		public ctrVideo(Video video)
 		{
 			InitializeComponent();
+
 			description.Opacity = 0.0;
 			panel.Opacity = 0.0;
+
 			Title = video.Title;
 			Views = video.Views;
 			Description = video.Description;
 			Url = video.Player;
 			Photo = video.Photo_640;
+
 		}
 		public string Title
 		{
@@ -46,7 +49,7 @@ namespace VkAPI.Controls
 		public int Views
 		{
 			get { return Convert.ToInt32(views.Content.ToString()); }
-			set { views.Content = Convert.ToString(value); }
+			set { views.Content = value.ToString(); }
 		}
 		public string Description
 		{
@@ -97,8 +100,11 @@ namespace VkAPI.Controls
 		}
 		private void play_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
-			Browser video = new Browser(Url, "Видеозапись");
-			video.Show();
+			if(Url != null)
+			{
+				Browser video = new Browser(Url, "Видеозапись");
+				video.Show();
+			}
 		}
 	}
 }

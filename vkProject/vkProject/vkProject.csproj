@@ -67,6 +67,9 @@
     <Compile Include="Controls\ctrPost.xaml.cs">
       <DependentUpon>ctrPost.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ctrTabElement.xaml.cs">
+      <DependentUpon>ctrTabElement.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ctrVideo.xaml.cs">
       <DependentUpon>ctrVideo.xaml</DependentUpon>
     </Compile>
@@ -91,6 +94,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ctrPost.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ctrTabElement.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

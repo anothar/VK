@@ -15,10 +15,11 @@
             <ColumnDefinition Width="160"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-
+        <StackPanel x:Name="tabs" Grid.Column="0">
+            <Controls:ctrTabElement x:Name="tb_posts" Text="Записи" MouseLeftButtonUp="tb_posts_MouseLeftButtonUp"/>
+            <Controls:ctrTabElement x:Name="tb_stat" Text="Статистика" MouseLeftButtonUp="tb_stat_MouseLeftButtonUp"/>
+        </StackPanel>
         <ScrollViewer Grid.Column="1" Visibility="Visible">
-            <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="TextBlock"/>
         </ScrollViewer>
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
     </Grid>
 </Window>

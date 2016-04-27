@@ -46,6 +46,12 @@ namespace VkAPI
 		{
 
 		}
+		public PostException(uint code)
+		{
+			this.code = code;
+		}
+		public uint Code { get { return code; } }
+		private uint code;
 	}
 	public class User
 	{

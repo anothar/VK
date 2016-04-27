@@ -58,8 +58,7 @@ namespace VkAPI.Controls
 		}
 
 		private uint vot = 0;
-
-		List<Answer> Lanswers = new List<Answer>();
+		private List<Answer> Lanswers = new List<Answer>();
 
 	}
 }
