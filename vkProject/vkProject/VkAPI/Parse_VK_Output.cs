@@ -32,21 +32,25 @@ namespace VkAPI
 		}
         public void getLikes()
         {
-            whoLiked = new SortedDictionary<VkAPI.User, int>(new Comp());
+            SortedDictionary<User, int> stat = new SortedDictionary<User, int>(new Comp());
 
             foreach (var item in Wall)
             {
                 if (item.Likes == 0)
                     continue;
-                List<VkAPI.User> likes = api.getLikes(item);
+                List<User> likes = api.getLikes(item);
                 foreach (var it in likes)
                 {
-                    if(whoLiked.ContainsKey(it))
-                        whoLiked[it]++;
+                    if(stat.ContainsKey(it))
+                        stat[it]++;
                     else
-                        whoLiked.Add(it, 1);
+                        stat.Add(it, 1);
                 }
             }
+            whoLiked = new List<KeyValuePair<int, User>>();
+            foreach (var item in stat)
+                whoLiked.Add(new KeyValuePair<int, User>(item.Value, item.Key));
+            whoLiked.Sort(Comparer<KeyValuePair<int, User>>.Create((a, b) => b.Key.CompareTo(a.Key)));
         }
         public string getVideoUrl(Media.Video video)
         {
@@ -58,9 +62,9 @@ namespace VkAPI
             return video.Player;
         }
 
-        VkAPI.vkAPI api;
-		public List<VkAPI.User> Friends { get; private set; }
-        public SortedDictionary<VkAPI.User, int> whoLiked { get; private set; }
-		public List<VkAPI.Post> Wall { get; private set; }
+        vkAPI api;
+		public List<User> Friends { get; private set; }
+        public List<KeyValuePair<int, User>> whoLiked { get; private set; }
+		public List<Post> Wall { get; private set; }
 	}
 }

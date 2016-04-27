@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:vkProject"
         xmlns:Controls="clr-namespace:VkAPI.Controls" x:Class="vkProject.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="600" MinHeight="300" MinWidth="300"
+        Title="vkProject" Height="400" Width="600" MinHeight="300" MinWidth="300"
         Loaded="Window_Loaded"
         Closing="Window_Closing">
     <Grid>
@@ -17,7 +17,7 @@
         </Grid.ColumnDefinitions>
 
         <ScrollViewer Grid.Column="1" Visibility="Visible">
-            <Controls:ctrPost x:Name="post1"/>
+            <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="TextBlock"/>
         </ScrollViewer>
         <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
     </Grid>

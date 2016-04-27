@@ -37,7 +37,16 @@ namespace vkProject
 
 		private void button_Click(object sender, RoutedEventArgs e)
 		{
-			post1.AddPoll(new VkAPI.Controls.ctrPoll(new VkAPI.Media.Poll() { Answers = new List<VkAPI.Media.Answer>() { new VkAPI.Media.Answer() { Text = "gdfgsdfgs", Id = 0, Rate = 44, Votes = 44 }, new VkAPI.Media.Answer() { Text = "fdfdаыфврпафыоафылафыолваполывпалофыпварфывпадфываолывапвоаывпаволаыфваафывафывафывфаывafsa", Rate = 33, Id = 1, Votes = 3 } }, Answer_id=1, Question="gdfsgdfgsdfhgffdgdfshdfghdfsgfdsgdfgdg" }));
+			Parse_Vk_Output vk = new Parse_Vk_Output(new vkAPI(access_token, user_id, new Scope { wall = true, friends = true }));
+            textBlock.Text = "";
+			vk.getFriends();
+			vk.getWall();
+			vk.getLikes();
+            foreach (var item in vk.whoLiked)
+            {
+                this.textBlock.Text += item.Key.First_name + " " + item.Key.Last_name + " " + item.Value.ToString() + '\n';
+            }
+			//post1.AddPoll(new VkAPI.Controls.ctrPoll(new VkAPI.Media.Poll() { Answers = new List<VkAPI.Media.Answer>() { new VkAPI.Media.Answer() { Text = "gdfgsdfgs", Id = 0, Rate = 44, Votes = 44 }, new VkAPI.Media.Answer() { Text = "fdfdаыфврпафыоафылафыолваполывпалофыпварфывпадфываолывапвоаывпаволаыфваафывафывафывфаывafsa", Rate = 33, Id = 1, Votes = 3 } }, Answer_id=1, Question="gdfsgdfgsdfhgffdgdfshdfghdfsgfdsgdfgdg" }));
         }
 
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
