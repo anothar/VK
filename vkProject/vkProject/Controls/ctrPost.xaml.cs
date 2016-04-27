@@ -26,7 +26,26 @@ namespace VkAPI.Controls
 		public ctrPost(Post post)
 		{
 			InitializeComponent();
-			this.Text = post.Text;
+			if(post.Copied_Post == null)
+			{
+				this.Text = post.Text;
+				foreach(var photo in post.Photos)
+					AddPhoto(photo);
+				//foreach(var video in post.Videos)
+				//	AddVideo(video);
+				if(post.Poll.Answers != null)
+					AddPoll(post.Poll);
+			}
+			else
+			{
+				this.Text = post.Copied_Post.Text;
+				foreach(var photo in post.Copied_Post.Photos)
+					AddPhoto(photo);
+				//foreach(var video in post.Copied_Post.Videos)
+				//	AddVideo(video);
+				if(post.Copied_Post.Poll.Answers != null)
+					AddPoll(post.Poll);
+			}
 		}
 		public string Text
 		{
@@ -51,9 +70,9 @@ namespace VkAPI.Controls
 			wall.Children.Add(ph);
 			videos.Add(video);
 		}
-		public void AddPoll(ctrPoll poll)
+		public void AddPoll(Poll poll)
 		{
-			wall.Children.Add(poll);
+			wall.Children.Add(new ctrPoll(poll));
 		}
 		List<Photo> photos = new List<Photo>();
 		List<Video> videos = new List<Video>();

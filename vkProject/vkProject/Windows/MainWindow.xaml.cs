@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Threading;
 using System.Threading.Tasks;
 using VkAPI;
+using VkAPI.Controls;
 
 namespace vkProject
 {
@@ -46,19 +47,23 @@ namespace vkProject
             var Wall = vk.getWall();
             var whoLiked = vk.getLikes(Wall);
  
-            foreach (var item in whoLiked)
-                Dispatcher.Invoke((Action)(() => textBlock.Text += String.Format("{0} {1} {2}\n", item.Value.First_name, item.Value.Last_name, item.Key.ToString())));
+            //foreach (var item in whoLiked)
+            //    Dispatcher.Invoke((Action)(() => textBlock.Text += String.Format("{0} {1} {2}\n", item.Value.First_name, item.Value.Last_name, item.Key.ToString())));
         }
 
 		private void tb_stat_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
+			//Task.Factory.StartNew(getStatistic);
 			tb_posts.Checked = false;
 			tb_stat.Checked = true;
 		}
 		
 		private void tb_posts_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
-			Task.Factory.StartNew(getStatistic);
+			Parse_Vk_Output vk = new Parse_Vk_Output(new vkAPI(access_token, user_id, new Scope() { wall = true, friends = true }));
+
+			var Wall = vk.getWall();
+			posts.Children.Add(new ctrPost(Wall[0]));
 			tb_posts.Checked = true;
 			tb_stat.Checked = false;
 		}

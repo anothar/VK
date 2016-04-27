@@ -26,11 +26,15 @@ namespace VkAPI.Controls
 		{
 			InitializeComponent();
 			AnsId = poll.Answer_id;
-			foreach(var d in poll.Answers)
+			if(poll.Answers != null)
 			{
-				AddAnswer(d);
+				foreach(var d in poll.Answers)
+				{
+					AddAnswer(d);
+				}
 			}
 			Question = poll.Question;
+			Votes = Convert.ToUInt32(poll.Votes);
 		}
 
 		public string Question
