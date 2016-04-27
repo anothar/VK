@@ -67,7 +67,7 @@ namespace vkProject
 			tb_posts.Checked = true;
 			tb_stat.Checked = false;
 		}
-
+        bool state = false;
 		private void mainwindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			if (Global.temporary != null)

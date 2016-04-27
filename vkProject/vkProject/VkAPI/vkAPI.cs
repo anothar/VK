@@ -48,7 +48,7 @@ namespace VkAPI
         }
         public string get(string method, string data)
         {
-            return GET(Url_Api + method, '?' + data + "&" + version_api + "&access_token=" + access_token);
+            return GET(Url_Api + method, data + "&" + version_api + "&access_token=" + access_token);
         }
         public string post(string method, string data)
         {
@@ -391,12 +391,12 @@ namespace VkAPI
                             Media.Answer answer = new Media.Answer();
                             foreach (XmlNode i in it.ChildNodes)
                             {
-                                switch (it.Name)
+                                switch (i.Name)
                                 {
                                     case "id": answer.Id = Convert.ToInt32(i.Value); break;
                                     case "rate": answer.Rate = Convert.ToInt32(i.Value); break;
                                     case "votes": answer.Votes = Convert.ToUInt32(i.Value); break;
-                                    case "text": answer.Text = (item.OuterXml == "<text />" ? "" : item.InnerText); break;
+                                    case "text": answer.Text = (i.OuterXml == "<text />" ? "" : i.InnerText); break;
                                 }
                             }
                             poll.Answers.Add(answer);
