@@ -62,12 +62,16 @@ namespace vkProject
 		}
 		
 		private void tb_posts_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-			{
-			Task.Factory.StartNew(getStatistic);
+		{
+            if (!state)
+            {
+                Task.Factory.StartNew(getStatistic);
+                state = true;
+            }
 			tb_posts.Checked = true;
 			tb_stat.Checked = false;
 		}
-
+        bool state = false;
 		private void mainwindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			if (Global.temporary != null)
