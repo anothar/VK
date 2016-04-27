@@ -62,7 +62,7 @@ namespace vkProject
 		}
 		
 		private void tb_posts_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-		{
+			{
 			Task.Factory.StartNew(getStatistic);
 			tb_posts.Checked = true;
 			tb_stat.Checked = false;
