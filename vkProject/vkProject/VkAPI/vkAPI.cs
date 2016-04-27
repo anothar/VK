@@ -19,15 +19,40 @@ namespace VkAPI
             this.access_token = access_token;
             this.scope = scope;
         }
-        public string get(string method, string data)
+        private string GET(string url, string data)
         {
-            WebRequest req = WebRequest.Create(Url_Api + method + '?' + data + "&v=5.50&access_token=" + access_token);
+            WebRequest req = WebRequest.Create(url + '?' + data);
             WebResponse resp = req.GetResponse();
             Stream stream = resp.GetResponseStream();
             StreamReader sr = new StreamReader(stream);
             string str = sr.ReadToEnd();
             sr.Close();
             return str;
+        }
+        private string POST(string url, string data)
+        {
+            WebRequest req = WebRequest.Create(url);
+            req.Method = "POST";
+            req.ContentType = "application/x-www-form-urlencoded";
+
+            byte[] arr = Encoding.UTF8.GetBytes(data);
+            req.GetRequestStream().Write(arr, 0, arr.Length);
+
+            WebResponse resp = req.GetResponse();
+            Stream stream = resp.GetResponseStream();
+            StreamReader sr = new StreamReader(stream);
+            string str = sr.ReadToEnd();
+            sr.Close();
+
+            return str;
+        }
+        public string get(string method, string data)
+        {
+            return GET(Url_Api + method, '?' + data + "&" + version_api + "&access_token=" + access_token);
+        }
+        public string post(string method, string data)
+        {
+            return POST(Url_Api + method, data + "&" + version_api + "&access_token=" + access_token);
         }
         public List<User> getFriends()
         {
@@ -75,7 +100,7 @@ namespace VkAPI
             }
 			Global.WriteLogString("Friends had been got");
 
-			return Friends;
+            return Friends;
         }
         public List<User> getLikes(Post post)
         {
@@ -128,7 +153,7 @@ namespace VkAPI
             while (count_of_posts > 0)
             {
                 do
-                    doc.LoadXml(this.get(Methods.Wall.Get_Xml, "count=100&offset=" + offset.ToString()));
+                    doc.LoadXml(this.get(VkAPI.Methods.Wall.Get_Xml, "&count=100&offset=" + offset.ToString()));
                 while (doc.DocumentElement.Name != "response");
                 offset += 100;
                 count_of_posts -= 100;
@@ -384,6 +409,7 @@ namespace VkAPI
         #endregion
 
         const string            Url_Api = "https://api.vk.com/method/";
+        const string            version_api = "v=5.52";
         int                     client_id = Convert.ToInt32(ConfigurationManager.AppSettings["client_id"]);
         int                     user_id;
         string                  access_token;
