@@ -50,12 +50,12 @@ namespace vkProject
             foreach (var item in whoLiked)
                 Dispatcher.Invoke((Action)(() => textBlock.Text += String.Concat(item.Value.First_name, " ", item.Value.Last_name, " ", item.Key.ToString(), '\n')));
         }
-		private void button_Click(object sender, RoutedEventArgs e)
-		{
-            Task.Factory.StartNew(getStatistic);            
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            Task.Factory.StartNew(getStatistic);
         }
 
-		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			
 			if (Global.temporary != null)

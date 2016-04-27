@@ -39,12 +39,25 @@ namespace VkAPI.Controls
 			set { question.Text = value; }
 		}
 		public int AnsId { get; set; }
-
+		public uint Votes
+		{
+			get
+			{
+				return vot;
+			}
+			set
+			{
+				vot = value;
+				votes.Text = String.Format("Проголосовало {0} человек", vot);
+			}
+		}
 		public void AddAnswer(Answer ans)
 		{
 			Lanswers.Add(ans);
 			answers.Children.Add(new ctrPollAnswer(ans, AnsId));
 		}
+
+		private uint vot = 0;
 
 		List<Answer> Lanswers = new List<Answer>();
 

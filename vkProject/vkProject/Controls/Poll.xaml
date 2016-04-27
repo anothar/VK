@@ -8,6 +8,13 @@
              mc:Ignorable="d" 
              Height="auto" MinWidth="380">
     <StackPanel Margin="10, 10, 10, 10" x:Name="answers">
-        <TextBlock x:Name="question" Margin="5, 5, 5, 0"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" x:Name="question" Margin="5, 5, 5, 0"/>
+            <TextBlock Grid.Row="1" x:Name="votes"  Margin="5, 5, 5, 0" Text="Проголосовало 0 человек"/>
+        </Grid>
     </StackPanel>
 </UserControl>
