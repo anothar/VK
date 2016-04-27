@@ -7,6 +7,7 @@ using System.Xml;
 using System.IO;
 using System.Configuration;
 using System.Net;
+using vkProject;
 
 namespace VkAPI
 {
@@ -30,14 +31,16 @@ namespace VkAPI
         }
         public List<User> getFriends()
         {
-            List<VkAPI.User> Friends = new List<VkAPI.User>();
+			Global.WriteLogString("Getting friends...");
+
+			List<User> Friends = new List<User>();
             XmlDocument doc = new XmlDocument();
-            doc.LoadXml(this.get(VkAPI.Methods.Friends.Get_Xml, ""));
+            doc.LoadXml(this.get(Methods.Friends.Get_Xml, ""));
             int count = Convert.ToInt32(doc.DocumentElement.FirstChild.InnerText), offset = 0;
             while (count > 0)
             {
                 do
-                    doc.LoadXml(this.get(VkAPI.Methods.Friends.Get_Xml, "fields=online&offset=" + offset.ToString()));
+                    doc.LoadXml(this.get(Methods.Friends.Get_Xml, "fields=online&offset=" + offset.ToString()));
                 while (doc.DocumentElement.Name != "response");
 
                 XmlNode node = null;
@@ -64,20 +67,22 @@ namespace VkAPI
                                 case "last_name": surname = it.InnerText; break;
                             }
                         }
-                        Friends.Add(new VkAPI.User(id, name, surname));
+                        Friends.Add(new User(id, name, surname));
                     }
                 }
                 count -= 5000;
                 offset += 5000;
             }
-            return Friends;
+			Global.WriteLogString("Friends had been got");
+
+			return Friends;
         }
-        public List<User> getLikes(VkAPI.Post post)
+        public List<User> getLikes(Post post)
         {
-            List<VkAPI.User> whoLiked = new List<VkAPI.User>();
+            List<User> whoLiked = new List<User>();
             XmlDocument doc = new XmlDocument();
             do
-                doc.LoadXml(this.get(VkAPI.Methods.Likes.GetList_Xml, "type=post&friends_only=1&owner_id=" + post.Owner_id + "&item_id=" + post.Id));
+                doc.LoadXml(this.get(Methods.Likes.GetList_Xml, "type=post&friends_only=1&owner_id=" + post.Owner_id + "&item_id=" + post.Id));
             while (doc.DocumentElement.Name != "response");
 
             int count = Convert.ToInt32(doc.DocumentElement.FirstChild.InnerText), offset = 0;
@@ -102,7 +107,7 @@ namespace VkAPI
                                 case "last_name": surname = it.InnerText; break;
                             }
                         }
-                        whoLiked.Add(new VkAPI.User(id, name, surname));
+                        whoLiked.Add(new User(id, name, surname));
                     }
                 count -= 100;
                 offset += 100;
@@ -111,11 +116,11 @@ namespace VkAPI
         }
         public List<Post> getWall()
         {
-            List<VkAPI.Post> Wall = new List<VkAPI.Post>();
+            List<Post> Wall = new List<Post>();
             XmlDocument doc = new XmlDocument();
 
             do
-                doc.LoadXml(this.get(VkAPI.Methods.Wall.Get_Xml, "count=1"));
+                doc.LoadXml(this.get(Methods.Wall.Get_Xml, "count=1"));
             while (doc.DocumentElement.Name != "response");
 
             int count_of_posts = Convert.ToInt32(doc.DocumentElement.FirstChild.InnerText), offset = 0;
@@ -123,7 +128,7 @@ namespace VkAPI
             while (count_of_posts > 0)
             {
                 do
-                    doc.LoadXml(this.get(VkAPI.Methods.Wall.Get_Xml, "count=100&offset=" + offset.ToString()));
+                    doc.LoadXml(this.get(Methods.Wall.Get_Xml, "count=100&offset=" + offset.ToString()));
                 while (doc.DocumentElement.Name != "response");
                 offset += 100;
                 count_of_posts -= 100;

@@ -35,21 +35,16 @@ namespace vkProject
         }
 		string  access_token;
 		int     user_id;
+
         private void getStatistic()
         {
 			Global.WriteLogString("Statistic had been called...");
 
             Parse_Vk_Output vk = new Parse_Vk_Output(new vkAPI(access_token, user_id, new Scope() { wall = true, friends = true }));
 
-			Global.WriteLogString("Getting friends...");
             var Friends = vk.getFriends();
-			Global.WriteLogString("Friends had been got");
-			Global.WriteLogString("Getting wall...");
             var Wall = vk.getWall();
-			Global.WriteLogString("Wall had been got");
-			Global.WriteLogString("Getting likes...");
             var whoLiked = vk.getLikes(Wall);
-			Global.WriteLogString("Likes had been got");
  
             foreach (var item in whoLiked)
                 Dispatcher.Invoke((Action)(() => textBlock.Text += String.Format("{0} {1} {2}\n", item.Value.First_name, item.Value.Last_name, item.Key.ToString())));
@@ -62,7 +57,7 @@ namespace vkProject
 		}
 		
 		private void tb_posts_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-			{
+		{
 			Task.Factory.StartNew(getStatistic);
 			tb_posts.Checked = true;
 			tb_stat.Checked = false;
