@@ -10,27 +10,29 @@ namespace VkAPI
 	public class Parse_Vk_Output
 	{
         class Comp : IComparer<User>
-    {
-        public int Compare(User a, User b)
         {
-            return a.Last_name.CompareTo(b.Last_name);
+            public int Compare(User a, User b)
+            {
+                return a.Last_name.CompareTo(b.Last_name);
+            }
         }
-    }
 
         public Parse_Vk_Output(vkAPI api)
 		{
 			this.api = api;
 		}
 
-		public void getFriends()
+		public List<User> getFriends()
 		{
-            Friends = api.getFriends();
+            List<User> Friends = api.getFriends();
+            return Friends;
 		}
-        public void getWall()
+        public List<Post> getWall()
 		{
-            Wall = api.getWall();
+            List<Post> Wall = api.getWall();
+            return Wall;
 		}
-        public void getLikes()
+        public List<KeyValuePair<int, User>> getLikes(List<Post> Wall)
         {
             SortedDictionary<User, int> stat = new SortedDictionary<User, int>(new Comp());
 
@@ -47,10 +49,15 @@ namespace VkAPI
                         stat.Add(it, 1);
                 }
             }
-            whoLiked = new List<KeyValuePair<int, User>>();
+
+            List<KeyValuePair<int, User>> whoLiked = new List<KeyValuePair<int, User>>();
+
             foreach (var item in stat)
                 whoLiked.Add(new KeyValuePair<int, User>(item.Value, item.Key));
+
             whoLiked.Sort(Comparer<KeyValuePair<int, User>>.Create((a, b) => b.Key.CompareTo(a.Key)));
+
+            return whoLiked;
         }
         public string getVideoUrl(Media.Video video)
         {
@@ -63,8 +70,5 @@ namespace VkAPI
         }
 
         vkAPI api;
-		public List<User> Friends { get; private set; }
-        public List<KeyValuePair<int, User>> whoLiked { get; private set; }
-		public List<Post> Wall { get; private set; }
 	}
 }
