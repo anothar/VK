@@ -50,7 +50,7 @@ namespace vkProject
                 Dispatcher.Invoke((Action)(() => textBlock.Text += String.Concat(item.Value.First_name, " ", item.Value.Last_name, " ", item.Key.ToString(), '\n')));
         }
 
-    private void button_Click(object sender, RoutedEventArgs e)
+		private void button_Click(object sender, RoutedEventArgs e)
 		{
             Task.Factory.StartNew(getStatistic);
             //post1.AddPoll(new VkAPI.Controls.ctrPoll(new VkAPI.Media.Poll() { Answers = new List<VkAPI.Media.Answer>() { new VkAPI.Media.Answer() { Text = "gdfgsdfgs", Id = 0, Rate = 44, Votes = 44 }, new VkAPI.Media.Answer() { Text = "fdfdаыфврпафыоафылафыолваполывпалофыпварфывпадфываолывапвоаывпаволаыфваафывафывафывфаывafsa", Rate = 33, Id = 1, Votes = 3 } }, Answer_id=1, Question="gdfsgdfgsdfhgffdgdfshdfghdfsgfdsgdfgdg" }));
@@ -61,11 +61,20 @@ namespace vkProject
 			tb_posts.Checked = false;
 			tb_stat.Checked = true;
 		}
-			
+		
 		private void tb_posts_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 			{
 			tb_posts.Checked = true;
 			tb_stat.Checked = false;
+		}
+
+		private void mainwindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			if (Global.temporary != null)
+			{
+				foreach(var file in Global.temporary)
+					File.Delete(file);
+			}
 		}
 	}
 }
