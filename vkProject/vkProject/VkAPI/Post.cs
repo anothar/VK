@@ -21,14 +21,15 @@ namespace VkAPI
             Nodes               = new List<Node>();
             Poll                = new Poll();
         }
-        public int Id                  { get; set; }
-        public int Owner_id            { get; set; }
-        public int From_id             { get; set; }
-        public int Date                { get; set; }
+        public int Id                   { get; set; }
+        public int Owner_id             { get; set; }
+        public int From_id              { get; set; }
+        public int Date                 { get; set; }
+        public int Likes                { get; set; }
         public string Text              { get; set; }
         public string Post_type         { get; set; }
 
-		public List<Photo> Photos               { get; set; }
+        public List<Photo> Photos               { get; set; }
 		public List<Posted_photo> Posted_photos { get; set; }
 		public List<Video> Videos               { get; set; }
 		public List<Audio> Audios               { get; set; }
