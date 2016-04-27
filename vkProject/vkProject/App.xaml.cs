@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
 
 namespace vkProject
@@ -13,5 +13,13 @@ namespace vkProject
 	/// </summary>
 	public partial class App : Application
 	{
+		public App()
+		{
+			if(File.Exists(Global.logFile))
+				File.Delete(Global.logFile);
+
+			Global.logStream = File.OpenWrite(Global.logFile);
+			Global.WriteLogString("Starting program...");
+		}
 	}
 }
