@@ -38,13 +38,13 @@ namespace vkProject
         private void getStatistic()
         {
             Parse_Vk_Output vk = new Parse_Vk_Output(new vkAPI(access_token, user_id, new Scope { wall = true, friends = true }));
-            Dispatcher.Invoke((Action)(() => textBlock.Text += "Getting friends\n"));
+            Dispatcher.Invoke((Action)(() => textBlock.Text += "Получение списка друзей\n"));
             var Friends = vk.getFriends();
-            Dispatcher.Invoke((Action)(() => textBlock.Text += "Getting wall\n"));
+            Dispatcher.Invoke((Action)(() => textBlock.Text += "Получение записей стены\n"));
             var Wall = vk.getWall();
-            Dispatcher.Invoke((Action)(() => textBlock.Text += "Getting likes\n"));
+            Dispatcher.Invoke((Action)(() => textBlock.Text += "Получение лайков\n"));
             var whoLiked = vk.getLikes(Wall);
-            Dispatcher.Invoke((Action)(() => textBlock.Text += "All have been got\n\n"));
+            Dispatcher.Invoke((Action)(() => textBlock.Text += "Готово\n\n"));
  
             foreach (var item in whoLiked)
                 Dispatcher.Invoke((Action)(() => textBlock.Text += String.Concat(item.Value.First_name, " ", item.Value.Last_name, " ", item.Key.ToString(), '\n')));
