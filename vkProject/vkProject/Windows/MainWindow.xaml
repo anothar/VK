@@ -17,7 +17,7 @@
         </Grid.ColumnDefinitions>
 
         <ScrollViewer Grid.Column="1" Visibility="Visible">
-            <TextBox x:Name="textBox" Height="359" TextWrapping="Wrap" Text="TextBox" Width="414"/>
+            <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text=""/>
         </ScrollViewer>
         <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
     </Grid>
