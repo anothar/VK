@@ -37,23 +37,22 @@ namespace vkProject
 		int     user_id;
         private void getStatistic()
         {
-            Parse_Vk_Output vk = new Parse_Vk_Output(new vkAPI(access_token, user_id, new Scope { wall = true, friends = true }));
-            Dispatcher.Invoke((Action)(() => textBlock.Text += "Getting friends\n"));
+			Global.WriteLogString("Statistic had been called...");
+
+            Parse_Vk_Output vk = new Parse_Vk_Output(new vkAPI(access_token, user_id, new Scope() { wall = true, friends = true }));
+
+			Global.WriteLogString("Getting friends...");
             var Friends = vk.getFriends();
-            Dispatcher.Invoke((Action)(() => textBlock.Text += "Getting wall\n"));
+			Global.WriteLogString("Friends had been got");
+			Global.WriteLogString("Getting wall...");
             var Wall = vk.getWall();
-            Dispatcher.Invoke((Action)(() => textBlock.Text += "Getting likes\n"));
+			Global.WriteLogString("Wall had been got");
+			Global.WriteLogString("Getting likes...");
             var whoLiked = vk.getLikes(Wall);
-            Dispatcher.Invoke((Action)(() => textBlock.Text += "All have been got\n\n"));
+			Global.WriteLogString("Likes had been got");
  
             foreach (var item in whoLiked)
-                Dispatcher.Invoke((Action)(() => textBlock.Text += String.Concat(item.Value.First_name, " ", item.Value.Last_name, " ", item.Key.ToString(), '\n')));
-        }
-
-		private void button_Click(object sender, RoutedEventArgs e)
-		{
-            Task.Factory.StartNew(getStatistic);
-            //post1.AddPoll(new VkAPI.Controls.ctrPoll(new VkAPI.Media.Poll() { Answers = new List<VkAPI.Media.Answer>() { new VkAPI.Media.Answer() { Text = "gdfgsdfgs", Id = 0, Rate = 44, Votes = 44 }, new VkAPI.Media.Answer() { Text = "fdfdаыфврпафыоафылафыолваполывпалофыпварфывпадфываолывапвоаывпаволаыфваафывафывафывфаывafsa", Rate = 33, Id = 1, Votes = 3 } }, Answer_id=1, Question="gdfsgdfgsdfhgffdgdfshdfghdfsgfdsgdfgdg" }));
+                Dispatcher.Invoke((Action)(() => textBlock.Text += String.Format("{0} {1} {2}\n", item.Value.First_name, item.Value.Last_name, item.Key.ToString())));
         }
 
 		private void tb_stat_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -63,7 +62,8 @@ namespace vkProject
 		}
 		
 		private void tb_posts_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-			{
+		{
+			Task.Factory.StartNew(getStatistic);
 			tb_posts.Checked = true;
 			tb_stat.Checked = false;
 		}

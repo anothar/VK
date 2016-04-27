@@ -16,7 +16,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <StackPanel x:Name="tabs" Grid.Column="0">
-            <Controls:ctrTabElement x:Name="tb_posts" Text="Стена" MouseLeftButtonUp="tb_posts_MouseLeftButtonUp"/>
+            <Controls:ctrTabElement x:Name="tb_posts" Text="Стена" Checked="True" MouseLeftButtonUp="tb_posts_MouseLeftButtonUp"/>
             <Controls:ctrTabElement x:Name="tb_stat" Text="Статистика" MouseLeftButtonUp="tb_stat_MouseLeftButtonUp"/>
         </StackPanel>
         <ScrollViewer Grid.Column="1" Visibility="Visible">
