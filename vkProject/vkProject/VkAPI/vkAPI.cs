@@ -153,7 +153,7 @@ namespace VkAPI
             while (count_of_posts > 0)
             {
                 do
-                    doc.LoadXml(this.get(VkAPI.Methods.Wall.Get_Xml, "&count=100&offset=" + offset.ToString()));
+                    doc.LoadXml(this.get(Methods.Wall.Get_Xml, "&count=100&offset=" + offset.ToString()));
                 while (doc.DocumentElement.Name != "response");
                 offset += 100;
                 count_of_posts -= 100;
@@ -163,7 +163,7 @@ namespace VkAPI
         }
 
         #region GetWallHelpFunctions
-        void getPosts(XmlDocument doc, ref List<VkAPI.Post> Wall)
+        void getPosts(XmlDocument doc, ref List<Post> Wall)
         {
             foreach (XmlNode it in doc.DocumentElement)
                 if (it.Name == "items")
@@ -189,7 +189,9 @@ namespace VkAPI
                     case "post_type": post.Post_type = item.InnerText; break;
                     case "text": post.Text = (item.OuterXml == "<text />" ? "" : item.InnerText); break;
                     case "attachments": getAttachments(item, ref post); break;
-                    case "copy_history": post.Copied_Post = getPost(item.FirstChild); break;
+                    case "copy_history":
+						post.Copied_Post = new Post();
+						post.Copied_Post = getPost(item.FirstChild); break;
                     case "likes": post.Likes = Convert.ToInt32(item.FirstChild.InnerText); break;
                 }
             }
@@ -204,15 +206,33 @@ namespace VkAPI
                 string type = item.FirstChild.InnerText;
                 switch (type)
                 {
-                    case "audio": post.Audios.Add(getAudio(item.LastChild)); break;
-                    case "doc": post.Documents.Add(getDocument(item.LastChild)); break;
-                    case "photo": post.Photos.Add(getPhoto(item.LastChild)); break;
-                    case "posted_photo": post.Posted_photos.Add(getPosted_photo(item.LastChild)); break;
-                    case "video": post.Videos.Add(getVideo(item.LastChild)); break;
-                    case "graffiti": post.Graffities.Add(getGraffity(item.LastChild)); break;
-                    case "link": post.Links.Add(getLink(item.LastChild)); break;
-                    case "node": post.Nodes.Add(getNode(item.LastChild)); break;
-                    case "poll": post.Poll = getPoll(item.LastChild); break;
+                    case "audio":
+						post.Audios = new List<Media.Audio>();
+						post.Audios.Add(getAudio(item.LastChild)); break;
+                    case "doc":
+						post.Documents = new List<Media.Document>();
+						post.Documents.Add(getDocument(item.LastChild)); break;
+                    case "photo":
+						post.Photos = new List<Media.Photo>();
+						post.Photos.Add(getPhoto(item.LastChild)); break;
+                    case "posted_photo":
+						post.Posted_photos = new List<Media.Posted_photo>();
+						post.Posted_photos.Add(getPosted_photo(item.LastChild)); break;
+                    case "video":
+						post.Videos = new List<Media.Video>();
+						post.Videos.Add(getVideo(item.LastChild)); break;
+                    case "graffiti":
+						post.Graffities = new List<Media.Graffity>();
+						post.Graffities.Add(getGraffity(item.LastChild)); break;
+                    case "link":
+						post.Links = new List<Media.Link>();
+						post.Links.Add(getLink(item.LastChild)); break;
+                    case "node":
+						post.Nodes = new List<Media.Node>();
+						post.Nodes.Add(getNode(item.LastChild)); break;
+                    case "poll":
+						post.Poll = new Media.Poll();
+						post.Poll = getPoll(item.LastChild); break;
                 }
             }
         }

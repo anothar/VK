@@ -11,15 +11,7 @@ namespace VkAPI
 	{     
         public Post()
         {
-            Photos              = new List<Photo>();
-            Posted_photos       = new List<Posted_photo>();
-            Videos              = new List<Video>();
-            Audios              = new List<Audio>();
-            Documents           = new List<Document>();
-            Graffities          = new List<Graffity>();
-            Links               = new List<Link>();
-            Nodes               = new List<Node>();
-            Poll                = new Poll();
+
         }
         public int Id                   { get; set; }
         public int Owner_id             { get; set; }
