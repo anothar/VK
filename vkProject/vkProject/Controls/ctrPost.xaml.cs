@@ -29,21 +29,23 @@ namespace VkAPI.Controls
 			if(post.Copied_Post == null)
 			{
 				this.Text = post.Text;
-				foreach(var photo in post.Photos)
-					AddPhoto(photo);
+                if (post.Photos != null)
+                    foreach (var photo in post.Photos)
+					    AddPhoto(photo);
 				//foreach(var video in post.Videos)
 				//	AddVideo(video);
-				if(post.Poll.Answers != null)
+				if(post.Poll != null)
 					AddPoll(post.Poll);
 			}
 			else
 			{
 				this.Text = post.Copied_Post.Text;
-				foreach(var photo in post.Copied_Post.Photos)
-					AddPhoto(photo);
+                if(post.Copied_Post.Photos != null)
+				    foreach(var photo in post.Copied_Post.Photos)
+					    AddPhoto(photo);
 				//foreach(var video in post.Copied_Post.Videos)
 				//	AddVideo(video);
-				if(post.Copied_Post.Poll.Answers != null)
+				if(post.Copied_Post.Poll != null)
 					AddPoll(post.Poll);
 			}
 		}

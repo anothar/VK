@@ -129,7 +129,7 @@ namespace VkAPI.Controls
 		{
 			if(_bitmap == null)
 			{
-				_bitmap = new Bitmap("712.gif");
+				_bitmap = new Bitmap("Media/712.gif");
 			}
 			IntPtr handle = IntPtr.Zero;
 			handle = _bitmap.GetHbitmap();

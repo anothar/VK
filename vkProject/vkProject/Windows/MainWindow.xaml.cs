@@ -50,6 +50,16 @@ namespace vkProject
             //foreach (var item in whoLiked)
             //    Dispatcher.Invoke((Action)(() => textBlock.Text += String.Format("{0} {1} {2}\n", item.Value.First_name, item.Value.Last_name, item.Key.ToString())));
         }
+        private void getWall()
+        {
+            Global.WriteLogString("getWall had been called");
+            Parse_Vk_Output vk = new Parse_Vk_Output(new vkAPI(access_token, user_id, new Scope() { wall = true, friends = true }));
+            var Wall = vk.getWall();
+            foreach (var item in Wall)
+            {
+                Dispatcher.Invoke((Action)(() => posts.Children.Add(new ctrPost(item))));
+            }
+        }
 
 		private void tb_stat_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
@@ -60,12 +70,14 @@ namespace vkProject
 		
 		private void tb_posts_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
-			Parse_Vk_Output vk = new Parse_Vk_Output(new vkAPI(access_token, user_id, new Scope() { wall = true, friends = true }));
-
-			var Wall = vk.getWall();
-			posts.Children.Add(new ctrPost(Wall[0]));
+            if (!state)
+            {
+                Task.Factory.StartNew(getWall);
+                state = true;
+            }
 			tb_posts.Checked = true;
 			tb_stat.Checked = false;
+
 		}
         bool state = false;
 		private void mainwindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
