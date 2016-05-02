@@ -207,31 +207,40 @@ namespace VkAPI
                 switch (type)
                 {
                     case "audio":
-						post.Audios = new List<Media.Audio>();
+                        if (post.Audios == null)
+                            post.Audios = new List<Media.Audio>();
 						post.Audios.Add(getAudio(item.LastChild)); break;
                     case "doc":
-						post.Documents = new List<Media.Document>();
+                        if (post.Documents == null)
+                            post.Documents = new List<Media.Document>();
 						post.Documents.Add(getDocument(item.LastChild)); break;
                     case "photo":
-						post.Photos = new List<Media.Photo>();
+                        if(post.Photos == null)
+						    post.Photos = new List<Media.Photo>();
 						post.Photos.Add(getPhoto(item.LastChild)); break;
                     case "posted_photo":
-						post.Posted_photos = new List<Media.Posted_photo>();
+                        if (post.Posted_photos == null)
+                            post.Posted_photos = new List<Media.Posted_photo>();
 						post.Posted_photos.Add(getPosted_photo(item.LastChild)); break;
                     case "video":
-						post.Videos = new List<Media.Video>();
+                        if (post.Videos == null)
+                            post.Videos = new List<Media.Video>();
 						post.Videos.Add(getVideo(item.LastChild)); break;
                     case "graffiti":
-						post.Graffities = new List<Media.Graffity>();
+                        if (post.Graffities == null)
+                            post.Graffities = new List<Media.Graffity>();
 						post.Graffities.Add(getGraffity(item.LastChild)); break;
                     case "link":
-						post.Links = new List<Media.Link>();
+                        if (post.Links == null)
+                            post.Links = new List<Media.Link>();
 						post.Links.Add(getLink(item.LastChild)); break;
                     case "node":
-						post.Nodes = new List<Media.Node>();
+                        if (post.Nodes == null)
+                            post.Nodes = new List<Media.Node>();
 						post.Nodes.Add(getNode(item.LastChild)); break;
                     case "poll":
-						post.Poll = new Media.Poll();
+                        if (post.Poll == null)
+                            post.Poll = new Media.Poll();
 						post.Poll = getPoll(item.LastChild); break;
                 }
             }
