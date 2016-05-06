@@ -26,13 +26,13 @@ namespace vkProject
 		{
 			InitializeComponent();
 		}
-
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
             WebGetter brouser = new WebGetter();
             brouser.ShowDialog();
             access_token = brouser.access_token;
             user_id = brouser.user_id;
+			Vk = new Parse_Vk_Output(new vkAPI(access_token, user_id, new Scope() { wall = true, friends = true }));
         }
 		string  access_token;
 		int     user_id;
@@ -40,34 +40,26 @@ namespace vkProject
         private void getStatistic()
         {
 			Global.WriteLogString("Statistic had been called...");
-
-            Parse_Vk_Output vk = new Parse_Vk_Output(new vkAPI(access_token, user_id, new Scope() { wall = true, friends = true }));
-
-            var Friends = vk.getFriends();
-            var Wall = vk.getWall();
-            var whoLiked = vk.getLikes(Wall);
- 
-            //foreach (var item in whoLiked)
-            //    Dispatcher.Invoke((Action)(() => textBlock.Text += String.Format("{0} {1} {2}\n", item.Value.First_name, item.Value.Last_name, item.Key.ToString())));
-        }
+            var Friends = Vk.getFriends();
+            var Wall = Vk.getWall();
+            var whoLiked = Vk.getLikes(Wall);
+         }
         private void getWall()
         {
             Global.WriteLogString("getWall had been called");
-            Parse_Vk_Output vk = new Parse_Vk_Output(new vkAPI(access_token, user_id, new Scope() { wall = true, friends = true }));
-            var Wall = vk.getWall();
+            var Wall = Vk.getWall();
             foreach (var item in Wall)
             {
                 Dispatcher.Invoke((Action)(() => posts.Children.Add(new ctrPost(item))));
             }
         }
-
+		private Parse_Vk_Output Vk;
 		private void tb_stat_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
 			//Task.Factory.StartNew(getStatistic);
 			tb_posts.Checked = false;
 			tb_stat.Checked = true;
 		}
-		
 		private void tb_posts_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
             if (!state)
@@ -79,7 +71,7 @@ namespace vkProject
 			tb_stat.Checked = false;
 
 		}
-        bool state = false;
+        bool state = false; //зачем?
 		private void mainwindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			if (Global.temporary != null)

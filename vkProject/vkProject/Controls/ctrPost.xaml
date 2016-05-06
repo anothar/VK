@@ -7,6 +7,19 @@
              mc:Ignorable="d" 
              Width="370" Height="auto">
     <StackPanel x:Name="wall" Margin="10, 10, 10, 10">
+        <Grid x:Name="header" Height="50">
+            <StackPanel x:Name="head" Orientation="Horizontal">
+                <Image x:Name="user_ico" Width="50" Height="50">
+                    <Image.Clip>
+                        <RectangleGeometry RadiusX="25" RadiusY="25" Rect="0, 0, 50, 50"/>
+                    </Image.Clip>
+                    <Image.Effect>
+                        <DropShadowEffect Opacity="0.75"/>
+                    </Image.Effect>
+                </Image>
+                <TextBlock x:Name="user_name" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="13" Foreground="#FF42648B"/>
+            </StackPanel>
+        </Grid>
         <TextBlock Margin="5, 5, 5, 5" TextWrapping="Wrap" x:Name="text"/>
     </StackPanel>
 </UserControl>
