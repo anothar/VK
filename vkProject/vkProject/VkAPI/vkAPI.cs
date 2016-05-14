@@ -82,7 +82,7 @@ namespace VkAPI
                     if (item.Name == "user")
                     {
                         int id = 0;
-                        string name = "", surname = "";
+                        string name = "", surname = "", photo_50 = null, photo_100 = null;
                         foreach (XmlNode it in item.ChildNodes)
                         {
                             switch (it.Name)
@@ -90,9 +90,11 @@ namespace VkAPI
                                 case "id": id = Convert.ToInt32(it.InnerText); break;
                                 case "first_name": name = it.InnerText; break;
                                 case "last_name": surname = it.InnerText; break;
+                                case "photo_50": photo_50 = it.InnerText; break;
+                                case "photo_100": photo_100 = it.InnerText; break;
                             }
                         }
-                        Friends.Add(new User(id, name, surname));
+                        Friends.Add(new User() { Id = id, First_name = name, Last_name = surname, Photo_100 = photo_100, Photo_50 = photo_50 });
                     }
                 }
                 count -= 5000;
@@ -122,7 +124,7 @@ namespace VkAPI
                     if (item.Name == "user")
                     {
                         int id = 0;
-                        string name = null, surname = null;
+                        string name = null, surname = null, photo_50 = null, photo_100 = null;
                         foreach (XmlNode it in item.ChildNodes)
                         {
                             switch(it.Name)
@@ -130,18 +132,21 @@ namespace VkAPI
                                 case "id": id = Convert.ToInt32(it.InnerText); break;
                                 case "first_name": name = it.InnerText; break;
                                 case "last_name": surname = it.InnerText; break;
+                                case "photo_50": photo_50 = it.InnerText; break;
+                                case "photo_100": photo_100 = it.InnerText; break;
                             }
                         }
-                        whoLiked.Add(new User(id, name, surname));
+                        whoLiked.Add(new User() { Id = id, First_name = name, Last_name = surname, Photo_100 = photo_100, Photo_50 = photo_50 });
                     }
                 count -= 100;
                 offset += 100;
             }
             return whoLiked;
         }
-        public List<Post> getWall()
+        public KeyValuePair<Dictionary<int, User>, List<Post>> getWall()
         {
             List<Post> Wall = new List<Post>();
+            Dictionary<int, User> Senders = new Dictionary<int, User>();
             XmlDocument doc = new XmlDocument();
 
             do
@@ -153,13 +158,14 @@ namespace VkAPI
             while (count_of_posts > 0)
             {
                 do
-                    doc.LoadXml(this.get(Methods.Wall.Get_Xml, "&count=100&offset=" + offset.ToString()));
+                    doc.LoadXml(this.get(Methods.Wall.Get_Xml, "&count=100&extended=1&offset=" + offset.ToString()));
                 while (doc.DocumentElement.Name != "response");
                 offset += 100;
                 count_of_posts -= 100;
                 getPosts(doc, ref Wall);
+                getSenders(doc, ref Senders);
             }
-            return Wall;
+            return new KeyValuePair<Dictionary<int, User>, List<Post>>(Senders, Wall);
         }
 
         #region GetWallHelpFunctions
@@ -175,6 +181,58 @@ namespace VkAPI
                             Wall.Add(getPost(item));
                 }
         }
+        void getSenders(XmlDocument doc, ref Dictionary<int, User> Senders)
+        {
+            foreach (XmlNode it in doc.DocumentElement)
+                if (it.Name == "profiles")
+                {
+                    if (it.Attributes == null || it.Attributes[0].Value != "true")
+                        break;
+                    foreach (XmlNode item in it.ChildNodes)
+                        if (item.Name == "user")
+                        {
+                            int id = 0;
+                            string name = null, surname = null, photo_50 = null, photo_100 = null;
+                            foreach (XmlNode i in item.ChildNodes)
+                            {
+                                switch (i.Name)
+                                {
+                                    case "id": id = Convert.ToInt32(i.InnerText); break;
+                                    case "first_name": name = i.InnerText; break;
+                                    case "last_name": surname = i.InnerText; break;
+                                    case "photo_50": photo_50 = i.InnerText; break;
+                                    case "photo_100": photo_100 = i.InnerText; break;
+                                }
+                            }
+                            if (!Senders.ContainsKey(id))
+                                Senders.Add(id, new User() { Id = id, First_name = name, Last_name = surname, Photo_100 = photo_100, Photo_50 = photo_50 });
+                        }
+                }
+                else if (it.Name == "groups")
+                {
+                    if (it.Attributes == null || it.Attributes[0].Value != "true")
+                        break;
+                    foreach (XmlNode item in it.ChildNodes)
+                        if (item.Name == "group")
+                        {
+                            int id = 0;
+                            string name = null, photo_50 = null, photo_100 = null;
+                            foreach (XmlNode i in item.ChildNodes)
+                            {
+                                switch (i.Name)
+                                {
+                                    case "id": id = Convert.ToInt32(i.InnerText); break;
+                                    case "name": name = i.InnerText; break;
+                                    case "photo_50": photo_50 = i.InnerText; break;
+                                    case "photo_100": photo_100 = i.InnerText; break;
+                                }
+                            }
+                            if (!Senders.ContainsKey(id))
+                                Senders.Add(id, new User() { Id = id, First_name = name, Photo_100 = photo_100, Photo_50 = photo_50 });
+                        }
+                }
+        }
+
         Post getPost(XmlNode Node)
         {
             Post post = new Post();

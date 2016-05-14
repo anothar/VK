@@ -42,13 +42,13 @@ namespace vkProject
 			Global.WriteLogString("Statistic had been called...");
             var Friends = Vk.getFriends();
             var Wall = Vk.getWall();
-            var whoLiked = Vk.getLikes(Wall);
+            var whoLiked = Vk.getLikes(Wall.Value);
          }
         private void getWall()
         {
             Global.WriteLogString("getWall had been called");
             var Wall = Vk.getWall();
-            foreach (var item in Wall)
+            foreach (var item in Wall.Value)
             {
                 Dispatcher.Invoke((Action)(() => posts.Children.Add(new ctrPost(item))));
             }

@@ -47,19 +47,19 @@ namespace VkAPI
 	}
 	public class User
 	{
-		public User(int id, string name, string surname)
+		public User()
 		{
-			User_id = id;
-			First_name = name;
-			Last_name = surname;
-		}
-		public int User_id             { get; private set; }
-		public string First_name        { get; private set; }
-		public string Last_name         { get; private set; }
+
+        }
+		public int Id                   { get; set; }
+		public string First_name        { get; set; }
+		public string Last_name         { get; set; }
+        public string Photo_50          { get; set; }
+        public string Photo_100         { get; set; }
 
         override public int GetHashCode()
         {
-            return User_id.GetHashCode() & First_name.GetHashCode() & Last_name.GetHashCode();
+            return Id.GetHashCode() & First_name.GetHashCode() & Last_name.GetHashCode();
         }
 	}
 

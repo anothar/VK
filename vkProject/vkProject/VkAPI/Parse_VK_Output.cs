@@ -27,9 +27,9 @@ namespace VkAPI
             List<User> Friends = api.getFriends();
             return Friends;
 		}
-        public List<Post> getWall()
+        public KeyValuePair<Dictionary<int, User>, List<Post>> getWall()
 		{
-            List<Post> Wall = api.getWall();
+            var Wall = api.getWall();
             return Wall;
 		}
         public List<KeyValuePair<int, User>> getLikes(List<Post> Wall)
