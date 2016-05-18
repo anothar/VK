@@ -29,7 +29,7 @@ namespace vkProject
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
-			WebGetter brouser = new WebGetter();
+            WebGetter brouser = new WebGetter();
             brouser.ShowDialog();
 
             access_token = brouser.access_token;
@@ -59,13 +59,13 @@ namespace vkProject
 			Global.WriteLogString("Data is fresh");
             var Friends = Vk.getFriends();
             var Wall = Vk.getWall();
-            var whoLiked = Vk.getLikes(Wall);
-        }
+            var whoLiked = Vk.getLikes(Wall.Value);
+         }
         private void getWall()
         {
             Global.WriteLogString("getWall have been called");
             var Wall = Vk.getWall();
-            foreach (var item in Wall)
+            foreach (var item in Wall.Value)
             {
                 Dispatcher.Invoke((Action)(() => posts.Children.Add(new ctrPost(item) { User_name = "dfffffffff" })));
             }
@@ -84,10 +84,10 @@ namespace vkProject
 		private void tb_posts_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
 			if(!wall_loaded)
-			{
-				Task.Factory.StartNew(getWall);
+            {
+                Task.Factory.StartNew(getWall);
 				wall_loaded = true;
-			}
+            }
 			Task load = new Task(start_load_wall);
 			start_load_wall();
 			tb_posts.Checked = true;
