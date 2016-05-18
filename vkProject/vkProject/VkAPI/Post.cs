@@ -53,9 +53,10 @@ namespace VkAPI
 			First_name = name;
 			Last_name = surname;
 		}
-		public int User_id             { get; private set; }
+		public int User_id				{ get; private set; }
 		public string First_name        { get; private set; }
 		public string Last_name         { get; private set; }
+		public string Photo_50			{ get; set; }
 
         override public int GetHashCode()
         {

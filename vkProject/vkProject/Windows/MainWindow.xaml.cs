@@ -26,52 +26,74 @@ namespace vkProject
 		{
 			InitializeComponent();
 		}
+
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
-            WebGetter brouser = new WebGetter();
+			WebGetter brouser = new WebGetter();
             brouser.ShowDialog();
+
             access_token = brouser.access_token;
             user_id = brouser.user_id;
-			Vk = new Parse_Vk_Output(new vkAPI(access_token, user_id, new Scope() { wall = true, friends = true }));
+			//token_starts = new DateTime(Environment.TickCount*10);
+			//expires_in = new TimeSpan();
+			//expires_in = TimeSpan.FromSeconds(brouser.expires_in);
+
+			Vk = new Parse_Vk_Output(new vkAPI(access_token, user_id));
         }
+
+		DateTime token_starts;
+		TimeSpan expires_in;
 		string  access_token;
 		int     user_id;
 
         private void getStatistic()
         {
-			Global.WriteLogString("Statistic had been called...");
+			Global.WriteLogString("Statistic have been called...");
+			//проверить активность токена
+			if(!check_valid_data())
+			{
+				Global.WriteLogString("Outdated data. Refreshing the data");
+				Window_Loaded(this, null); //получить новый, если устарел
+			}
+
+			Global.WriteLogString("Data is fresh");
             var Friends = Vk.getFriends();
             var Wall = Vk.getWall();
             var whoLiked = Vk.getLikes(Wall);
-         }
+        }
         private void getWall()
         {
-            Global.WriteLogString("getWall had been called");
+            Global.WriteLogString("getWall have been called");
             var Wall = Vk.getWall();
             foreach (var item in Wall)
             {
-                Dispatcher.Invoke((Action)(() => posts.Children.Add(new ctrPost(item))));
+                Dispatcher.Invoke((Action)(() => posts.Children.Add(new ctrPost(item) { User_name = "dfffffffff" })));
             }
         }
 		private Parse_Vk_Output Vk;
+		bool wall_loaded = false;
+		bool stat_loaded = false;
 		private void tb_stat_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
-			//Task.Factory.StartNew(getStatistic);
 			tb_posts.Checked = false;
 			tb_stat.Checked = true;
+
+			if(!stat_loaded) ;
+			//сбор информации
 		}
 		private void tb_posts_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
-            if (!state)
-            {
-                Task.Factory.StartNew(getWall);
-                state = true;
-            }
+			if(!wall_loaded)
+			{
+				Task.Factory.StartNew(getWall);
+				wall_loaded = true;
+			}
+			Task load = new Task(start_load_wall);
+			start_load_wall();
 			tb_posts.Checked = true;
 			tb_stat.Checked = false;
 
 		}
-        bool state = false; //зачем?
 		private void mainwindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			if (Global.temporary != null)
@@ -80,5 +102,19 @@ namespace vkProject
 					File.Delete(file);
 			}
 		}
+		private void start_load_wall()
+		{
+			Wall = Vk.getWall();
+		}
+
+		bool check_valid_data()
+		{
+			Global.WriteLogString("Checling data valid");
+			return (new DateTime(Environment.TickCount * 10) - token_starts < expires_in - TimeSpan.FromSeconds(900));
+		}
+
+		//инфа
+		User cur_user;
+		List<Post> Wall;
 	}
 }

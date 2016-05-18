@@ -13,11 +13,10 @@ namespace VkAPI
 {
     public class vkAPI
     {
-        public vkAPI(string access_token, int user_id, Scope scope)
+        public vkAPI(string access_token, int user_id)
         {
             this.user_id = user_id;
             this.access_token = access_token;
-            this.scope = scope;
         }
         private string GET(string url, string data)
         {
@@ -442,24 +441,6 @@ namespace VkAPI
         int                     client_id = Convert.ToInt32(ConfigurationManager.AppSettings["client_id"]);
         int                     user_id;
         string                  access_token;
-        Scope                   scope;
-    }
-
-    public class Scope
-    {
-        public bool friends         { get; set; }
-        public bool photos          { get; set; }
-        public bool audio           { get; set; }
-        public bool video           { get; set; }
-        public bool docs            { get; set; }
-        public bool notes           { get; set; }
-        public bool pages           { get; set; }
-        public bool status          { get; set; }
-        public bool wall            { get; set; }
-        public bool groups          { get; set; }
-        public bool messages        { get; set; }
-        public bool notifications   { get; set; }
-        public bool offline         { get; set; }
     }
 
     public class Methods

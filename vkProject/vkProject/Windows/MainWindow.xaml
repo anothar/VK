@@ -20,8 +20,17 @@
             <Controls:ctrTabElement x:Name="tb_stat" Text="Статистика" MouseLeftButtonUp="tb_stat_MouseLeftButtonUp"/>
         </StackPanel>
         <ScrollViewer Grid.Column="1" Visibility="Visible">
-            <StackPanel x:Name="posts">
-                
+            <StackPanel>
+                <Grid x:Name="load_panel" Height="30" Margin="5, 5, 5, 5" HorizontalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0"/>
+                    <TextBlock Grid.Column="1" Margin="5, 0, 5, 0" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="State"/>
+                </Grid>
+                <StackPanel x:Name="posts">
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
     </Grid>

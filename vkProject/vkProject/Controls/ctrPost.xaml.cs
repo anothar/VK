@@ -60,23 +60,35 @@ namespace VkAPI.Controls
 				text.Text = value;
 			}
 		}
+		public string User_photo
+		{
+			get { return user_photo_url; }
+			set
+			{
+				user_ico.Source = new BitmapImage(new Uri(value));
+				user_photo_url = value;
+			}
+		}
+		public string User_name
+		{
+			get { return user_name.Text; }
+			set { user_name.Text = value; }
+		}
 		public void AddPhoto(Photo photo)
 		{
 			ctrPhoto ph = new ctrPhoto(photo);
-			wall.Children.Add(ph);
-			photos.Add(photo);
+			photos.Children.Add(ph);
 		}
 		public void AddVideo(Video video)
 		{
 			ctrVideo ph = new ctrVideo(video);
-			wall.Children.Add(ph);
-			videos.Add(video);
+			videos.Children.Add(ph);
 		}
 		public void AddPoll(Poll poll)
 		{
-			wall.Children.Add(new ctrPoll(poll));
+			pools.Children.Add(new ctrPoll(poll));
 		}
-		List<Photo> photos = new List<Photo>();
-		List<Video> videos = new List<Video>();
+
+		private string user_photo_url;
 	}
 }

@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿#define DEBUG
+#define LOG
+
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System;
@@ -16,13 +20,14 @@ namespace vkProject
 			}
 		}
 		public static List<string> temporary = new List<string>();
-		public static bool debug = true;
 
+		[Conditional("DEBUG"), Conditional("LOG")]
 		public static void WriteLogString(string mes)
 		{
 			byte[] bytes = new UTF8Encoding(true).GetBytes(mes + "\r\n");
 			logStream.Write(bytes, 0, bytes.Length);
 		}
+		[Conditional("DEBUG"), Conditional("LOG")]
 		public static void WriteLog(string mes)
 		{
 			byte[] bytes = new UTF8Encoding(true).GetBytes(mes);
