@@ -5,8 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:VkAPI.Controls"
              mc:Ignorable="d" 
-             Width="370" Height="auto">
-    <StackPanel x:Name="wall" Margin="10, 10, 10, 10">
+             Width="370" Height="auto"
+             Background="Transparent">
+    <StackPanel x:Name="wall" Margin="5, 5, 5, 0" Background="White">
         <StackPanel x:Name="head" Orientation="Horizontal">
                 <Image x:Name="user_ico" Width="50" Height="50" Margin="5, 5, 0, 5">
                     <Image.Clip>

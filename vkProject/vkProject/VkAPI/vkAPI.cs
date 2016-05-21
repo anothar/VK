@@ -93,7 +93,7 @@ namespace VkAPI
                                 case "photo_100": photo_100 = it.InnerText; break;
                             }
                         }
-                        Friends.Add(new User() { Id = id, First_name = name, Last_name = surname, Photo_100 = photo_100, Photo_50 = photo_50 });
+                        Friends.Add(new User() { User_id = id, First_name = name, Last_name = surname, Photo_50 = photo_50 });
                     }
                 }
                 count -= 5000;
@@ -119,24 +119,24 @@ namespace VkAPI
                     doc.LoadXml(this.get(Methods.Likes.GetList_Xml, get_data));
                 while (doc.DocumentElement.Name != "response");
 
-                foreach (XmlNode item in doc.DocumentElement.ChildNodes[1])
-                    if (item.Name == "user")
-                    {
-                        int id = 0;
-                        string name = null, surname = null, photo_50 = null, photo_100 = null;
-                        foreach (XmlNode it in item.ChildNodes)
-                        {
-                            switch(it.Name)
-                            {
-                                case "id": id = Convert.ToInt32(it.InnerText); break;
-                                case "first_name": name = it.InnerText; break;
-                                case "last_name": surname = it.InnerText; break;
-                                case "photo_50": photo_50 = it.InnerText; break;
-                                case "photo_100": photo_100 = it.InnerText; break;
-                            }
-                        }
-                        whoLiked.Add(new User() { Id = id, First_name = name, Last_name = surname, Photo_100 = photo_100, Photo_50 = photo_50 });
-                    }
+				foreach(XmlNode item in doc.DocumentElement.ChildNodes[1])
+					if(item.Name == "user")
+					{
+						int id = 0;
+						string name = null, surname = null, photo_50 = null, photo_100 = null;
+						foreach(XmlNode it in item.ChildNodes)
+						{
+							switch(it.Name)
+							{
+								case "id": id = Convert.ToInt32(it.InnerText); break;
+								case "first_name": name = it.InnerText; break;
+								case "last_name": surname = it.InnerText; break;
+								case "photo_50": photo_50 = it.InnerText; break;
+								case "photo_100": photo_100 = it.InnerText; break;
+							}
+						}
+						whoLiked.Add(new User() { User_id = id, First_name = name, Last_name = surname, Photo_50 = photo_50 });
+					}
                 count -= 100;
                 offset += 100;
             }
@@ -204,7 +204,7 @@ namespace VkAPI
                                 }
                             }
                             if (!Senders.ContainsKey(id))
-                                Senders.Add(id, new User() { Id = id, First_name = name, Last_name = surname, Photo_100 = photo_100, Photo_50 = photo_50 });
+                                Senders.Add(id, new User() { User_id = id, First_name = name, Last_name = surname, Photo_50 = photo_50 });
                         }
                 }
                 else if (it.Name == "groups")
@@ -227,7 +227,7 @@ namespace VkAPI
                                 }
                             }
                             if (!Senders.ContainsKey(id))
-                                Senders.Add(id, new User() { Id = id, First_name = name, Photo_100 = photo_100, Photo_50 = photo_50 });
+                                Senders.Add(id, new User() { User_id = id, First_name = name, Photo_50 = photo_50 });
                         }
                 }
         }

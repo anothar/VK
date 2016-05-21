@@ -101,15 +101,15 @@ namespace VkAPI.Controls
 			web1.DownloadFileCompleted += Web1_DownloadFileCompleted;
 
 			//начать крутить картинку загрузки
-			_source = GetSource();
-			loading.Source = _source;
-			ImageAnimator.Animate(_bitmap, OnFrameChanged);
+			//_source = GetSource();
+			//loading.Source = _source;
+			//ImageAnimator.Animate(_bitmap, OnFrameChanged);
 		}
 		private void Web1_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
 		{
 			//stopping loading animating
-			ImageAnimator.StopAnimate(_bitmap, OnFrameChanged);
-
+			//ImageAnimator.StopAnimate(_bitmap, OnFrameChanged);
+			loading.Visibility = Visibility.Hidden;
 			//writing image;
 			var stream = File.OpenRead(path_img);
 			BitmapImage im = new BitmapImage();
@@ -125,32 +125,32 @@ namespace VkAPI.Controls
 			image.Source = im;
 		}
 		private string path_img;
-		private BitmapSource GetSource()
-		{
-			if(_bitmap == null)
-			{
-				_bitmap = new Bitmap("712.gif");
-			}
-			IntPtr handle = IntPtr.Zero;
-			handle = _bitmap.GetHbitmap();
-			return Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-		}
-		private void FrameUpdatedCallback()
-		{
-			ImageAnimator.UpdateFrames();
-			if(_source != null)
-				_source.Freeze();
-			_source = GetSource();
-			loading.Source = _source;
-			InvalidateVisual();
-		}
-		private void OnFrameChanged(object sender, EventArgs e)
-		{
-			Dispatcher.BeginInvoke(DispatcherPriority.Normal,
-									new Action(FrameUpdatedCallback));
-		}
-		private BitmapSource _source;
-		private Bitmap _bitmap;
+		//private BitmapSource GetSource()
+		//{
+		//	if(_bitmap == null)
+		//	{
+		//		_bitmap = new Bitmap("712.gif");
+		//	}
+		//	IntPtr handle = IntPtr.Zero;
+		//	handle = _bitmap.GetHbitmap();
+		//	return Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+		//}
+		//private void FrameUpdatedCallback()
+		//{
+		//	ImageAnimator.UpdateFrames();
+		//	if(_source != null)
+		//		_source.Freeze();
+		//	_source = GetSource();
+		//	loading.Source = _source;
+		//	InvalidateVisual();
+		//}
+		//private void OnFrameChanged(object sender, EventArgs e)
+		//{
+		//	Dispatcher.BeginInvoke(DispatcherPriority.Normal,
+		//							new Action(FrameUpdatedCallback));
+		//}
+		//private BitmapSource _source;
+		//private Bitmap _bitmap;
 		private WebClient web1;
 	}
 }

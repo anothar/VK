@@ -64,10 +64,14 @@ namespace vkProject
         private void getWall()
         {
             Global.WriteLogString("getWall have been called");
-            var Wall = Vk.getWall();
-            foreach (var item in Wall.Value)
+            foreach (var item in Wall)
             {
-                Dispatcher.Invoke((Action)(() => posts.Children.Add(new ctrPost(item) { User_name = "dfffffffff" })));
+				User curuser;
+				if(item.Copied_Post != null)
+					curuser = users[Math.Abs(item.Copied_Post.Owner_id)];
+				else
+					curuser = users[item.From_id];
+                Dispatcher.Invoke((Action)(() => posts.Children.Add(new ctrPost(item) { User_name = String.Format("{0} {1}", curuser.First_name, curuser.Last_name), User_photo = curuser.Photo_50 })));
             }
         }
 		private Parse_Vk_Output Vk;
@@ -104,7 +108,10 @@ namespace vkProject
 		}
 		private void start_load_wall()
 		{
-			Wall = Vk.getWall();
+			KeyValuePair<Dictionary<int, User>, List<Post>> arr = Vk.getWall();
+			users = arr.Key;
+			Wall = arr.Value;
+			getWall();
 		}
 
 		bool check_valid_data()
@@ -115,6 +122,12 @@ namespace vkProject
 
 		//инфа
 		User cur_user;
+		Dictionary<int, User> users;
 		List<Post> Wall;
+
+		private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
+		{
+			
+		}
 	}
 }
