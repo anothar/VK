@@ -4,8 +4,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:vkProject"
-        xmlns:Controls="clr-namespace:VkAPI.Controls" x:Class="vkProject.MainWindow"
+        xmlns:local="clr-namespace:vkProject.Controls"
+        xmlns:Controls="clr-namespace:VkAPI.Controls"
+    x:Class="vkProject.MainWindow"
         mc:Ignorable="d"
         Title="vkProject" Height="400" Width="600" MinHeight="300" MinWidth="300"
         Loaded="Window_Loaded"
@@ -19,18 +20,17 @@
             <Controls:ctrTabElement x:Name="tb_posts" Text="Стена" Checked="True" MouseLeftButtonUp="tb_posts_MouseLeftButtonUp"/>
             <Controls:ctrTabElement x:Name="tb_stat" Text="Статистика" MouseLeftButtonUp="tb_stat_MouseLeftButtonUp"/>
         </StackPanel>
-        <ScrollViewer Grid.Column="1" Visibility="Visible" ScrollChanged="ScrollViewer_ScrollChanged" Background="#EEEE">
-            <StackPanel>
-                <Grid x:Name="load_panel" Height="30" Margin="5, 5, 5, 5" HorizontalAlignment="Center">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="30"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Image Grid.Column="0"/>
-                    <TextBlock Grid.Column="1" Margin="5, 0, 5, 0" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="State"/>
-                </Grid>
-                <StackPanel x:Name="posts">
+        <ScrollViewer x:Name="postViewer" Grid.Column="1" Visibility="Visible" Background="#EEEE">
+            <StackPanel Margin="5, 5, 5, 5">
+                <StackPanel x:Name="postButton">
                 </StackPanel>
+                 <StackPanel x:Name="posts">
+                    <TextBlock HorizontalAlignment="Center" x:Name="countPost"/>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+        <ScrollViewer Grid.Column="1" x:Name="statViewer" Visibility="Hidden" Background="#EEEE">
+            <StackPanel x:Name="statButtons">
             </StackPanel>
         </ScrollViewer>
     </Grid>

@@ -73,6 +73,12 @@
     <Compile Include="Controls\ctrVideo.xaml.cs">
       <DependentUpon>ctrVideo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\HoverButton.xaml.cs">
+      <DependentUpon>HoverButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\HoverLoading.xaml.cs">
+      <DependentUpon>HoverLoading.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Poll.xaml.cs">
       <DependentUpon>Poll.xaml</DependentUpon>
     </Compile>
@@ -102,6 +108,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ctrVideo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\HoverButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\HoverLoading.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

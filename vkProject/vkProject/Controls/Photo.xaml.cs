@@ -34,8 +34,16 @@ namespace VkAPI.Controls
 			InitializeComponent();
 			text.Visibility = Visibility.Hidden;
 			Text = photo.Text;
-			smallImage = photo.Photo_604;
-			bigImage = photo.Photo_2560 != null ? photo.Photo_2560 : photo.Photo_1280;
+			smallImage = photo.Photo_130 != null ? photo.Photo_130 : photo.Photo_604;
+
+			if(photo.Photo_2560 != null)
+				bigImage = photo.Photo_2560;
+			else if(photo.Photo_1280 != null)
+				bigImage = photo.Photo_1280;
+			else if(photo.Photo_807 != null)
+				bigImage = photo.Photo_807;
+			else if(photo.Photo_604 != null)
+				bigImage = photo.Photo_604;
 
 			if (bigImage != null)
 			{
