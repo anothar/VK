@@ -20,5 +20,6 @@
         <StackPanel x:Name="photos" Margin="5, 5, 5, 0"></StackPanel>
         <StackPanel x:Name="videos" Margin=" 5, 5, 5, 0"></StackPanel>
         <StackPanel x:Name="polls" Margin="5, 5, 5, 0"></StackPanel>
+        <StackPanel x:Name="repost" Margin="5, 5, 5, 0"></StackPanel>
     </StackPanel>
 </UserControl>

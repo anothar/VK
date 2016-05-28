@@ -24,6 +24,7 @@ namespace VkAPI.Controls
 		}
 		public ctrPoll(IPoll poll)
 		{
+			InitializeComponent();
 			//------Инициализация-членов-интерфейса------\\
 			Id			= poll.Id;
 			Owner_id	= poll.Owner_id;
@@ -35,8 +36,6 @@ namespace VkAPI.Controls
 
 			foreach(Answer ans in Answers)
 				AnserPanel.Add(new ctrPollAnswer(ans, Answer_id));
-
-			InitializeComponent();
 		}
 
 		public string Question

@@ -24,6 +24,7 @@ namespace VkAPI.Controls
 		}
 		public ctrPollAnswer(Answer ans, int ansId)
 		{
+			InitializeComponent();
 			Id = ans.Id;
 			Text = ans.Text;
 			Rate = ans.Rate;
@@ -31,7 +32,6 @@ namespace VkAPI.Controls
 
 			if(ansId == Id)
 				Answered = true;
-			InitializeComponent();
 		}
 		public string Text
 		{

@@ -23,13 +23,14 @@ namespace VkAPI.Controls
 	{
 		public ctrVideo()
 		{
+			InitializeComponent();
+
 			description.Opacity = 0.0;
 			panel.Opacity = 0.0;
-
-			InitializeComponent();
 		}
 		public ctrVideo(IVideo video)
 		{
+			InitializeComponent();
 			//---------Инициализация-членов-интерфейса----\\
 			Title			= video.Title;
 			Views			= video.Views;
@@ -54,7 +55,6 @@ namespace VkAPI.Controls
 
 			description.Opacity = 0.0;
 			panel.Opacity = 0.0;
-			InitializeComponent();
 		}
 		public string Photo
 		{

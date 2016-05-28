@@ -23,18 +23,19 @@ namespace VkAPI.Controls
 		{
 			InitializeComponent();
 		}
-		public ctrPost(IPost post)
-		{
-			CopyPost(post);
-			BeginLayoutDesign();
-			InitializeComponent();
-		}
 		public ctrPost(IPost post, User user)
 		{
+			InitializeComponent();
 			CopyPost(post);
 			LoadUserInformation(user);
-			BeginLayoutDesign();
+			BeginLayoutDesign(null);
+		}
+		public ctrPost(IPost post, User user, User RepUser)
+		{
 			InitializeComponent();
+			CopyPost(post);
+			LoadUserInformation(user);
+			BeginLayoutDesign(RepUser);
 		}
 		public string Text
 		{
@@ -59,7 +60,7 @@ namespace VkAPI.Controls
 		public string User_name
 		{
 			get { return user_name.Text; }
-			set { user_name.Text = value; }
+			private set { user_name.Text = value; }
 		}
 
 		public int Id							{ get; private set; }
@@ -102,23 +103,34 @@ namespace VkAPI.Controls
 			Poll				= post.Poll;
 			Copied_Post			= post.Copied_Post;
 		}
-		private void BeginLayoutDesign()
+		private void BeginLayoutDesign(User repUser)
 		{
-			//-------------adding-videos-------------\\
-			foreach(Video vid in Videos)
-				VideoPanel.Add(new ctrVideo(vid));
-
-			//------------adding-photos--------------\\
-			foreach(Photo phot in Photos)
-				PhotoPanel.Add(new ctrPhoto(phot));
-
-			//----------------add-poll---------------\\
-			PollPanel = new ctrPoll(Poll);
+			if(Videos != null)
+			{
+				//-------------adding-videos-------------\\
+				foreach(Video vid in Videos)
+					VideoPanel.Add(new ctrVideo(vid));
+			}
+			if(Photos != null)
+			{
+				//------------adding-photos--------------\\
+				foreach(Photo phot in Photos)
+					PhotoPanel.Add(new ctrPhoto(phot));
+			}
+			if(Poll != null)
+			{
+				//----------------add-poll---------------\\
+				PollPanel = new ctrPoll(Poll);
+			}
+			if(Copied_Post != null)
+			{
+				repost.Children.Add(new ctrPost(Copied_Post, repUser));
+			}
 		}
 		private void LoadUserInformation(User user)
 		{
-			User_name = String.Format("{0} {1}", user.First_name, user.Last_name);
 			User_photo = user.Photo_50;
+			User_name = String.Format("{0} {1}", user.First_name, user.Last_name);
 		}
 		private string user_photo_url;
 	}
