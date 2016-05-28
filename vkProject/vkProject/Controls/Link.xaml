@@ -1,0 +1,15 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VkAPI.Controls"
+             xmlns:Controls="clr-namespace:VkAPI.Controls" x:Class="VkAPI.Controls.ctrLink"
+             mc:Ignorable="d" 
+             Height="auto" MinWidth="380">
+    <Grid Margin="10, 10, 10, 10">
+        <StackPanel x:Name="photo" Height="auto" Width="auto"/>
+        <TextBlock x:Name="title" Text=""/>
+        <TextBlock x:Name="description" Text=""/>
+    </Grid>
+</UserControl>

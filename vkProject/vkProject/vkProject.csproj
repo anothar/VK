@@ -79,6 +79,9 @@
     <Compile Include="Controls\HoverLoading.xaml.cs">
       <DependentUpon>HoverLoading.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Link.xaml.cs">
+      <DependentUpon>Link.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Poll.xaml.cs">
       <DependentUpon>Poll.xaml</DependentUpon>
     </Compile>
@@ -118,6 +121,10 @@
     <Page Include="Controls\HoverLoading.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Link.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\Poll.xaml">
       <SubType>Designer</SubType>
