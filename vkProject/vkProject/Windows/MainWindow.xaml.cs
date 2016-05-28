@@ -42,6 +42,9 @@ namespace vkProject
 			StatRefreshHB = new HoverButton();
 			StatRefreshHB.Text = "Обновить";
 			StatRefreshHB.MouseLeftButtonUp += StatRefreshHB_MouseLeftButtonUp;
+
+			StatRefreshingHL = new HoverLoading();
+			StatRefreshingHL.Text = "Обновление";
 		}
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
@@ -53,19 +56,20 @@ namespace vkProject
 			Vk = new Parse_Vk_Output(new vkAPI(access_token, user_id));
 
 			postButton.Children.Add(RefreshHB);
-        }
+			statButtons.Children.Add(StatRefreshHB);
+		}
 		private void StatRefreshHB_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
 			statistic.Children.Clear();
-			statButtons.Children.Remove((HoverButton)sender);
-			RefreshingHL.LoadWheelRotateBegin();
-			statButtons.Children.Add(RefreshingHL);
+			statButtons.Children.Remove(sender as HoverButton);
+			StatRefreshingHL.LoadWheelRotateBegin();
+			statButtons.Children.Add(StatRefreshingHL);
 			Task.Factory.StartNew(getStatistic);
 		}
 		private void RefreshBt_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
 			posts.Children.RemoveRange(1, posts.Children.Count - 1);
-			postButton.Children.Remove((HoverButton)sender);
+			postButton.Children.Remove(sender as HoverButton);
 			RefreshingHL.LoadWheelRotateBegin();
 			postButton.Children.Add(RefreshingHL);
 			Task.Factory.StartNew(StartPreLoadWall);
@@ -89,6 +93,10 @@ namespace vkProject
 			foreach(var ans in whoLiked)
 				LikeStat.Answers.Add(new VkAPI.Media.Answer() { Rate = 100*ans.Key/sum, Text = String.Format("{0} {1}", ans.Value.First_name, ans.Value.Last_name), Votes = Convert.ToUInt32(ans.Key) });
         }
+		private void getStatisticComplite()
+		{
+
+		}
 		private void tb_stat_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
 			tb_posts.Checked = false;
@@ -137,12 +145,14 @@ namespace vkProject
 			foreach(var item in Wall)
 			{
 				User curuser;
+				curuser = users[item.Owner_id];
+				User curRepUser;
 				if(item.Copied_Post != null)
-					curuser = users[Math.Abs(item.Copied_Post.Owner_id)];
+					curRepUser = users[Math.Abs(item.Copied_Post.Owner_id)];
 				else
-					curuser = users[item.From_id];
+					curRepUser = users[item.From_id];
 
-				Dispatcher.Invoke((Action)(() => posts.Children.Add(new ctrPost(item) { User_name = String.Format("{0} {1}", curuser.First_name, curuser.Last_name), User_photo = curuser.Photo_50 })));
+				Dispatcher.Invoke(() => posts.Children.Add(new ctrPost(item, curuser, curRepUser)));
 
 				++outed;
 				Dispatcher.Invoke(() => countPost.Text = String.Format("{0}/{1}", outed, Wall.Count));
@@ -162,6 +172,7 @@ namespace vkProject
 
 		private HoverLoading RefreshingHL;
 		private HoverLoading RefreshingLayoutHL;
+		private HoverLoading StatRefreshingHL;
 		private HoverButton RefreshHB;
 		private HoverButton StatRefreshHB;
 		private Dictionary<int, User> users;

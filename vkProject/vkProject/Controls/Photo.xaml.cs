@@ -31,6 +31,7 @@ namespace VkAPI.Controls
 		}
 		public ctrPhoto(IPhoto photo)
 		{
+			InitializeComponent();
 			//---------------------------------Инициализация-членов-интерфейса------------------------------------\\
 			Text			=	photo.Text;
 			Id				=	photo.Id;
@@ -64,7 +65,6 @@ namespace VkAPI.Controls
 				image.MouseLeftButtonUp += Image_MouseLeftButtonUp;
 			}
 
-			InitializeComponent();
 		}
 		private void Image_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
