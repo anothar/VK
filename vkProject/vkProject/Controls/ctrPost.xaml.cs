@@ -86,6 +86,7 @@ namespace VkAPI.Controls
 
 		private void CopyPost(IPost post)
 		{
+			Text				= post.Text;
 			Id					= post.Id;
 			Owner_id			= post.Owner_id;
 			From_id				= post.From_id;

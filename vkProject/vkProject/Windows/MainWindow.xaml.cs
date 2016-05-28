@@ -88,8 +88,11 @@ namespace vkProject
 		{
 			posts.Children.RemoveRange(1, posts.Children.Count - 1);
 			postButton.Children.Remove(sender as HoverButton);
+			ShowAfterPanel.Children.Remove(ShowAfter);
+			ShowBeforePanel.Children.Remove(ShowBefore);
 			RefreshingHL.LoadWheelRotateBegin();
 			postButton.Children.Add(RefreshingHL);
+
 			Task.Factory.StartNew(StartPreLoadWall);
 		}
 		private void getStatistic()
