@@ -25,12 +25,15 @@
                 <StackPanel x:Name="postButton">
                 </StackPanel>
                  <StackPanel x:Name="posts">
-                    <TextBlock HorizontalAlignment="Center" x:Name="countPost"/>
+                    <TextBlock HorizontalAlignment="Center" x:Name="countPost"  Text="0/0" Visibility="Hidden"/>
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>
         <ScrollViewer Grid.Column="1" x:Name="statViewer" Visibility="Hidden" Background="#EEEE">
-            <StackPanel x:Name="statButtons">
+            <StackPanel x:Name="statistic">
+                <StackPanel x:Name="statButtons">
+                </StackPanel>
+                
             </StackPanel>
         </ScrollViewer>
     </Grid>

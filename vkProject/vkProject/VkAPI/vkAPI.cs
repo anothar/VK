@@ -353,8 +353,6 @@ namespace VkAPI
                     case "owner_id": photo.Owner_id = Convert.ToInt32(item.InnerText); break;
                     case "album_id": photo.Album_id = Convert.ToInt32(item.InnerText); break;
                     case "date": photo.Date = Convert.ToInt32(item.InnerText); break;
-                    case "width": photo.Width = Convert.ToInt32(item.InnerText); break;
-                    case "height": photo.Heght = Convert.ToInt32(item.InnerText); break;
                     case "user_id":
                         photo.User_id = Convert.ToInt32(item.InnerText);
                         if (photo.User_id == 100)

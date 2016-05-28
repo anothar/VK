@@ -38,6 +38,10 @@ namespace vkProject
 			RefreshHB = new HoverButton();
 			RefreshHB.Text = "Обновить";
 			RefreshHB.MouseLeftButtonUp += RefreshBt_MouseLeftButtonUp;
+
+			StatRefreshHB = new HoverButton();
+			StatRefreshHB.Text = "Обновить";
+			StatRefreshHB.MouseLeftButtonUp += StatRefreshHB_MouseLeftButtonUp;
 		}
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
@@ -48,23 +52,42 @@ namespace vkProject
             user_id = brouser.user_id;
 			Vk = new Parse_Vk_Output(new vkAPI(access_token, user_id));
 
-			RefreshingHL.LoadWheelRotateBegin();
 			postButton.Children.Add(RefreshHB);
         }
+		private void StatRefreshHB_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+		{
+			statistic.Children.Clear();
+			statButtons.Children.Remove((HoverButton)sender);
+			RefreshingHL.LoadWheelRotateBegin();
+			statButtons.Children.Add(RefreshingHL);
+			Task.Factory.StartNew(getStatistic);
+		}
 		private void RefreshBt_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
 			posts.Children.RemoveRange(1, posts.Children.Count - 1);
 			postButton.Children.Remove((HoverButton)sender);
+			RefreshingHL.LoadWheelRotateBegin();
 			postButton.Children.Add(RefreshingHL);
 			Task.Factory.StartNew(StartPreLoadWall);
 		}
 		private void getStatistic()
         {
-			Global.WriteLogString("Statistic have been called...");
+			if (Wall == null)
+			{
+				var Posts = Vk.getWall();
+				Wall = Posts.Value;
+				users = Posts.Key;
+			}
 
-            var Friends = Vk.getFriends();
-            var Wall = Vk.getWall();
-            var whoLiked = Vk.getLikes(Wall.Value);
+            var whoLiked = Vk.getLikes(Wall);
+			VkAPI.Media.Poll LikeStat = new VkAPI.Media.Poll();
+
+			int sum = 0;
+			foreach(var ans in whoLiked)
+				sum += ans.Key;
+
+			foreach(var ans in whoLiked)
+				LikeStat.Answers.Add(new VkAPI.Media.Answer() { Rate = 100*ans.Key/sum, Text = String.Format("{0} {1}", ans.Value.First_name, ans.Value.Last_name), Votes = Convert.ToUInt32(ans.Key) });
         }
 		private void tb_stat_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
@@ -90,7 +113,7 @@ namespace vkProject
 		}
 		private void StartPreLoadWall()
 		{
-			KeyValuePair<Dictionary<int, User>, List<Post>> arr = Vk.getWall();
+			var arr = Vk.getWall();
 			users = arr.Key;
 			Wall = arr.Value;
 			Task.Factory.StartNew(EndPreLoadWall);
@@ -107,6 +130,7 @@ namespace vkProject
 			Dispatcher.Invoke(() => postButton.Children.RemoveAt(0));
 			Dispatcher.Invoke(() => RefreshingLayoutHL.LoadWheelRotateBegin());
 			Dispatcher.Invoke(() => postButton.Children.Add(RefreshingLayoutHL));
+			Dispatcher.Invoke(() => countPost.Visibility = Visibility.Visible);
 			Dispatcher.Invoke(() => countPost.Text = String.Format("{0}/{1}", outed, Wall.Count));
 
 
@@ -133,11 +157,13 @@ namespace vkProject
 			Dispatcher.Invoke(() => RefreshingLayoutHL.LaodWheelRotateStop());
 			Dispatcher.Invoke(() => postButton.Children.RemoveAt(0));
 			Dispatcher.Invoke(() => postButton.Children.Add(RefreshHB));
+			Dispatcher.Invoke(() => countPost.Visibility = Visibility.Hidden);
 		}
 
 		private HoverLoading RefreshingHL;
 		private HoverLoading RefreshingLayoutHL;
 		private HoverButton RefreshHB;
+		private HoverButton StatRefreshHB;
 		private Dictionary<int, User> users;
 		private List<Post> Wall;
 		private string  access_token;

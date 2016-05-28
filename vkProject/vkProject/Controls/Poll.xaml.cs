@@ -16,25 +16,27 @@ using VkAPI.Media;
 
 namespace VkAPI.Controls
 {
-	public partial class ctrPoll : UserControl
+	public partial class ctrPoll : UserControl, IPoll
 	{
 		public ctrPoll()
 		{
 			InitializeComponent();
 		}
-		public ctrPoll(Poll poll)
+		public ctrPoll(IPoll poll)
 		{
+			//------Инициализация-членов-интерфейса------\\
+			Id			= poll.Id;
+			Owner_id	= poll.Owner_id;
+			Votes		= poll.Votes;
+			Answer_id	= poll.Answer_id;
+			Question	= poll.Question;
+			Answers		= poll.Answers;
+			//-------------------------------------------\\
+
+			foreach(Answer ans in Answers)
+				AnserPanel.Add(new ctrPollAnswer(ans, Answer_id));
+
 			InitializeComponent();
-			AnsId = poll.Answer_id;
-			if(poll.Answers != null)
-			{
-				foreach(var d in poll.Answers)
-				{
-					AddAnswer(d);
-				}
-			}
-			Question = poll.Question;
-			Votes = Convert.ToUInt32(poll.Votes);
 		}
 
 		public string Question
@@ -42,27 +44,12 @@ namespace VkAPI.Controls
 			get { return question.Text; }
 			set { question.Text = value; }
 		}
-		public int AnsId { get; set; }
-		public uint Votes
-		{
-			get
-			{
-				return vot;
-			}
-			set
-			{
-				vot = value;
-				votes.Text = String.Format("Проголосовало {0} человек", vot);
-			}
-		}
-		public void AddAnswer(Answer ans)
-		{
-			Lanswers.Add(ans);
-			answers.Children.Add(new ctrPollAnswer(ans, AnsId));
-		}
-
-		private uint vot = 0;
-		private List<Answer> Lanswers = new List<Answer>();
-
+		public int Id				{ get; private set; }
+		public int Owner_id			{ get; private set; }
+		public int Votes			{ get { return vot; } private set { votes.Text = String.Format("Проголосовало {0} человек", value); vot = value; } }
+		public int Answer_id		{ get; private set; }
+		public List<Answer> Answers { get; private set; }
+		public UIElementCollection AnserPanel { get { return answers.Children; } }
+		private int vot = 0;
 	}
 }

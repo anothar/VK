@@ -12,23 +12,26 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VkAPI.Media;
 
 namespace VkAPI.Controls
 {
-	public partial class ctrPollAnswer : UserControl
+	public partial class ctrPollAnswer : UserControl, IAnswer
 	{
 		public ctrPollAnswer()
 		{
 			InitializeComponent();
 		}
-		public ctrPollAnswer(Media.Answer ans, int ansId)
+		public ctrPollAnswer(Answer ans, int ansId)
 		{
-			InitializeComponent();
+			Id = ans.Id;
 			Text = ans.Text;
 			Rate = ans.Rate;
-			Answers = ans.Votes;
-			if(ansId == ans.Id)
+			Votes = ans.Votes;
+
+			if(ansId == Id)
 				Answered = true;
+			InitializeComponent();
 		}
 		public string Text
 		{
@@ -36,7 +39,7 @@ namespace VkAPI.Controls
 			{
 				return text.Text;
 			}
-			set
+			private set
 			{
 				text.Text = value;
 			}
@@ -47,19 +50,19 @@ namespace VkAPI.Controls
 			{
 				return rate.Width / 3;
 			}
-			set
+			private set
 			{
 				rate.Width = value * 3;
 				rate_pers.Text = value.ToString() + '%';
 			}
 		}
-		public uint Answers
+		public uint Votes
 		{
 			get
 			{
 				return Convert.ToUInt32(mans.Text);
 			}
-			set
+			private set
 			{
 				mans.Text = value.ToString();
 			}
@@ -70,7 +73,7 @@ namespace VkAPI.Controls
 			{
 				return answered;
 			}
-			set
+			private set
 			{
 				if(value)
 					text.FontWeight = FontWeights.Bold;
@@ -78,7 +81,7 @@ namespace VkAPI.Controls
 					text.FontWeight = FontWeights.Normal;
 			}
 		}
-
-		bool answered = false;
+		public int Id { get; private set; }
+		private bool answered = false;
 	}
 }

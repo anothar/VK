@@ -21,7 +21,7 @@ using VkAPI.Media;
 
 namespace VkAPI.Controls
 {
-	public partial class ctrPhoto : UserControl
+	public partial class ctrPhoto : UserControl, IPhoto
 	{
 
 		public ctrPhoto()
@@ -29,11 +29,24 @@ namespace VkAPI.Controls
 			InitializeComponent();
 			text.Visibility = Visibility.Hidden;
 		}
-		public ctrPhoto(Photo photo)
+		public ctrPhoto(IPhoto photo)
 		{
-			InitializeComponent();
+			//---------------------------------Инициализация-членов-интерфейса------------------------------------\\
+			Text			=	photo.Text;
+			Id				=	photo.Id;
+			Date			=	photo.Date;
+			Album_id		=	photo.Album_id;
+			Owner_id		=	photo.Owner_id;
+			User_id			=	photo.User_id;
+			Photo_75		=	photo.Photo_75;
+			Photo_130		=	photo.Photo_130;
+			Photo_604		=	photo.Photo_604;
+			Photo_807		=	photo.Photo_807;
+			Photo_1280		=	photo.Photo_1280;
+			Photo_2560		=	photo.Photo_2560;
+			//-------------------------------------------------------------------------------------------------\\
+
 			text.Visibility = Visibility.Hidden;
-			Text = photo.Text;
 			smallImage = photo.Photo_130 != null ? photo.Photo_130 : photo.Photo_604;
 
 			if(photo.Photo_2560 != null)
@@ -50,14 +63,14 @@ namespace VkAPI.Controls
 				image.Cursor = Cursors.Hand;
 				image.MouseLeftButtonUp += Image_MouseLeftButtonUp;
 			}
-		}
 
+			InitializeComponent();
+		}
 		private void Image_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
 			vkProject.Browser bIm = new vkProject.Browser(bigImage, "Фотография");
 			bIm.Show();
 		}
-
 		private void text_MouseEnter(object sender, MouseEventArgs e)
 		{
 			DoubleAnimation da = new DoubleAnimation();
@@ -74,7 +87,6 @@ namespace VkAPI.Controls
 			da.To = 1.0;
 			text.BeginAnimation(OpacityProperty, da);
 		}
-
 		public string Text
 		{
 			get { return text.Text; }
@@ -94,7 +106,19 @@ namespace VkAPI.Controls
 				GetImg(value);
 			}
 		}
-		public string bigImage { get; set; }
+		public string bigImage { get; private set; }
+
+		public int Id			 { get; private set; }
+		public int Date			 { get; private set; }
+		public int Album_id		 { get; private set; }
+		public int Owner_id		 { get; private set; }
+		public int User_id		 { get; private set; }
+		public string Photo_75	 { get; private set; }
+		public string Photo_130  { get; private set; }
+		public string Photo_604  { get; private set; }
+		public string Photo_807	 { get; private set; }
+		public string Photo_1280 { get; private set; }
+		public string Photo_2560 { get; private set; }
 
 		private void GetImg(string url)
 		{
