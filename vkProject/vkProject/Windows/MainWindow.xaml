@@ -24,9 +24,11 @@
             <StackPanel Margin="5, 5, 5, 5">
                 <StackPanel x:Name="postButton">
                 </StackPanel>
-                 <StackPanel x:Name="posts">
+                <StackPanel x:Name="ShowBeforePanel"/>
+                <StackPanel x:Name="posts">
                     <TextBlock HorizontalAlignment="Center" x:Name="countPost"  Text="0/0" Visibility="Hidden"/>
                 </StackPanel>
+                <StackPanel x:Name="ShowAfterPanel"/>
             </StackPanel>
         </ScrollViewer>
         <ScrollViewer Grid.Column="1" x:Name="statViewer" Visibility="Hidden" Background="#EEEE">

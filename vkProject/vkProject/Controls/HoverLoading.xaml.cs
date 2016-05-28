@@ -31,48 +31,11 @@ namespace vkProject.Controls
 		}
 		public void LoadWheelRotateBegin()
 		{
-			if(!_rotating)
-			{
-				_source = GetSource();
-				loading.Source = _source;
-				ImageAnimator.Animate(_bitmap, OnFrameChanged);
-				_rotating = true;
-			}
+			loading.Play();
 		}
 		public void LaodWheelRotateStop()
 		{
-			if(_rotating)
-				ImageAnimator.StopAnimate(_bitmap, OnFrameChanged);
+			loading.Pause();
 		}
-
-
-		private BitmapSource GetSource()
-		{
-			if(_bitmap == null)
-			{
-				_bitmap = new Bitmap("712.gif");
-			}
-			IntPtr handle = IntPtr.Zero;
-			handle = _bitmap.GetHbitmap();
-			return Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-		}
-		private void FrameUpdatedCallback()
-		{
-			ImageAnimator.UpdateFrames();
-			if(_source != null)
-				_source.Freeze();
-			_source = GetSource();
-			loading.Source = _source;
-			InvalidateVisual();
-		}
-		private void OnFrameChanged(object sender, EventArgs e)
-		{
-			Dispatcher.BeginInvoke(DispatcherPriority.Send,
-									new Action(FrameUpdatedCallback));
-		}
-		private BitmapSource _source;
-		private Bitmap _bitmap;
-		private bool _rotating = false;
-
 	}
 }

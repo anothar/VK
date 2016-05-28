@@ -45,6 +45,24 @@ namespace vkProject
 
 			StatRefreshingHL = new HoverLoading();
 			StatRefreshingHL.Text = "Обновление";
+
+			ShowBefore = new HoverButton();
+			ShowBefore.MouseLeftButtonUp += ShowBefore_MouseLeftButtonUp;
+			ShowAfter = new HoverButton();
+			ShowAfter.MouseLeftButtonUp += ShowAfter_MouseLeftButtonUp;
+		}
+
+		private void ShowAfter_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+		{
+			int begin = postEnd;
+			int end = Math.Min(begin+defaultcount, Wall.Count);
+			Task.Factory.StartNew(() => StartShowPosts(begin, end));
+		}
+		private void ShowBefore_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+		{
+			int end = postBegin;
+			int begin = Math.Max(end-defaultcount, 0);
+			Task.Factory.StartNew(() => StartShowPosts(begin, end));
 		}
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
@@ -53,7 +71,7 @@ namespace vkProject
 
             access_token = brouser.access_token;
             user_id = brouser.user_id;
-			Vk = new Parse_Vk_Output(new vkAPI(access_token, user_id));
+			Vk = new ParseVkOutput(new vkAPI(access_token, user_id));
 
 			postButton.Children.Add(RefreshHB);
 			statButtons.Children.Add(StatRefreshHB);
@@ -119,55 +137,83 @@ namespace vkProject
 					File.Delete(file);
 			}
 		}
+
 		private void StartPreLoadWall()
 		{
 			var arr = Vk.getWall();
 			users = arr.Key;
 			Wall = arr.Value;
-			Task.Factory.StartNew(EndPreLoadWall);
+			postEnd = Math.Min(Wall.Count, defaultcount);
+			Task.Factory.StartNew(() => EndPreLoadWall(postBegin, postEnd));
 		}
-		private void EndPreLoadWall()
+		private void EndPreLoadWall(int begin, int end)
 		{
-			Task.Factory.StartNew(StartLayoutDesign);
+			Dispatcher.Invoke(() =>
+			{
+				RefreshingHL.LaodWheelRotateStop();
+				postButton.Children.Remove(RefreshingHL);
+			});
+			Task.Factory.StartNew(() => StartShowPosts(begin, end));
 		}
-		private void StartLayoutDesign()
+
+		private void StartShowPosts(int begin, int end)
+		{
+			Dispatcher.Invoke(() => 
+			{
+				postButton.Children.Remove(RefreshHB);
+				ShowAfterPanel.Children.Remove(ShowAfter);
+				ShowBeforePanel.Children.Remove(ShowBefore);
+
+				RefreshingLayoutHL.LoadWheelRotateBegin();
+				postButton.Children.Add(RefreshingLayoutHL);
+				posts.Children.RemoveRange(1, posts.Children.Count - 1);
+			});
+
+			ShowPosts(begin, end);
+		}
+		private void ShowPosts(int begin, int end)
 		{
 			int outed = 0;
-
-			Dispatcher.Invoke(() => RefreshingHL.LaodWheelRotateStop());
-			Dispatcher.Invoke(() => postButton.Children.RemoveAt(0));
-			Dispatcher.Invoke(() => RefreshingLayoutHL.LoadWheelRotateBegin());
-			Dispatcher.Invoke(() => postButton.Children.Add(RefreshingLayoutHL));
 			Dispatcher.Invoke(() => countPost.Visibility = Visibility.Visible);
-			Dispatcher.Invoke(() => countPost.Text = String.Format("{0}/{1}", outed, Wall.Count));
-
-
-			foreach(var item in Wall)
+			Dispatcher.Invoke(() => countPost.Text = String.Format("{0}/{1}", outed, end - begin));
+			for(int i = begin; i != end; ++i)
 			{
 				User curuser;
-				curuser = users[item.Owner_id];
-				User curRepUser;
-				if(item.Copied_Post != null)
-					curRepUser = users[Math.Abs(item.Copied_Post.Owner_id)];
-				else
-					curRepUser = users[item.From_id];
-
-				Dispatcher.Invoke(() => posts.Children.Add(new ctrPost(item, curuser, curRepUser)));
+				curuser = users[Wall[i].Owner_id];
+				User curRepUser = null;
+				if(Wall[i].Copied_Post != null)
+					curRepUser = users[Math.Abs(Wall[i].Copied_Post.Owner_id)];
 
 				++outed;
-				Dispatcher.Invoke(() => countPost.Text = String.Format("{0}/{1}", outed, Wall.Count));
+				Dispatcher.Invoke(() => posts.Children.Add(new ctrPost(Wall[i], curuser, curRepUser)));
+				Dispatcher.Invoke(() => countPost.Text = String.Format("{0}/{1}", outed, end - begin));
 				Thread.Sleep(50);
-
 			}
-
-			Task.Factory.StartNew(EndLayoutDesing);
+			EndShowPosts(begin, end);
 		}
-		private void EndLayoutDesing()
+		private void EndShowPosts(int begin, int end)
 		{
-			Dispatcher.Invoke(() => RefreshingLayoutHL.LaodWheelRotateStop());
-			Dispatcher.Invoke(() => postButton.Children.RemoveAt(0));
-			Dispatcher.Invoke(() => postButton.Children.Add(RefreshHB));
-			Dispatcher.Invoke(() => countPost.Visibility = Visibility.Hidden);
+			Dispatcher.Invoke(() =>
+			{
+				countPost.Visibility = Visibility.Hidden;
+				RefreshingLayoutHL.LaodWheelRotateStop();
+				postButton.Children.Remove(RefreshingLayoutHL);
+				postButton.Children.Add(RefreshHB);
+				postBegin = begin;
+				postEnd = end;
+			});
+			
+
+			if(postEnd != Wall.Count)
+			{
+				Dispatcher.Invoke(() => ShowAfter.Text = "Показать следуюущие ↓");
+				Dispatcher.Invoke(() => ShowAfterPanel.Children.Add(ShowAfter));
+			}
+			if(postBegin != 0)
+			{
+				Dispatcher.Invoke(() => ShowBefore.Text = "Показать предыдущие ↑");
+				Dispatcher.Invoke(() => ShowBeforePanel.Children.Add(ShowBefore));
+			}
 		}
 
 		private HoverLoading RefreshingHL;
@@ -175,10 +221,15 @@ namespace vkProject
 		private HoverLoading StatRefreshingHL;
 		private HoverButton RefreshHB;
 		private HoverButton StatRefreshHB;
+		private HoverButton ShowBefore;
+		private HoverButton ShowAfter;
 		private Dictionary<int, User> users;
 		private List<Post> Wall;
 		private string  access_token;
 		private int     user_id;
-		private Parse_Vk_Output Vk;
+		private ParseVkOutput Vk;
+		private int defaultcount = 50;
+		private int postBegin = 0;
+		private int postEnd = 0;
 	}
 }

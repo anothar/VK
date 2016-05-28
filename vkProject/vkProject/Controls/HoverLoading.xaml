@@ -14,7 +14,7 @@
             <ColumnDefinition Width="30"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Image Grid.Column="0" x:Name="loading"/>
+        <MediaElement Grid.Column="0" LoadedBehavior="Manual" SpeedRatio="1" IsMuted="False" Source="712.gif" x:Name="loading"/>
         <TextBlock Grid.Column="1" x:Name="text" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#F0AF"/>
     </Grid>
 </UserControl>
