@@ -109,18 +109,21 @@ namespace VkAPI.Controls
 		{
 			if(Videos != null)
 			{
+                videos.Margin = new Thickness(5, 0, 5, 5);
 				//-------------adding-videos-------------\\
 				foreach(Video vid in Videos)
 					VideoPanel.Add(new ctrVideo(vid));
 			}
 			if(Photos != null)
 			{
+                photos.Margin = new Thickness(5, 0, 5, 5);
 				//------------adding-photos--------------\\
-				foreach(Photo phot in Photos)
+                foreach (Photo phot in Photos)
 					PhotoPanel.Add(new ctrPhoto(phot));
 			}
 			if(Poll != null)
 			{
+                polls.Margin = new Thickness(5, 0, 5, 5);
 				//----------------add-poll---------------\\
 				PollPanel = new ctrPoll(Poll);
 			}
@@ -129,6 +132,12 @@ namespace VkAPI.Controls
 				foreach(Media.Audio aud in Audios)
 					AudioPanel.Add(new Audio(aud));
 			}
+            if(Links != null)
+            {
+                links.Margin = new Thickness(5, 0, 5, 5);
+                //----------------add-link---------------\\
+                links.Children.Add(new ctrLink(Links[0]));
+            }
 			if(Copied_Post != null)
 			{
 				repost.Children.Add(new ctrPost(Copied_Post, repUser));

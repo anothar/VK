@@ -7,9 +7,9 @@
              xmlns:Controls="clr-namespace:VkAPI.Controls" x:Class="VkAPI.Controls.ctrLink"
              mc:Ignorable="d" 
              Height="auto" MinWidth="380">
-    <Grid Margin="10, 10, 10, 10">
-        <StackPanel x:Name="photo" Height="auto" Width="auto"/>
-        <TextBlock x:Name="title" Text=""/>
-        <TextBlock x:Name="description" Text=""/>
-    </Grid>
+    <StackPanel Margin="0, 0, 0, 0">
+        <StackPanel x:Name="photo" Margin="0,5,0,0" Height="auto" Width="auto" MouseLeftButtonDown="click_MouseLeftButtonDown"></StackPanel>
+        <TextBlock x:Name="title" Text="" Margin="5,0,5,0" TextWrapping="Wrap" FontSize="16" Height="auto" MouseLeftButtonDown="click_MouseLeftButtonDown"></TextBlock>
+        <TextBlock x:Name="description" Text="" Margin="5,0,5,0" TextWrapping="Wrap" FontSize="12" Height="auto" MouseLeftButtonDown="click_MouseLeftButtonDown"></TextBlock>
+    </StackPanel>
 </UserControl>
