@@ -61,6 +61,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\Audio.xaml.cs">
+      <DependentUpon>Audio.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ctrPollAnswer.xaml.cs">
       <DependentUpon>ctrPollAnswer.xaml</DependentUpon>
     </Compile>
@@ -98,6 +101,10 @@
     <Compile Include="Windows\WebGetter.xaml.cs">
       <DependentUpon>WebGetter.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\Audio.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\ctrPollAnswer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -186,7 +193,10 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Media\pauseaudio.png" />
+    <Resource Include="Media\playaudio.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Media\712.gif" />
     <Resource Include="Media\play.jpg" />

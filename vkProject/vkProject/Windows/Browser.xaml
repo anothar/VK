@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:vkProject"
         mc:Ignorable="d"
-        Title="Browser" Height="600" Width="600">
+        Title="Browser" Height="auto" Width="auto">
     <Grid>
         <WebBrowser x:Name="player" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
     </Grid>

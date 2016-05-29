@@ -231,7 +231,7 @@ namespace vkProject
 		private string  access_token;
 		private int     user_id;
 		private ParseVkOutput Vk;
-		private int defaultcount = 50;
+		private int defaultcount = 1;
 		private int postBegin = 0;
 		private int postEnd = 0;
 	}

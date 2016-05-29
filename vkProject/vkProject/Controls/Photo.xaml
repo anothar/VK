@@ -9,6 +9,6 @@
     <Grid Margin="5, 5, 5, 5">
         <Image x:Name="image" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         <TextBlock x:Name="text" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Bottom" Mouse.MouseEnter="text_MouseEnter" Mouse.MouseLeave="text_MouseLeave" Margin="5, 5, 5, 5"/>
-        <MediaElement x:Name="loading" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="30" Width="30" Source="712.gif"/>
+        <MediaElement x:Name="loading" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="30" Width="30" Source="712.gif" LoadedBehavior="Manual"/>
     </Grid>
 </UserControl>

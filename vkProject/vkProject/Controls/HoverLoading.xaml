@@ -7,14 +7,14 @@
              mc:Ignorable="d" 
              Width="150" Height="30">
     <Grid Background="White">
-        <Grid.Clip>
-            <RectangleGeometry RadiusX="15" RadiusY="15" Rect="0, 0, 150, 30"/>
-        </Grid.Clip>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="30"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <MediaElement Grid.Column="0" LoadedBehavior="Manual" SpeedRatio="1" IsMuted="False" Source="712.gif" x:Name="loading"/>
-        <TextBlock Grid.Column="1" x:Name="text" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#F0AF"/>
-    </Grid>
+            <Grid.Clip>
+                <RectangleGeometry RadiusX="15" RadiusY="15" Rect="0, 0, 150, 30"/>
+            </Grid.Clip>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <MediaElement Grid.Column="0" LoadedBehavior="Manual" SpeedRatio="1" IsMuted="False" Source="712.gif" x:Name="loading"/>
+            <TextBlock Grid.Column="1" x:Name="text" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#F0AF"/>
+        </Grid>
 </UserControl>
