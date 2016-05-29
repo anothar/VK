@@ -430,7 +430,7 @@ namespace VkAPI
             {
                 switch (item.Name)
                 {
-                    case "is_external ": link.is_external = Convert.ToBoolean(Convert.ToInt32(item.InnerText)); break;
+                    case "is_external": link.is_external = Convert.ToBoolean(Convert.ToInt32(item.InnerText)); break;
                     case "caption": link.Caption = item.InnerText; break;
                     case "description": link.Description = (item.OuterXml == "<description />" ? "" : item.InnerText); break;
                     case "photo": link.Photo = getPhoto(item); break;

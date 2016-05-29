@@ -53,7 +53,7 @@ namespace VkAPI.Controls
 				else
 				{
 					text.Text = value;
-					text.FontSize = 15;
+					text.FontSize = 13;
 				}
 			}
 		}
