@@ -45,7 +45,16 @@ namespace VkAPI.Controls
 			}
 			set
 			{
-				text.Text = value;
+				if(value == null || value == "")
+				{
+					text.Text = null;
+					text.FontSize = 0.1;
+				}
+				else
+				{
+					text.Text = value;
+					text.FontSize = 15;
+				}
 			}
 		}
 		public string User_photo
@@ -82,8 +91,8 @@ namespace VkAPI.Controls
 
 		public UIElementCollection VideoPanel { get { return videos.Children; } }
 		public UIElementCollection PhotoPanel { get { return photos.Children; } }
-		public UIElement		   PollPanel  { get { return polls.Children[0]; } private set { polls.Children[0] = value; } }
 		public UIElementCollection AudioPanel { get { return audios.Children; } }
+		public UIElement		   PollPanel  { get { return polls.Children[0]; } private set { polls.Children[0] = value; } }
 
 		private void CopyPost(IPost post)
 		{
