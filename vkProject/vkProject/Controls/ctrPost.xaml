@@ -17,9 +17,10 @@
                 <TextBlock x:Name="user_name" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Foreground="#FF42648B" Margin="5, 5, 0, 0"/>
             </StackPanel> 
         <TextBlock Margin="5, 5, 5, 5" TextWrapping="Wrap" x:Name="text"/>
-        <StackPanel x:Name="photos" Margin="5, 5, 5, 0"></StackPanel>
-        <StackPanel x:Name="videos" Margin=" 5, 5, 5, 0"></StackPanel>
-        <StackPanel x:Name="polls" Margin="5, 5, 5, 0"></StackPanel>
-        <StackPanel x:Name="repost" Margin="5, 5, 5, 0"></StackPanel>
+        <StackPanel x:Name="photos" Margin="5, 0, 5, 0"></StackPanel>
+        <StackPanel x:Name="videos" Margin=" 5, 0, 5, 0"></StackPanel>
+        <StackPanel x:Name="polls" Margin="5, 0, 5, 0"></StackPanel>
+        <StackPanel x:Name="links" Margin="5, 0, 5, 0"></StackPanel>
+        <StackPanel x:Name="repost" Margin="5, 0, 5, 5"></StackPanel>
     </StackPanel>
 </UserControl>

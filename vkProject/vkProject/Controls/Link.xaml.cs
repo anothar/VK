@@ -25,7 +25,9 @@ namespace VkAPI.Controls
 		public ctrLink(ILink link)
 		{
             //------Инициализация-членов-интерфейса------\\
+			InitializeComponent();
             Url = link.Url;
+            title.Text = link.Title;
             Title = link.Title;
             Caption = link.Caption;
             Description = link.Description;
@@ -34,7 +36,6 @@ namespace VkAPI.Controls
 
             photo.Children.Add(new ctrPhoto(Photo));
 
-			InitializeComponent();
 		}
         public string Url { get; set; }
         public string Title
@@ -63,5 +64,9 @@ namespace VkAPI.Controls
         public Photo Photo { get; set; }
         public bool is_external { get; set; }
 
+        private void click_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            System.Diagnostics.Process.Start(Url);
+        }
     }
 }
