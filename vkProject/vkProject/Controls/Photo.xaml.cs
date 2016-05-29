@@ -48,7 +48,7 @@ namespace VkAPI.Controls
 			//-------------------------------------------------------------------------------------------------\\
 
 			text.Visibility = Visibility.Hidden;
-			smallImage = photo.Photo_130 != null ? photo.Photo_130 : photo.Photo_604;
+			smallImage = photo.Photo_604;
 
 			if(photo.Photo_2560 != null)
 				bigImage = photo.Photo_2560;
@@ -56,8 +56,6 @@ namespace VkAPI.Controls
 				bigImage = photo.Photo_1280;
 			else if(photo.Photo_807 != null)
 				bigImage = photo.Photo_807;
-			else if(photo.Photo_604 != null)
-				bigImage = photo.Photo_604;
 
 			if (bigImage != null)
 			{
