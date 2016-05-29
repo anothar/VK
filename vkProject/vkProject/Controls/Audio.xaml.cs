@@ -42,12 +42,13 @@ namespace VkAPI.Controls
 			timeline.Maximum = Duration;
 			timer = new Timer(1000);
 			timer.Elapsed += Timer_Elapsed;
+			
 		}
 
 		private void Timer_Elapsed(object sender, ElapsedEventArgs e)
 		{
-			timeline.Value = audioME.Position.Seconds;
-			timenow.Text = TimeSpan.FromSeconds(audioME.Position.Seconds).ToString();
+			Dispatcher.Invoke(() => timeline.Value = audioME.Position.Seconds);
+			Dispatcher.Invoke(() => timenow.Text = TimeSpan.FromSeconds(audioME.Position.Seconds).ToString());
 		}
 
 		public string Artist		{ get; private set; }
@@ -107,5 +108,10 @@ namespace VkAPI.Controls
 		private string PathAudio { get; set; }
 		WebClient web1;
 		Timer timer;
+
+		private void timeline_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+		{
+			audioME.Position = TimeSpan.FromSeconds(timeline.Value);
+		}
 	}
 }
