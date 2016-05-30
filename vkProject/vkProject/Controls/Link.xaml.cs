@@ -37,7 +37,7 @@ namespace VkAPI.Controls
             photo.Children.Add(new ctrPhoto(Photo));
 
 		}
-        public string Url { get; set; }
+        public string Caption { get; set; }
         public string Title
         {
             get
@@ -49,24 +49,25 @@ namespace VkAPI.Controls
                 title.Text = value;
             }
         }
-        public string Caption { get; set; }
-        public string Description
+        public string Url
         {
             get
             {
-                return description.Text;
+                return url.Text;
             }
             set
             {
-                description.Text = value;
+                url.Text = value;
             }
         }
+        public string Description { get; set; }
         public Photo Photo { get; set; }
         public bool is_external { get; set; }
 
         private void click_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             System.Diagnostics.Process.Start(Url);
+            //description.TextWrapping = TextWrapping.WrapWithOverflow;
         }
     }
 }
