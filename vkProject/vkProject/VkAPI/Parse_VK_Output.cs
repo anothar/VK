@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace VkAPI
 {
+    // Класс-обертка vkAPI
 	public class ParseVkOutput
 	{
         class Comp : IComparer<User>

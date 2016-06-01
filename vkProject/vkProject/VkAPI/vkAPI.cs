@@ -11,13 +11,16 @@ using vkProject;
 
 namespace VkAPI
 {
+    // Класс для низкоуровневой работы с API Вконтакте
     public class vkAPI
     {
+        // Конструируем объект vkAPI с полученными заранее access_token и user_id
         public vkAPI(string access_token, int user_id)
         {
             this.user_id = user_id;
             this.access_token = access_token;
         }
+        // Общий метод запроса GET
         private string GET(string url, string data)
         {
             WebRequest req = WebRequest.Create(url + '?' + data);
@@ -28,6 +31,7 @@ namespace VkAPI
             sr.Close();
             return str;
         }
+        // Общий метод запроса POST
         private string POST(string url, string data)
         {
             WebRequest req = WebRequest.Create(url);
@@ -45,17 +49,20 @@ namespace VkAPI
 
             return str;
         }
+        // Метод запроса GET, специализированный под это приложение
         public string get(string method, string data)
         {
             return GET(Url_Api + method, data + "&" + version_api + "&access_token=" + access_token);
         }
+        // Метод запроса POST, специализированный под это приложение
         public string post(string method, string data)
         {
             return POST(Url_Api + method, data + "&" + version_api + "&access_token=" + access_token);
         }
+        // Метод возвращает всех друзей пользователя, который вошел в приложение
         public List<User> getFriends()
         {
-			Global.WriteLogString("Getting friends...");
+            Global.WriteLogString("Getting friends...");
 
 			List<User> Friends = new List<User>();
             XmlDocument doc = new XmlDocument();
@@ -103,6 +110,7 @@ namespace VkAPI
 
             return Friends;
         }
+        // Метод возвращает всех друзей пользователя, которые делали лайки к передаваемому посту
         public List<User> getLikes(Post post)
         {
             List<User> whoLiked = new List<User>();
@@ -142,6 +150,7 @@ namespace VkAPI
             }
             return whoLiked;
         }
+        // Метод возвращает все записи, которые есть на стене пользователя, и список тех чьими записями пользаватель делился
         public KeyValuePair<Dictionary<int, User>, List<Post>> getWall()
         {
             List<Post> Wall = new List<Post>();
