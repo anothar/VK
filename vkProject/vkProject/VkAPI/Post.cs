@@ -15,6 +15,7 @@ namespace VkAPI
 		int From_id { get; }
 		int Date { get; }
 		int Likes { get; }
+		int Reposts { get; }
 		string Text { get; }
 		string Post_type { get; }
 
@@ -40,6 +41,7 @@ namespace VkAPI
 		public int From_id				{ get; set; }
 		public int Date					{ get; set; }
 		public int Likes				{ get; set; }
+		public int Reposts				{ get; set; }
 		public string Text				{ get; set; }
 		public string Post_type			{ get; set; }
 		
@@ -88,7 +90,7 @@ namespace VkAPI
 	namespace Media
 	{
 		#region interfaces
-		public interface IPhoto
+		public interface IPhoto : IPostedPhoto
 		{
 			int Id { get; }
 			int Date { get; }

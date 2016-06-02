@@ -5,11 +5,49 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:VkAPI.Controls"
              mc:Ignorable="d" 
-             MinWidth="350" Height="auto" Width="350" Margin="5, 5, 5, 5">
+             MinWidth="350" Height="auto" Width="auto" Margin="5, 5, 5, 5">
+    <UserControl.Resources>
+        <Style x:Key="{x:Type ProgressBar}" TargetType="{x:Type ProgressBar}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ProgressBar}">
+                        <Grid Name="TemplateRoot" SnapsToDevicePixels="true">
+                            <Rectangle Fill="#f2f4f7" RadiusX="2" RadiusY="2"/>
+                            <Rectangle Name="PART_Track"/>
+
+                            <Decorator x:Name="PART_Indicator" HorizontalAlignment="Left">
+                                <Grid Name="Foreground">
+                                    <Rectangle x:Name="Indicator" Fill="#FFC7D4E0" RadiusX="2" RadiusY="2"/>
+                                </Grid>
+                            </Decorator>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Orientation"
+                             Value="Vertical">
+                                <Setter TargetName="TemplateRoot"
+                                Property="LayoutTransform">
+                                    <Setter.Value>
+                                        <RotateTransform Angle="-90"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+
+                            <Trigger Property="IsIndeterminate"
+                             Value="true">
+                                <Setter TargetName="Indicator"
+                                Property="Visibility"
+                                Value="Collapsed"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="15"/>
+            <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
         <TextBlock x:Name="text" Grid.Row="0" Grid.ColumnSpan="3" TextAlignment="Left" TextWrapping="Wrap" FontSize="12" Margin="2, 2, 2, 2"/>
         <TextBlock Grid.Row="1" Grid.Column="2" TextAlignment="Left"/>
@@ -18,10 +56,9 @@
                 <ColumnDefinition Width="300"/>
                 <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
-            <Rectangle Grid.Row="1" Grid.Column="0" RadiusX="2" RadiusY="2" Fill="#f2f4f7" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
-            <Rectangle Grid.Row="1"  Fill="#FFC7D4E0" RadiusX="2" RadiusY="2" VerticalAlignment="Stretch" HorizontalAlignment="Left" x:Name="rate" Width="0"/>
-            <TextBlock Grid.Column="0" Grid.Row="1" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Stretch" x:Name="mans" Text="0" Foreground="#FF1539B4"/>
-            <TextBlock Grid.Column="1" TextAlignment="Center" Text="0%" x:Name="rate_pers" VerticalAlignment="Center" Foreground="#FABC"/>
+            <ProgressBar x:Name="rate" Minimum="0.00" Maximum="100.00" Height="20"/>
+            <TextBlock Grid.Column="1" Grid.Row="1" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Stretch" x:Name="mans" Text="0" Foreground="#FABC"/>
+            <TextBlock Grid.Column="0" TextAlignment="Left" Margin="10, 0, 10, 0" Text="0%" x:Name="rate_pers" VerticalAlignment="Top" Foreground="#FF1539B4" FontSize="14"/>
         </Grid>
     </Grid>
 </UserControl>

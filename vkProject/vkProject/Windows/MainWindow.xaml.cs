@@ -6,7 +6,6 @@ using System.Windows;
 using System.IO;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -92,7 +91,6 @@ namespace vkProject
 			ShowBeforePanel.Children.Remove(ShowBefore);
 			RefreshingHL.LoadWheelRotateBegin();
 			postButton.Children.Add(RefreshingHL);
-
 			Task.Factory.StartNew(StartPreLoadWall);
 		}
 		private void getStatistic()
@@ -149,7 +147,8 @@ namespace vkProject
 			var arr = Vk.getWall();
 			users = arr.Key;
 			Wall = arr.Value;
-			postEnd = Math.Min(Wall.Count, defaultcount);
+			if (postEnd == 0)
+				postEnd = Math.Min(Wall.Count, defaultcount);
 			Task.Factory.StartNew(() => EndPreLoadWall(postBegin, postEnd));
 		}
 		private void EndPreLoadWall(int begin, int end)
@@ -234,7 +233,7 @@ namespace vkProject
 		private string  access_token;
 		private int     user_id;
 		private ParseVkOutput Vk;
-		private int defaultcount = 50;
+		private int defaultcount = 1;
 		private int postBegin = 0;
 		private int postEnd = 0;
 	}

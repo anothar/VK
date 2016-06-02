@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.IO;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -76,7 +77,28 @@ namespace VkAPI.Controls
 		public int Owner_id						{ get; private set; }
 		public int From_id						{ get; private set; }
 		public int Date							{ get; private set; }
-		public int Likes						{ get; private set; }
+		public int Likes
+		{
+			get
+			{
+				return Convert.ToInt32(likes.Text);
+			}
+			private set
+			{
+				likes.Text = value.ToString();
+			}
+		}
+		public int Reposts
+		{
+			get
+			{
+				return Convert.ToInt32(reposts.Text);
+			}
+			set
+			{
+				reposts.Text = value.ToString();
+			}
+		}
 		public string Post_type					{ get; private set; }
 		public List<Photo> Photos				{ get; private set; }
 		public List<Posted_photo> Posted_photos { get; private set; }
@@ -92,7 +114,7 @@ namespace VkAPI.Controls
 		public UIElementCollection VideoPanel { get { return videos.Children; } }
 		public UIElementCollection PhotoPanel { get { return photos.Children; } }
 		public UIElementCollection AudioPanel { get { return audios.Children; } }
-		public UIElement		   PollPanel  { get { return polls.Children[0]; } private set { polls.Children[0] = value; } }
+		public UIElementCollection PollPanel  { get { return polls.Children; }  }
 
 		private void CopyPost(IPost post)
 		{
@@ -102,6 +124,7 @@ namespace VkAPI.Controls
 			From_id				= post.From_id;
 			Date				= post.Date;
 			Likes				= post.Likes;
+			Reposts				= post.Reposts;
 			Post_type			= post.Post_type;
 			Photos				= post.Photos;
 			Posted_photos		= post.Posted_photos;
@@ -116,6 +139,26 @@ namespace VkAPI.Controls
 		}
 		private void BeginLayoutDesign(User repUser)
 		{
+			if(repUser != null)
+			{
+				BitmapImage bilikes = new BitmapImage();
+				bilikes.BeginInit();
+				var streamlike = File.OpenRead(Environment.CurrentDirectory + @"\like.png");
+				bilikes.StreamSource = streamlike;
+				bilikes.EndInit();
+				likesImage.Source = bilikes;
+
+				BitmapImage bireps = new BitmapImage();
+				bireps.BeginInit();
+				var streamrep = File.OpenRead(Environment.CurrentDirectory + @"\rep.png");
+				bireps.StreamSource = streamrep;
+				bireps.EndInit();
+				repImage.Source = bireps;
+			}
+			else
+			{
+				foot.Height = 0;
+			}
 			if(Videos != null)
 			{
                 videos.Margin = new Thickness(5, 0, 5, 5);
@@ -134,7 +177,7 @@ namespace VkAPI.Controls
 			{
                 polls.Margin = new Thickness(5, 0, 5, 5);
 				//----------------add-poll---------------\\
-				PollPanel = new ctrPoll(Poll);
+				PollPanel.Add(new ctrPoll(Poll));
 			}
 			if (Audios != null)
 			{

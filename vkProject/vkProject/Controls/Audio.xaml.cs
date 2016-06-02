@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.IO;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.IO;
 using System.Configuration;
 using System.Net;
 using System.Timers;
@@ -21,10 +21,6 @@ namespace VkAPI.Controls
 {
 	public partial class Audio : UserControl, IAudio
 	{
-		public Audio()
-		{
-			InitializeComponent();
-		}
 		public Audio(IAudio audio)
 		{
 			InitializeComponent();
@@ -37,18 +33,49 @@ namespace VkAPI.Controls
 			Title			= audio.Title;
 			Url				= audio.Url;
 			//---------------------------------------------\\
+
+			playImg = new BitmapImage();
+			var playstram = File.OpenRead(Environment.CurrentDirectory + @"\play.png");
+			playImg.BeginInit();
+			playImg.StreamSource = playstram;
+			playImg.EndInit();
+
+			pauseImg = new BitmapImage();
+			var pausestream = File.OpenRead(Environment.CurrentDirectory + @"\pause.png");
+			pauseImg.BeginInit();
+			pauseImg.StreamSource = pausestream;
+			pauseImg.EndInit();
+
 			timetotal.Text = TimeSpan.FromSeconds(Duration).ToString();
 			timenow.Text = "00:00:00";
 			timeline.Maximum = Duration;
-			timer = new Timer(1000);
-			timer.Elapsed += Timer_Elapsed;
-			
+			timer1 = new Timer(500);
+			timer2 = new Timer(500);
+			timer2.Elapsed += Timer2_Elapsed;
+			timer1.Elapsed += Timer_Elapsed;
+			playPause.Source = playImg;
+			timeline.AddHandler(MouseLeftButtonUpEvent, new MouseButtonEventHandler(AudioME_MouseLeftButtonUp), true);
+			timeline.AddHandler(MouseLeftButtonDownEvent, new MouseButtonEventHandler(AudioME_MouseLeftButtonDown), true);
 		}
-
+		private void Timer2_Elapsed(object sender, ElapsedEventArgs e)
+		{
+			Dispatcher.Invoke(() => timenow.Text = TimeSpan.FromSeconds(Convert.ToInt32(audioME.Position.TotalSeconds)).ToString());
+		}
+		private void AudioME_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+		{
+			if (Duration > 0)
+			{
+				audioME.Position = TimeSpan.FromSeconds(timeline.Value);
+				timer1.Start();
+			}
+		}
+		private void AudioME_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+		{
+			timer1.Stop();
+		}
 		private void Timer_Elapsed(object sender, ElapsedEventArgs e)
 		{
-			Dispatcher.Invoke(() => timeline.Value = audioME.Position.Seconds);
-			Dispatcher.Invoke(() => timenow.Text = TimeSpan.FromSeconds(audioME.Position.Seconds).ToString());
+			Dispatcher.Invoke(() => timeline.Value = audioME.Position.TotalSeconds);
 		}
 
 		public string Artist		{ get; private set; }
@@ -68,17 +95,19 @@ namespace VkAPI.Controls
 			{
 				if(isPlaying)
 				{
-					playPause.Source = new Uri("playaudio.png", UriKind.Relative);
+					playPause.Source = playImg;
 					audioME.Pause();
 					isPlaying = false;
-					timer.Stop();
+					timer1.Stop();
+					timer2.Stop();
 				}
 				else
 				{
-					playPause.Source = new Uri("pauseaudio.png", UriKind.Relative);
+					playPause.Source = pauseImg;
 					audioME.Play();
 					isPlaying = true;
-					timer.Start();
+					timer1.Start();
+					timer2.Start();
 				}
 			}
 			else
@@ -106,12 +135,10 @@ namespace VkAPI.Controls
 		}
 
 		private string PathAudio { get; set; }
+		private BitmapImage playImg;
+		private BitmapImage pauseImg;
 		WebClient web1;
-		Timer timer;
-
-		private void timeline_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-		{
-			audioME.Position = TimeSpan.FromSeconds(timeline.Value);
-		}
+		Timer timer1;
+		Timer timer2;
 	}
 }

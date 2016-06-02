@@ -278,6 +278,7 @@ namespace VkAPI
 						post.Copied_Post = new Post();
 						post.Copied_Post = getPost(item.FirstChild); break;
                     case "likes": post.Likes = Convert.ToInt32(item.FirstChild.InnerText); break;
+					case "reposts": post.Reposts = Convert.ToInt32(item.FirstChild.InnerText); break;
                 }
             }
             return post;
@@ -506,7 +507,7 @@ namespace VkAPI
                                 switch (i.Name)
                                 {
                                     case "id": answer.Id = Convert.ToInt32(i.InnerText); break;
-                                    case "rate": answer.Rate = Convert.ToUInt32(i.InnerText.Substring(0, i.InnerText.IndexOf('.'))); break;
+                                    case "rate": answer.Rate = Convert.ToDouble(i.InnerText); break;
                                     case "votes": answer.Votes = Convert.ToUInt32(i.InnerText); break;
                                     case "text": answer.Text = (i.OuterXml == "<text />" ? "" : i.InnerText); break;
                                 }
