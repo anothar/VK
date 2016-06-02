@@ -194,12 +194,14 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Media\pauseaudio.png" />
-    <Resource Include="Media\playaudio.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Media\712.gif" />
     <Resource Include="Media\play.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\like.png" />
+    <Resource Include="Media\pause.png" />
+    <Resource Include="Media\play.png" />
+    <Resource Include="Media\rep.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
