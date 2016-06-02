@@ -507,7 +507,7 @@ namespace VkAPI
                                 switch (i.Name)
                                 {
                                     case "id": answer.Id = Convert.ToInt32(i.InnerText); break;
-                                    case "rate": answer.Rate = (double)Convert.ToUInt32(i.InnerText[2] + ((i.InnerText.Length == 4) ? i.InnerText[3] : ' ')) / 100; break;
+                                    case "rate": answer.Rate = Convert.ToDouble(i.InnerText.Replace('.', ',')); break;
                                     case "votes": answer.Votes = Convert.ToUInt32(i.InnerText); break;
                                     case "text": answer.Text = (i.OuterXml == "<text />" ? "" : i.InnerText); break;
                                 }
