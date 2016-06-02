@@ -82,8 +82,14 @@
     <Compile Include="Controls\HoverLoading.xaml.cs">
       <DependentUpon>HoverLoading.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Liker.xaml.cs">
+      <DependentUpon>Liker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Link.xaml.cs">
       <DependentUpon>Link.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LikersList.xaml.cs">
+      <DependentUpon>LikersList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Poll.xaml.cs">
       <DependentUpon>Poll.xaml</DependentUpon>
@@ -129,7 +135,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Liker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\Link.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\LikersList.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
