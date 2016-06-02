@@ -18,10 +18,10 @@
                 <ColumnDefinition Width="100"/>
             </Grid.ColumnDefinitions>
             <TextBlock Text="Друзья" TextAlignment="Center" Margin="0,0,0,5" Grid.Column="0" Grid.Row="0"/>
-            <StackPanel x:Name="users_panel" Grid.Column="0" Grid.Row="1">
+            <StackPanel x:Name="users_panel" Grid.Column="0" Grid.Row="1" Margin="5">
             </StackPanel>
             <TextBlock Text="Кол-во лайков" TextAlignment="Center" Margin="0,0,0,5" Grid.Column="1" Grid.Row="0"/>
-            <StackPanel x:Name="count_likes_panel" Grid.Column="1" Grid.Row="1">
+            <StackPanel x:Name="count_likes_panel" Grid.Column="1" Grid.Row="1" Margin="5">
             </StackPanel>
         </Grid>
     </StackPanel>
