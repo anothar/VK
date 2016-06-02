@@ -85,14 +85,6 @@ namespace VkAPI.Controls
 			da.To = 1.0;
 			text.BeginAnimation(OpacityProperty, da);
 		}
-		public string Text
-		{
-			get { return text.Text; }
-			set
-			{
-				text.Text = value;
-			}
-		}
 		public string smallImage
 		{
 			get
@@ -106,6 +98,14 @@ namespace VkAPI.Controls
 		}
 		public string bigImage { get; private set; }
 
+		public string Text
+		{
+			get { return text.Text; }
+			set
+			{
+				text.Text = value;
+			}
+		}
 		public int Id			 { get; private set; }
 		public int Date			 { get; private set; }
 		public int Album_id		 { get; private set; }

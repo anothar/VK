@@ -88,7 +88,7 @@ namespace VkAPI
 	namespace Media
 	{
 		#region interfaces
-		public interface IPhoto
+		public interface IPhoto : IPostedPhoto
 		{
 			int Id { get; }
 			int Date { get; }

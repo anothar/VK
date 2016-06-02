@@ -22,13 +22,14 @@ namespace VkAPI.Controls
 		{
 			InitializeComponent();
 		}
-		public ctrPollAnswer(Answer ans, int ansId)
+		public ctrPollAnswer(IAnswer ans, int ansId)
 		{
 			InitializeComponent();
-			Id = ans.Id;
-			Text = ans.Text;
-			Rate = ans.Rate;
-			Votes = ans.Votes;
+
+			Id		= ans.Id;
+			Text	= ans.Text;
+			Rate	= ans.Rate;
+			Votes	= ans.Votes;
 
 			if(ansId == Id)
 				Answered = true;
@@ -48,12 +49,12 @@ namespace VkAPI.Controls
 		{
 			get
 			{
-				return rate.Width / 3;
+				return rate.Value;
 			}
 			private set
 			{
-				rate.Width = value * 3;
-				rate_pers.Text = value.ToString() + '%';
+				rate.Value = value;
+				rate_pers.Text = rate.Value.ToString() + "%";
 			}
 		}
 		public uint Votes

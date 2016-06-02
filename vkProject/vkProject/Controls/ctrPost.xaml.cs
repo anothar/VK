@@ -92,7 +92,7 @@ namespace VkAPI.Controls
 		public UIElementCollection VideoPanel { get { return videos.Children; } }
 		public UIElementCollection PhotoPanel { get { return photos.Children; } }
 		public UIElementCollection AudioPanel { get { return audios.Children; } }
-		public UIElement		   PollPanel  { get { return polls.Children[0]; } private set { polls.Children[0] = value; } }
+		public UIElementCollection PollPanel  { get { return polls.Children; }  }
 
 		private void CopyPost(IPost post)
 		{
@@ -134,7 +134,7 @@ namespace VkAPI.Controls
 			{
                 polls.Margin = new Thickness(5, 0, 5, 5);
 				//----------------add-poll---------------\\
-				PollPanel = new ctrPoll(Poll);
+				PollPanel.Add(new ctrPoll(Poll));
 			}
 			if (Audios != null)
 			{
