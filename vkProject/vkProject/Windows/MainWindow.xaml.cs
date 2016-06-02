@@ -146,7 +146,8 @@ namespace vkProject
 			var arr = Vk.getWall();
 			users = arr.Key;
 			Wall = arr.Value;
-			postEnd = Math.Min(Wall.Count, defaultcount);
+			if (postEnd == 0)
+				postEnd = Math.Min(Wall.Count, defaultcount);
 			Task.Factory.StartNew(() => EndPreLoadWall(postBegin, postEnd));
 		}
 		private void EndPreLoadWall(int begin, int end)
@@ -231,7 +232,7 @@ namespace vkProject
 		private string  access_token;
 		private int     user_id;
 		private ParseVkOutput Vk;
-		private int defaultcount = 1;
+		private int defaultcount = 50;
 		private int postBegin = 0;
 		private int postEnd = 0;
 	}

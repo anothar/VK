@@ -17,12 +17,35 @@
                 </Image>
                 <TextBlock x:Name="user_name" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Foreground="#FF42648B" Margin="5, 5, 0, 0"/>
             </StackPanel>
-           <TextBlock Margin="5, 0, 5, 0" TextWrapping="Wrap" x:Name="text" FontSize="0.1"/>
-           <StackPanel x:Name="photos" Margin="5, 0, 5, 0"></StackPanel>
-           <StackPanel x:Name="videos" Margin=" 5, 0, 5, 0"></StackPanel>
-            <StackPanel x:Name="polls" Margin="5, 0, 5, 0"></StackPanel>
-            <StackPanel x:Name="audios" Margin="5, 0, 5, 0"></StackPanel>
-            <StackPanel x:Name="links" Margin="5, 0, 5, 0"></StackPanel>
-            <StackPanel x:Name="repost" Margin="5, 0, 5, 5"></StackPanel>
+        <TextBlock Margin="5, 0, 5, 0" TextWrapping="Wrap" x:Name="text" FontSize="0.1"/>
+        <StackPanel x:Name="photos" Margin="5, 0, 5, 0"></StackPanel>
+        <StackPanel x:Name="videos" Margin=" 5, 0, 5, 0"></StackPanel>
+        <StackPanel x:Name="polls" Margin="5, 0, 5, 0"></StackPanel>
+        <StackPanel x:Name="audios" Margin="5, 0, 5, 0"></StackPanel>
+        <StackPanel x:Name="links" Margin="5, 0, 5, 0"></StackPanel>
+        <StackPanel x:Name="repost" Margin="5, 0, 5, 5"></StackPanel>
+        <Grid x:Name="foot" Margin="5, 5, 5, 5" Height="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid HorizontalAlignment="Right" Height="20" Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="15"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image Grid.Column="0" x:Name="likesImage"/>
+                <TextBlock Grid.Column="1" x:Name="likes" Margin="5, 0, 5, 0" Foreground="#7996b5" FontWeight="Bold"/>
+            </Grid>
+            <Grid HorizontalAlignment="Right" Height="20" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="15"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image x:Name="repImage" Grid.Column="0"/>
+                <TextBlock x:Name="reposts" Grid.Column="2" Margin="5, 0, 5, 0" Foreground="#7996b5" FontWeight="Bold"/>
+            </Grid>
+        </Grid>
     </StackPanel>
 </UserControl>

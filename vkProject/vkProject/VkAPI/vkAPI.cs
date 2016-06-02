@@ -259,6 +259,7 @@ namespace VkAPI
 						post.Copied_Post = new Post();
 						post.Copied_Post = getPost(item.FirstChild); break;
                     case "likes": post.Likes = Convert.ToInt32(item.FirstChild.InnerText); break;
+					case "reposts": post.Reposts = Convert.ToInt32(item.FirstChild.InnerText); break;
                 }
             }
             return post;

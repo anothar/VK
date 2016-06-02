@@ -138,6 +138,7 @@ namespace VkAPI.Controls
 			//stopping loading animating
 			loading.Pause();
 			loading.Visibility = Visibility.Hidden;
+
 			//writing image;
 			var stream = File.OpenRead(path_img);
 			BitmapImage im = new BitmapImage();
