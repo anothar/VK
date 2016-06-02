@@ -151,6 +151,25 @@ namespace VkAPI
             return whoLiked;
         }
         // Метод возвращает все записи, которые есть на стене пользователя, и список тех чьими записями пользаватель делился
+        public string getUserPhoto(int id)
+        {
+            string Photo_50 = null;
+            XmlDocument doc = new XmlDocument();
+
+            do
+                doc.LoadXml(get(Methods.Users.Get_Xml, "fields=photo_50&user_ids=" + id.ToString()));
+            while (doc.DocumentElement.Name != "response");
+
+            foreach (XmlNode item in doc.DocumentElement)
+                if (item.Name == "user")
+                    foreach (XmlNode it in item.ChildNodes)
+                        switch (it.Name)
+                        {
+                            case "photo_50": Photo_50 = it.InnerText; break;
+                        }
+
+            return Photo_50;
+        }
         public KeyValuePair<Dictionary<int, User>, List<Post>> getWall()
         {
             List<Post> Wall = new List<Post>();
@@ -488,7 +507,7 @@ namespace VkAPI
                                 switch (i.Name)
                                 {
                                     case "id": answer.Id = Convert.ToInt32(i.InnerText); break;
-                                    case "rate": answer.Rate = Convert.ToDouble(i.InnerText); break;
+                                    case "rate": answer.Rate = (double)Convert.ToUInt32(i.InnerText[2] + ((i.InnerText.Length == 4) ? i.InnerText[3] : ' ')) / 100; break;
                                     case "votes": answer.Votes = Convert.ToUInt32(i.InnerText); break;
                                     case "text": answer.Text = (i.OuterXml == "<text />" ? "" : i.InnerText); break;
                                 }

@@ -60,6 +60,10 @@ namespace VkAPI
 
             return whoLiked;
         }
+        public string getUserPhoto(int id)
+        {
+            return api.getUserPhoto(id);
+        }
         public string getVideoUrl(Media.Video video)
         {
             XmlDocument doc = new XmlDocument();

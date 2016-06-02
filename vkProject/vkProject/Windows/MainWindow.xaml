@@ -8,13 +8,13 @@
         xmlns:Controls="clr-namespace:VkAPI.Controls"
     x:Class="vkProject.MainWindow"
         mc:Ignorable="d"
-        Title="vkProject" Height="400" Width="600" MinHeight="300" MinWidth="300"
+        Title="vkProject" Height="600" Width="800" MinHeight="300" MinWidth="300" MaxWidth="800"
         Loaded="Window_Loaded"
         Closing="mainwindow_Closing">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="160"/>
-            <ColumnDefinition/>
+            <ColumnDefinition MaxWidth="640"/>
         </Grid.ColumnDefinitions>
         <StackPanel x:Name="tabs" Grid.Column="0">
             <Controls:ctrTabElement x:Name="tb_posts" Text="Стена" Checked="True" MouseLeftButtonUp="tb_posts_MouseLeftButtonUp"/>
@@ -32,10 +32,10 @@
             </StackPanel>
         </ScrollViewer>
         <ScrollViewer Grid.Column="1" x:Name="statViewer" Visibility="Hidden" Background="#EEEE">
-            <StackPanel x:Name="statistic">
+            <StackPanel x:Name="statistic" Margin="5, 5, 5, 5">
                 <StackPanel x:Name="statButtons">
                 </StackPanel>
-                
+                <Controls:ctrLikersList x:Name="stat"></Controls:ctrLikersList>
             </StackPanel>
         </ScrollViewer>
     </Grid>

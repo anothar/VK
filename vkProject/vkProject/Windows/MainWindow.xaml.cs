@@ -77,8 +77,8 @@ namespace vkProject
 		}
 		private void StatRefreshHB_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
-			statistic.Children.Clear();
-			statButtons.Children.Remove(sender as HoverButton);
+			statButtons.Children.Clear();
+            stat.Clear();
 			StatRefreshingHL.LoadWheelRotateBegin();
 			statButtons.Children.Add(StatRefreshingHL);
 			Task.Factory.StartNew(getStatistic);
@@ -103,19 +103,22 @@ namespace vkProject
 			}
 
             var whoLiked = Vk.getLikes(Wall);
-			VkAPI.Media.Poll LikeStat = new VkAPI.Media.Poll();
-
-			int sum = 0;
-			foreach(var ans in whoLiked)
-				sum += ans.Key;
-
-			foreach(var ans in whoLiked)
-				LikeStat.Answers.Add(new VkAPI.Media.Answer() { Rate = 100*ans.Key/sum, Text = String.Format("{0} {1}", ans.Value.First_name, ans.Value.Last_name), Votes = Convert.ToUInt32(ans.Key) });
+            
+            for(int i = 0; i < whoLiked.Count; ++i)
+            {
+                whoLiked[i].Value.Photo_50 = Vk.getUserPhoto(whoLiked[i].Value.User_id);
+                Dispatcher.Invoke(() => stat.Add(whoLiked[i]));
+            }
+            getStatisticComplete();
         }
-		private void getStatisticComplite()
+		private void getStatisticComplete()
 		{
-
-		}
+            Dispatcher.Invoke(() =>
+            {
+                statButtons.Children.Clear();
+                statButtons.Children.Add(StatRefreshHB);
+            });
+        }
 		private void tb_stat_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
 			tb_posts.Checked = false;
@@ -230,7 +233,7 @@ namespace vkProject
 		private string  access_token;
 		private int     user_id;
 		private ParseVkOutput Vk;
-		private int defaultcount = 1;
+		private int defaultcount = 50;
 		private int postBegin = 0;
 		private int postEnd = 0;
 	}
