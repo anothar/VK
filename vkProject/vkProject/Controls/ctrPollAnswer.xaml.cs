@@ -18,10 +18,7 @@ namespace VkAPI.Controls
 {
 	public partial class ctrPollAnswer : UserControl, IAnswer
 	{
-		public ctrPollAnswer()
-		{
-			InitializeComponent();
-		}
+		#region Конструкторы
 		public ctrPollAnswer(IAnswer ans, int ansId)
 		{
 			InitializeComponent();
@@ -34,6 +31,8 @@ namespace VkAPI.Controls
 			if(ansId == Id)
 				Answered = true;
 		}
+		#endregion
+		#region Поля интерфейса
 		public string Text
 		{
 			get
@@ -83,6 +82,12 @@ namespace VkAPI.Controls
 			}
 		}
 		public int Id { get; private set; }
+		#endregion
+		#region Поля
+		/// <summary>
+		/// Является ли данный ответ ответом текущего пользователя
+		/// </summary>
 		private bool answered = false;
+		#endregion
 	}
 }

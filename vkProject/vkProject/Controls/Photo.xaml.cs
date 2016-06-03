@@ -141,7 +141,7 @@ namespace VkAPI.Controls
 
 			//writing image;
 			var stream = File.OpenRead(path_img);
-			BitmapImage im = new BitmapImage();
+			im = new BitmapImage();
 			im.BeginInit();
 			im.CacheOption = BitmapCacheOption.OnLoad;
 			im.StreamSource = stream;
@@ -153,6 +153,7 @@ namespace VkAPI.Controls
 			text.Visibility = Visibility.Visible;
 			image.Source = im;
 		}
+		BitmapImage im;
 		private string path_img;
 		private WebClient web1;
 	}
