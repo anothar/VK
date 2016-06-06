@@ -20,17 +20,20 @@
             <Controls:ctrTabElement x:Name="tb_posts" Text="Стена" Checked="True" MouseLeftButtonUp="tb_posts_MouseLeftButtonUp"/>
             <Controls:ctrTabElement x:Name="tb_stat" Text="Статистика" MouseLeftButtonUp="tb_stat_MouseLeftButtonUp"/>
         </StackPanel>
-        <ScrollViewer x:Name="postViewer" Grid.Column="1" Visibility="Visible" Background="#EEEE">
-            <StackPanel Margin="5, 5, 5, 5">
-                <StackPanel x:Name="postButton">
-                </StackPanel>
-                <StackPanel x:Name="ShowBeforePanel"/>
+        <Grid x:Name="postViewer" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <ScrollViewer x:Name="postsStroller" Visibility="Visible" Background="#EEEE" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                 <StackPanel x:Name="posts">
                     <TextBlock HorizontalAlignment="Center" x:Name="countPost"  Text="0/0" Visibility="Hidden"/>
                 </StackPanel>
+            </ScrollViewer>
+            <StackPanel Height="auto" VerticalAlignment="Top" x:Name="UpperButtons">
+                <StackPanel x:Name="postButton" Margin="5, 5, 5, 0"/>
+                <StackPanel x:Name="ShowBeforePanel" Margin="5, 5, 5, 0"/>
+            </StackPanel>
+            <StackPanel VerticalAlignment="Bottom" Height="auto" x:Name="DownerButtons">
                 <StackPanel x:Name="ShowAfterPanel"/>
             </StackPanel>
-        </ScrollViewer>
+        </Grid>
         <ScrollViewer Grid.Column="1" x:Name="statViewer" Visibility="Hidden" Background="#EEEE">
             <StackPanel x:Name="statistic" Margin="5, 5, 5, 5">
                 <StackPanel x:Name="statButtons">

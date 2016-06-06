@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Windows.Media.Animation;
 using System.Threading;
 using System.Drawing;
 using System.Threading.Tasks;
@@ -48,10 +49,14 @@ namespace vkProject
 
 			ShowBefore = new HoverButton();
 			ShowBefore.Text = "Показать предыдущие ↑";
+			ShowBeforePanel.Children.Add(ShowBefore);
+			ShowBeforePanel.Visibility = Visibility.Hidden;
 			ShowBefore.MouseLeftButtonUp += ShowBefore_MouseLeftButtonUp;
 
 			ShowAfter = new HoverButton();
 			ShowAfter.Text = "Показать следуюущие ↓";
+			ShowAfterPanel.Children.Add(ShowAfter);
+			ShowAfterPanel.Visibility = Visibility.Hidden;
 			ShowAfter.MouseLeftButtonUp += ShowAfter_MouseLeftButtonUp;
 		}
 		#endregion
@@ -60,7 +65,7 @@ namespace vkProject
 		/// Вызывается при нажатии на кнопку "Показать следующие"
 		/// </summary>
 		private void ShowAfter_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-		{
+		{			
 			int begin = postEnd;
 			int end = Math.Min(begin+defaultcount, Wall.Count);
 			Task.Factory.StartNew(() => StartShowPosts(begin, end));
@@ -107,8 +112,8 @@ namespace vkProject
 		{
 			posts.Children.RemoveRange(1, posts.Children.Count - 1);
 			postButton.Children.Remove(sender as HoverButton);
-			ShowAfterPanel.Children.Remove(ShowAfter);
-			ShowBeforePanel.Children.Remove(ShowBefore);
+			ShowAfterPanel.Visibility = Visibility.Hidden;
+			ShowBeforePanel.Visibility = Visibility.Hidden;
 			RefreshingHL.LoadWheelRotateBegin();
 			postButton.Children.Add(RefreshingHL);
 			Task.Factory.StartNew(StartPreLoadWall);
@@ -216,12 +221,13 @@ namespace vkProject
 			Dispatcher.Invoke(() => 
 			{
 				postButton.Children.Remove(RefreshHB);
-				ShowAfterPanel.Children.Remove(ShowAfter);
-				ShowBeforePanel.Children.Remove(ShowBefore);
+				ShowAfterPanel.Visibility = Visibility.Hidden;
+				ShowBeforePanel.Visibility = Visibility.Hidden;
 
 				RefreshingLayoutHL.LoadWheelRotateBegin();
 				postButton.Children.Add(RefreshingLayoutHL);
 				posts.Children.RemoveRange(1, posts.Children.Count - 1);
+				postsStroller.ScrollToTop();
 			});
 
 			ShowPosts(begin, end);
@@ -271,11 +277,11 @@ namespace vkProject
 
 			if(postEnd != Wall.Count)
 			{
-				Dispatcher.Invoke(() => ShowAfterPanel.Children.Add(ShowAfter));
+				Dispatcher.Invoke(() => ShowAfterPanel.Visibility = Visibility.Visible);
 			}
 			if(postBegin != 0)
 			{
-				Dispatcher.Invoke(() => ShowBeforePanel.Children.Add(ShowBefore));
+				Dispatcher.Invoke(() => ShowBeforePanel.Visibility = Visibility.Visible);
 			}
 		}
 		#endregion
@@ -335,5 +341,6 @@ namespace vkProject
 		/// </summary>
 		private int postEnd = 0;
 		#endregion
+
 	}
 }
