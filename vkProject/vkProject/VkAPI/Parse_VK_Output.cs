@@ -64,15 +64,6 @@ namespace VkAPI
         {
             return api.getUserPhoto(id);
         }
-        public string getVideoUrl(Media.Video video)
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(api.get("video.get.xml", "owner_id=" + video.Owner_id + "videos=" + video.Owner_id + '_' + video.Id + '_' + video.Access_key));
-            foreach (XmlNode item in doc.DocumentElement.ChildNodes[1].ChildNodes)
-                if (item.Name == "player")
-                    video.Player = item.FirstChild.Value;
-            return video.Player;
-        }
 
         vkAPI api;
 	}

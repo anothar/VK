@@ -435,7 +435,17 @@ namespace VkAPI
                     case "access_key": video.Access_key = item.InnerText; break;
                 }
             }
+            video.Player = getVideoUrl(video);
             return video;
+        }
+        string getVideoUrl(Media.Video video)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(get("video.get.xml", "owner_id=" + video.Owner_id + "videos=" + video.Owner_id + '_' + video.Id + '_' + video.Access_key));
+            foreach (XmlNode item in doc.DocumentElement.ChildNodes[1].ChildNodes)
+                if (item.Name == "player")
+                    video.Player = item.FirstChild.Value;
+            return video.Player;
         }
         Media.Graffity getGraffity(XmlNode node)
         {
