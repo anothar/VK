@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Windows.Media.Animation;
 using System.Threading;
 using System.Drawing;
 using System.Threading.Tasks;
@@ -25,6 +26,7 @@ namespace vkProject
 
 	public partial class MainWindow : Window
 	{
+		#region Конструкторы
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -46,23 +48,40 @@ namespace vkProject
 			StatRefreshingHL.Text = "Обновление";
 
 			ShowBefore = new HoverButton();
+			ShowBefore.Text = "Показать предыдущие ↑";
+			ShowBeforePanel.Children.Add(ShowBefore);
+			ShowBeforePanel.Visibility = Visibility.Hidden;
 			ShowBefore.MouseLeftButtonUp += ShowBefore_MouseLeftButtonUp;
+
 			ShowAfter = new HoverButton();
+			ShowAfter.Text = "Показать следуюущие ↓";
+			ShowAfterPanel.Children.Add(ShowAfter);
+			ShowAfterPanel.Visibility = Visibility.Hidden;
 			ShowAfter.MouseLeftButtonUp += ShowAfter_MouseLeftButtonUp;
 		}
-
+		#endregion
+		#region События
+		/// <summary>
+		/// Вызывается при нажатии на кнопку "Показать следующие"
+		/// </summary>
 		private void ShowAfter_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-		{
+		{			
 			int begin = postEnd;
 			int end = Math.Min(begin+defaultcount, Wall.Count);
 			Task.Factory.StartNew(() => StartShowPosts(begin, end));
 		}
+		/// <summary>
+		/// Вызывается при нажатии на кнопку "Показать предыдущие"
+		/// </summary>
 		private void ShowBefore_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
 			int end = postBegin;
 			int begin = Math.Max(end-defaultcount, 0);
 			Task.Factory.StartNew(() => StartShowPosts(begin, end));
 		}
+		/// <summary>
+		/// Вызывается при загрузке главного окна
+		/// </summary>
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
             WebGetter brouser = new WebGetter();
@@ -75,6 +94,9 @@ namespace vkProject
 			postButton.Children.Add(RefreshHB);
 			statButtons.Children.Add(StatRefreshHB);
 		}
+		/// <summary>
+		/// Вызывается при нажатии на кнопку "Обновить" для статистики
+		/// </summary>
 		private void StatRefreshHB_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
 			statButtons.Children.Clear();
@@ -83,16 +105,55 @@ namespace vkProject
 			statButtons.Children.Add(StatRefreshingHL);
 			Task.Factory.StartNew(getStatistic);
 		}
+		/// <summary>
+		/// Вызывается при нажатии на кнопку "Обновить" записей
+		/// </summary>
 		private void RefreshBt_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
 			posts.Children.RemoveRange(1, posts.Children.Count - 1);
 			postButton.Children.Remove(sender as HoverButton);
-			ShowAfterPanel.Children.Remove(ShowAfter);
-			ShowBeforePanel.Children.Remove(ShowBefore);
+			ShowAfterPanel.Visibility = Visibility.Hidden;
+			ShowBeforePanel.Visibility = Visibility.Hidden;
 			RefreshingHL.LoadWheelRotateBegin();
 			postButton.Children.Add(RefreshingHL);
 			Task.Factory.StartNew(StartPreLoadWall);
 		}
+		/// <summary>
+		/// Вызывается при переходе на вкладку "Статистика"
+		/// </summary>
+		private void tb_stat_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+		{
+			tb_posts.Checked = false;
+			tb_stat.Checked = true;
+			postViewer.Visibility = Visibility.Hidden;
+			statViewer.Visibility = Visibility.Visible;
+		}
+		/// <summary>
+		/// Вызывается при переходе на вкладку "Записи"
+		/// </summary>
+		private void tb_posts_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+		{
+			tb_posts.Checked = true;
+			tb_stat.Checked = false;
+			postViewer.Visibility = Visibility.Visible;
+			statViewer.Visibility = Visibility.Hidden;
+		}
+		/// <summary>
+		/// Вызывается при закрытии окна
+		/// </summary>
+		private void mainwindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			if (Global.temporary != null)
+			{
+				foreach(var file in Global.temporary)
+					File.Delete(file);
+			}
+		}
+		#endregion
+		#region Методы
+		/// <summary>
+		/// Метод, начинающий загрузку и отображение статистики
+		/// </summary>
 		private void getStatistic()
         {
 			if (Wall == null)
@@ -111,6 +172,9 @@ namespace vkProject
             }
             getStatisticComplete();
         }
+		/// <summary>
+		/// Метод, завершающий загрузку и отображение статистики
+		/// </summary>
 		private void getStatisticComplete()
 		{
             Dispatcher.Invoke(() =>
@@ -119,29 +183,10 @@ namespace vkProject
                 statButtons.Children.Add(StatRefreshHB);
             });
         }
-		private void tb_stat_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-		{
-			tb_posts.Checked = false;
-			tb_stat.Checked = true;
-			postViewer.Visibility = Visibility.Hidden;
-			statViewer.Visibility = Visibility.Visible;
-		}
-		private void tb_posts_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-		{
-			tb_posts.Checked = true;
-			tb_stat.Checked = false;
-			postViewer.Visibility = Visibility.Visible;
-			statViewer.Visibility = Visibility.Hidden;
-		}
-		private void mainwindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-		{
-			if (Global.temporary != null)
-			{
-				foreach(var file in Global.temporary)
-					File.Delete(file);
-			}
-		}
 
+		/// <summary>
+		/// Метод, начинающий предварительную загрузку записей
+		/// </summary>
 		private void StartPreLoadWall()
 		{
 			var arr = Vk.getWall();
@@ -151,6 +196,11 @@ namespace vkProject
 				postEnd = Math.Min(Wall.Count, defaultcount);
 			Task.Factory.StartNew(() => EndPreLoadWall(postBegin, postEnd));
 		}
+		/// <summary>
+		/// Метод, заверающий предварительную загрузку записей
+		/// </summary>
+		/// <param name="begin">Итератор на первую запись, которая должна быть отображена</param>
+		/// <param name="end">Итератор на последнюю запись, котораю не должна быть отображена</param>
 		private void EndPreLoadWall(int begin, int end)
 		{
 			Dispatcher.Invoke(() =>
@@ -161,21 +211,32 @@ namespace vkProject
 			Task.Factory.StartNew(() => StartShowPosts(begin, end));
 		}
 
+		/// <summary>
+		/// Метод, начинающий отображение записей в окне
+		/// </summary>
+		/// <param name="begin">Итератор на первую запись, которая должна быть отображена</param>
+		/// <param name="end">Итератор на последнюю запись, котораю не должна быть отображена</param>
 		private void StartShowPosts(int begin, int end)
 		{
 			Dispatcher.Invoke(() => 
 			{
 				postButton.Children.Remove(RefreshHB);
-				ShowAfterPanel.Children.Remove(ShowAfter);
-				ShowBeforePanel.Children.Remove(ShowBefore);
+				ShowAfterPanel.Visibility = Visibility.Hidden;
+				ShowBeforePanel.Visibility = Visibility.Hidden;
 
 				RefreshingLayoutHL.LoadWheelRotateBegin();
 				postButton.Children.Add(RefreshingLayoutHL);
 				posts.Children.RemoveRange(1, posts.Children.Count - 1);
+				postsStroller.ScrollToTop();
 			});
 
 			ShowPosts(begin, end);
 		}
+		/// <summary>
+		/// Метод, отображающий записи в окне
+		/// </summary>
+		/// <param name="begin">Итератор на первую запись, которая должна быть отображена</param>
+		/// <param name="end">Итератор на последнюю запись, котораю не должна быть отображена</param>
 		private void ShowPosts(int begin, int end)
 		{
 			int outed = 0;
@@ -196,6 +257,11 @@ namespace vkProject
 			}
 			EndShowPosts(begin, end);
 		}
+		/// <summary>
+		/// Метод, закнчивающий отображение записей в окне
+		/// </summary>
+		/// <param name="begin">Итератор на первую запись, которая должна быть отображена</param>
+		/// <param name="end">Итератор на последнюю запись, котораю не должна быть отображена</param>
 		private void EndShowPosts(int begin, int end)
 		{
 			Dispatcher.Invoke(() =>
@@ -211,30 +277,70 @@ namespace vkProject
 
 			if(postEnd != Wall.Count)
 			{
-				Dispatcher.Invoke(() => ShowAfter.Text = "Показать следуюущие ↓");
-				Dispatcher.Invoke(() => ShowAfterPanel.Children.Add(ShowAfter));
+				Dispatcher.Invoke(() => ShowAfterPanel.Visibility = Visibility.Visible);
 			}
 			if(postBegin != 0)
 			{
-				Dispatcher.Invoke(() => ShowBefore.Text = "Показать предыдущие ↑");
-				Dispatcher.Invoke(() => ShowBeforePanel.Children.Add(ShowBefore));
+				Dispatcher.Invoke(() => ShowBeforePanel.Visibility = Visibility.Visible);
 			}
 		}
-
+		#endregion
+		#region Поля
+		/// <summary>
+		/// Анимированная панель загрузки для записей
+		/// </summary>
 		private HoverLoading RefreshingHL;
+		/// <summary>
+		/// Анимированная панель загрузки для отображения записей
+		/// </summary>
 		private HoverLoading RefreshingLayoutHL;
+		/// <summary>
+		/// Анимированная панель загрузки для статистики
+		/// </summary>
 		private HoverLoading StatRefreshingHL;
+		/// <summary>
+		/// Кнопка "Обновить" для записей
+		/// </summary>
 		private HoverButton RefreshHB;
+		/// <summary>
+		/// Кнопка "Обновить" для статистики
+		/// </summary>
 		private HoverButton StatRefreshHB;
+		/// <summary>
+		/// Кнопка "Показать следующие" для записей
+		/// </summary>
 		private HoverButton ShowBefore;
+		/// <summary>
+		/// Кнопка "Показать предыдущие" для записей
+		/// </summary>
 		private HoverButton ShowAfter;
+		/// <summary>
+		/// Словарь всех пользователей, упомянутых на стене. Доступ осуществляется по Id
+		/// </summary>
 		private Dictionary<int, User> users;
+		/// <summary>
+		/// Список всех записей на стене пользователя
+		/// </summary>
 		private List<Post> Wall;
 		private string  access_token;
 		private int     user_id;
+		/// <summary>
+		/// Интерфейс взаимодействия с VkAPI
+		/// </summary>
 		private ParseVkOutput Vk;
-		private int defaultcount = 50;
+		/// <summary>
+		/// Количество подгружаемых записей за раз
+		/// </summary>
+		private int defaultcount = 5;
+		/// <summary>
+		/// Итератор на первую запись, которая в данный момент отображена
+		/// </summary>
 		private int postBegin = 0;
+		/// <summary>
+		/// Итератор на последнюю запись, которая в данный момент отображена
+		/// </summary>
 		private int postEnd = 0;
+		#endregion
+
 	}
 }

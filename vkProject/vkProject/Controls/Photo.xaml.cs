@@ -85,18 +85,15 @@ namespace VkAPI.Controls
 			da.To = 1.0;
 			text.BeginAnimation(OpacityProperty, da);
 		}
-		public string smallImage
+		private string smallImage
 		{
-			get
-			{
-				return path_img;
-			}
+			get { return null; }
 			set
 			{
-				GetImg(value);
+				image.Source = new BitmapImage(new Uri(value));
 			}
 		}
-		public string bigImage { get; private set; }
+		private string bigImage { get; set; }
 
 		public string Text
 		{
@@ -117,43 +114,5 @@ namespace VkAPI.Controls
 		public string Photo_807	 { get; private set; }
 		public string Photo_1280 { get; private set; }
 		public string Photo_2560 { get; private set; }
-
-		private void GetImg(string url)
-		{
-			//начать загрузку
-			web1 = new WebClient();
-			string path_temp = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + 
-														ConfigurationManager.AppSettings["tempDirectory"] + 
-														vkProject.Global.temporary_name + Path.GetExtension(url);
-
-			web1.DownloadFileAsync(new Uri(url), path_temp);
-			path_img = path_temp;
-			web1.DownloadFileCompleted += Web1_DownloadFileCompleted;
-
-			//начать крутить картинку загрузки
-			loading.Play();
-		}
-		private void Web1_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
-		{
-			//stopping loading animating
-			loading.Pause();
-			loading.Visibility = Visibility.Hidden;
-
-			//writing image;
-			var stream = File.OpenRead(path_img);
-			BitmapImage im = new BitmapImage();
-			im.BeginInit();
-			im.CacheOption = BitmapCacheOption.OnLoad;
-			im.StreamSource = stream;
-			im.EndInit();
-			stream.Close();
-
-			vkProject.Global.temporary.Add(path_img);
-			loading.Visibility = Visibility.Hidden;
-			text.Visibility = Visibility.Visible;
-			image.Source = im;
-		}
-		private string path_img;
-		private WebClient web1;
 	}
 }
