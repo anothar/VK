@@ -441,8 +441,11 @@ namespace VkAPI
         string getVideoUrl(Media.Video video)
         {
             XmlDocument doc = new XmlDocument();
-            doc.LoadXml(get("video.get.xml", "owner_id=" + video.Owner_id + "videos=" + video.Owner_id + '_' + video.Id + '_' + video.Access_key));
-            foreach (XmlNode item in doc.DocumentElement.ChildNodes[1].ChildNodes)
+            do
+                doc.LoadXml(get("video.get.xml", "owner_id=" + video.Owner_id + "&videos=" + video.Owner_id + '_' + video.Id + '_' + video.Access_key));
+            while (doc.DocumentElement.Name != "response");
+            if(doc.DocumentElement.ChildNodes[1].ChildNodes.Count != 0)
+            foreach (XmlNode item in doc.DocumentElement.ChildNodes[1].ChildNodes[0].ChildNodes)
                 if (item.Name == "player")
                     video.Player = item.FirstChild.Value;
             return video.Player;
