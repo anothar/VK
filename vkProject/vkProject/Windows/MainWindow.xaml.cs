@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Configuration;
 using System.Windows;
 using System.IO;
 using System.Windows.Controls;
@@ -58,6 +59,9 @@ namespace vkProject
 			ShowAfterPanel.Children.Add(ShowAfter);
 			ShowAfterPanel.Visibility = Visibility.Hidden;
 			ShowAfter.MouseLeftButtonUp += ShowAfter_MouseLeftButtonUp;
+			defaultcount = Convert.ToInt32(ConfigurationManager.AppSettings["defaultcount"]);
+
+			StatRefreshHB_MouseLeftButtonUp(RefreshHB, null);
 		}
 		#endregion
 		#region События
@@ -110,7 +114,7 @@ namespace vkProject
 		/// </summary>
 		private void RefreshBt_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
-			posts.Children.RemoveRange(1, posts.Children.Count - 1);
+			posts.Children.Clear();
 			postButton.Children.Remove(sender as HoverButton);
 			ShowAfterPanel.Visibility = Visibility.Hidden;
 			ShowBeforePanel.Visibility = Visibility.Hidden;
@@ -226,7 +230,7 @@ namespace vkProject
 
 				RefreshingLayoutHL.LoadWheelRotateBegin();
 				postButton.Children.Add(RefreshingLayoutHL);
-				posts.Children.RemoveRange(1, posts.Children.Count - 1);
+				posts.Children.Clear();
 				postsStroller.ScrollToTop();
 			});
 
@@ -341,6 +345,13 @@ namespace vkProject
 		/// </summary>
 		private int postEnd = 0;
 		#endregion
-
 	}
 }
+/*
+1. Первая загрузка данных
+2. Обновление интерфейса при подходе к нижней границе
+3. Кнопки вход, выход.
+4. Сохранение авторизации при повторном входе
+5. Фоноввая загрузка картинки с бегунком
+6. Выбор поста в том же окне
+*/
