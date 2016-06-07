@@ -331,7 +331,7 @@ namespace vkProject
 		/// <summary>
 		/// Количество подгружаемых записей за раз
 		/// </summary>
-		private int defaultcount = 5;
+		private int defaultcount = 50;
 		/// <summary>
 		/// Итератор на первую запись, которая в данный момент отображена
 		/// </summary>
