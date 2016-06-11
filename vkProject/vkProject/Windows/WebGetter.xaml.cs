@@ -30,7 +30,7 @@ namespace vkProject
 		{
 			brouser.Source = new Uri("https://oauth.vk.com/authorize?client_id=" +
 									  ConfigurationManager.AppSettings["client_id"] + '&' +
-									  "redirect_uri=https://oauth.vk.com/blank.html&display=page&scope=wall,friends,video&revoke=1&response_type=token&v=5.50");
+									  "redirect_uri=https://oauth.vk.com/blank.html&display=page&scope=wall,friends,video&response_type=token&v=5.52");
 		}
 		private void brouser_LoadCompleted(object sender, NavigationEventArgs e)
 		{

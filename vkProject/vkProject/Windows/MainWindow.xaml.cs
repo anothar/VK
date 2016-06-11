@@ -60,8 +60,6 @@ namespace vkProject
 			ShowAfterPanel.Visibility = Visibility.Hidden;
 			ShowAfter.MouseLeftButtonUp += ShowAfter_MouseLeftButtonUp;
 			defaultcount = Convert.ToInt32(ConfigurationManager.AppSettings["defaultcount"]);
-
-			StatRefreshHB_MouseLeftButtonUp(RefreshHB, null);
 		}
 		#endregion
 		#region События
@@ -97,7 +95,9 @@ namespace vkProject
 
 			postButton.Children.Add(RefreshHB);
 			statButtons.Children.Add(StatRefreshHB);
-		}
+
+            RefreshBt_MouseLeftButtonUp(null, null);
+        }
 		/// <summary>
 		/// Вызывается при нажатии на кнопку "Обновить" для статистики
 		/// </summary>
@@ -110,16 +110,16 @@ namespace vkProject
 			Task.Factory.StartNew(getStatistic);
 		}
 		/// <summary>
-		/// Вызывается при нажатии на кнопку "Обновить" записей
+		/// Вызывается при нажатии на кнопку "Обновить" для записей
 		/// </summary>
 		private void RefreshBt_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
 			posts.Children.Clear();
-			postButton.Children.Remove(sender as HoverButton);
-			ShowAfterPanel.Visibility = Visibility.Hidden;
-			ShowBeforePanel.Visibility = Visibility.Hidden;
+			postButton.Children.Clear();
 			RefreshingHL.LoadWheelRotateBegin();
 			postButton.Children.Add(RefreshingHL);
+			ShowAfterPanel.Visibility = Visibility.Hidden;
+			ShowBeforePanel.Visibility = Visibility.Hidden;
 			Task.Factory.StartNew(StartPreLoadWall);
 		}
 		/// <summary>
@@ -352,6 +352,6 @@ namespace vkProject
 2. Обновление интерфейса при подходе к нижней границе
 3. Кнопки вход, выход.
 4. Сохранение авторизации при повторном входе
-5. Фоноввая загрузка картинки с бегунком
+5. Фоновая загрузка картинки с бегунком
 6. Выбор поста в том же окне
 */
