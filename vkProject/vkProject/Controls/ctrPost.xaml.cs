@@ -26,6 +26,7 @@ namespace VkAPI.Controls
 			InitializeComponent();
 			CopyPost(post);
 			LoadUserInformation(user);
+            LoadDate(Date);
 			BeginLayoutDesign(null, true);
 		}
 		public ctrPost(IPost post, User user)
@@ -33,14 +34,16 @@ namespace VkAPI.Controls
 			InitializeComponent();
 			CopyPost(post);
 			LoadUserInformation(user);
-			BeginLayoutDesign(null, false);
+            LoadDate(Date);
+            BeginLayoutDesign(null, false);
 		}
 		public ctrPost(IPost post, User user, User RepUser)
 		{
 			InitializeComponent();
 			CopyPost(post);
 			LoadUserInformation(user);
-			BeginLayoutDesign(RepUser, false);
+            LoadDate(Date);
+            BeginLayoutDesign(RepUser, false);
 		}
 		#endregion
 		#region Поля интерфейса
@@ -134,8 +137,8 @@ namespace VkAPI.Controls
 		/// <param name="repUser">Пользователь, у которого сделали репост (null, если нет)</param>
 		private void BeginLayoutDesign(User repUser, bool rep)
 		{
-			if (Copied_Post != null)
-				repost.Children.Add(new ctrPost(Copied_Post, repUser, true));
+            if (Copied_Post != null)
+                repost.Children.Add(new ctrPost(Copied_Post, repUser, true));
 
 			if(!rep)
 			{
@@ -156,7 +159,12 @@ namespace VkAPI.Controls
 			else
 			{
 				foot.Height = 0;
-			}
+                user_ico.Width = 40;
+                user_ico.Height = 40;
+                user_ico_circle.RadiusX = 20;
+                user_ico_circle.RadiusY = 20;
+                user_ico_circle.Rect = new Rect(0, 0, 40, 40);
+            }
 			if(Videos != null)
 			{
                 videos.Margin = new Thickness(5, 0, 5, 5);
@@ -197,13 +205,20 @@ namespace VkAPI.Controls
 		{
 			User_photo = user.Photo_50;
 			User_name = String.Format("{0} {1}", user.First_name, user.Last_name);
-		}
-		#endregion
-		#region Поля
-		/// <summary>
-		/// Путь к иконке пользователя
-		/// </summary>
-		private string user_photo_url;
+		}/// <summary>
+         /// Загружает информацию о дате создания записи
+         /// </summary>
+         /// <param name="date">Владелец</param>
+        private void LoadDate(int unix_time)
+        {
+            date.Text = (new DateTime(1970, 1, 1, 5, 0, 0)).AddSeconds(unix_time).ToString();
+        }
+        #endregion
+        #region Поля
+        /// <summary>
+        /// Путь к иконке пользователя
+        /// </summary>
+        private string user_photo_url;
 		/// <summary>
 		/// Картинка пользователя
 		/// </summary>

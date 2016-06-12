@@ -100,6 +100,23 @@ namespace vkProject
 			Task.Factory.StartNew(() => StartShowPosts(begin, end));
 		}
 		/// <summary>
+		/// Вызывается при загрузке главного окна
+		/// </summary>
+		private void Window_Loaded(object sender, RoutedEventArgs e)
+		{
+            WebGetter brouser = new WebGetter();
+            brouser.ShowDialog();
+
+            access_token = brouser.access_token;
+            user_id = brouser.user_id;
+			Vk = new ParseVkOutput(new vkAPI(access_token, user_id));
+
+			postButton.Children.Add(RefreshHB);
+			statButtons.Children.Add(StatRefreshHB);
+
+            RefreshBt_MouseLeftButtonUp(null, null);
+        }
+		/// <summary>
 		/// Вызывается при нажатии на кнопку "Обновить" для статистики
 		/// </summary>
 		private void StatRefreshHB_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -111,7 +128,7 @@ namespace vkProject
 			Task.Factory.StartNew(getStatistic);
 		}
 		/// <summary>
-		/// Вызывается при нажатии на кнопку "Обновить" записей
+		/// Вызывается при нажатии на кнопку "Обновить" для записей
 		/// </summary>
 		private void RefreshBt_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
@@ -133,6 +150,15 @@ namespace vkProject
 				foreach(var file in Global.temporary)
 					File.Delete(file);
 			}
+        }
+        /// <summary>
+        /// Вызывается при прокручивании стены
+        /// </summary>
+        private void postsStroller_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            double x = postsStroller.ScrollableHeight - e.VerticalOffset;
+            if (x < 2000 && postsStroller.ScrollableHeight > 2000)
+                ShowAfter_MouseLeftButtonUp(null, null);
 		}
 		#endregion
 		#region Методы
@@ -210,9 +236,9 @@ namespace vkProject
 				ShowBeforeButton.Visibility = Visibility.Hidden;
 
 				RefreshingLayoutHL.LoadWheelRotateBegin();
-				PostButton = RefreshingLayoutHL;
-				posts.Children.Clear();
-				postsStroller.ScrollToTop();
+				postButton.Children.Add(RefreshingLayoutHL);
+				//posts.Children.Clear();
+				//postsStroller.ScrollToTop();
 			});
 
 			ShowPosts(begin, end);
@@ -225,19 +251,19 @@ namespace vkProject
 		private void ShowPosts(int begin, int end)
 		{
 			int outed = 0;
-			Dispatcher.Invoke(() => countPost.Visibility = Visibility.Visible);
-			Dispatcher.Invoke(() => countPost.Text = String.Format("{0}/{1}", outed, end - begin));
+			//Dispatcher.Invoke(() => countPost.Visibility = Visibility.Visible);
+			//Dispatcher.Invoke(() => countPost.Text = String.Format("{0}/{1}", outed, end - begin));
 			for(int i = begin; i != end; ++i)
 			{
 				User curuser;
-				curuser = users[Wall[i].Owner_id];
+				curuser = users[Wall[i].From_id];
 				User curRepUser = null;
 				if(Wall[i].Copied_Post != null)
 					curRepUser = users[Math.Abs(Wall[i].Copied_Post.Owner_id)];
 
 				++outed;
 				Dispatcher.Invoke(() => posts.Children.Add(new ctrPost(Wall[i], curuser, curRepUser)));
-				Dispatcher.Invoke(() => countPost.Text = String.Format("{0}/{1}", outed, end - begin));
+				//Dispatcher.Invoke(() => countPost.Text = String.Format("{0}/{1}", outed, end - begin));
 				Thread.Sleep(50);
 			}
 			EndShowPosts(begin, end);
@@ -262,11 +288,11 @@ namespace vkProject
 
 			if(postEnd != Wall.Count)
 			{
-				Dispatcher.Invoke(() => ShowAfterButton.Visibility = Visibility.Visible);
+				//Dispatcher.Invoke(() => ShowAfterPanel.Visibility = Visibility.Visible);
 			}
 			if(postBegin != 0)
 			{
-				Dispatcher.Invoke(() => ShowBeforeButton.Visibility = Visibility.Visible);
+				//Dispatcher.Invoke(() => ShowBeforePanel.Visibility = Visibility.Visible);
 			}
 		}
 		#endregion
@@ -316,7 +342,7 @@ namespace vkProject
 		/// <summary>
 		/// Количество подгружаемых записей за раз
 		/// </summary>
-		private int defaultcount = 5;
+		private int defaultcount = 50;
 		/// <summary>
 		/// Итератор на первую запись, которая в данный момент отображена
 		/// </summary>
@@ -377,6 +403,6 @@ namespace vkProject
 2. Обновление интерфейса при подходе к нижней границе
 3. Кнопки вход, выход.
 4. Сохранение авторизации при повторном входе
-5. Фоноввая загрузка картинки с бегунком
+5. Фоновая загрузка картинки с бегунком
 6. Выбор поста в том же окне
 */
