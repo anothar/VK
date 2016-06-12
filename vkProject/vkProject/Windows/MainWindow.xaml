@@ -21,7 +21,7 @@
             <Controls:ctrTabElement x:Name="tb_stat" Text="Статистика" MouseLeftButtonUp="tb_stat_MouseLeftButtonUp"/>
         </StackPanel>
         <Grid x:Name="postViewer" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-            <ScrollViewer x:Name="postsStroller" Visibility="Visible" Background="#EEEE" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <ScrollViewer x:Name="postsStroller" Visibility="Visible" Background="#EEEE" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ScrollChanged="postsStroller_ScrollChanged">
                 <StackPanel x:Name="posts">
                 </StackPanel>
             </ScrollViewer>

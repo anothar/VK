@@ -152,13 +152,22 @@ namespace vkProject
 				foreach(var file in Global.temporary)
 					File.Delete(file);
 			}
-		}
-		#endregion
-		#region Методы
-		/// <summary>
-		/// Метод, начинающий загрузку и отображение статистики
-		/// </summary>
-		private void getStatistic()
+        }
+        /// <summary>
+        /// Вызывается при прокручивании стены
+        /// </summary>
+        private void postsStroller_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            double x = postsStroller.ScrollableHeight - e.VerticalOffset;
+            if (x < 2000 && postsStroller.ScrollableHeight > 2000)
+                ShowAfter_MouseLeftButtonUp(null, null);
+        }
+        #endregion
+        #region Методы
+        /// <summary>
+        /// Метод, начинающий загрузку и отображение статистики
+        /// </summary>
+        private void getStatistic()
         {
 			if (Wall == null)
 			{
@@ -230,8 +239,8 @@ namespace vkProject
 
 				RefreshingLayoutHL.LoadWheelRotateBegin();
 				postButton.Children.Add(RefreshingLayoutHL);
-				posts.Children.Clear();
-				postsStroller.ScrollToTop();
+				//posts.Children.Clear();
+				//postsStroller.ScrollToTop();
 			});
 
 			ShowPosts(begin, end);
@@ -244,19 +253,19 @@ namespace vkProject
 		private void ShowPosts(int begin, int end)
 		{
 			int outed = 0;
-			Dispatcher.Invoke(() => countPost.Visibility = Visibility.Visible);
-			Dispatcher.Invoke(() => countPost.Text = String.Format("{0}/{1}", outed, end - begin));
+			//Dispatcher.Invoke(() => countPost.Visibility = Visibility.Visible);
+			//Dispatcher.Invoke(() => countPost.Text = String.Format("{0}/{1}", outed, end - begin));
 			for(int i = begin; i != end; ++i)
 			{
 				User curuser;
-				curuser = users[Wall[i].Owner_id];
+				curuser = users[Wall[i].From_id];
 				User curRepUser = null;
 				if(Wall[i].Copied_Post != null)
 					curRepUser = users[Math.Abs(Wall[i].Copied_Post.Owner_id)];
 
 				++outed;
 				Dispatcher.Invoke(() => posts.Children.Add(new ctrPost(Wall[i], curuser, curRepUser)));
-				Dispatcher.Invoke(() => countPost.Text = String.Format("{0}/{1}", outed, end - begin));
+				//Dispatcher.Invoke(() => countPost.Text = String.Format("{0}/{1}", outed, end - begin));
 				Thread.Sleep(50);
 			}
 			EndShowPosts(begin, end);
@@ -281,11 +290,11 @@ namespace vkProject
 
 			if(postEnd != Wall.Count)
 			{
-				Dispatcher.Invoke(() => ShowAfterPanel.Visibility = Visibility.Visible);
+				//Dispatcher.Invoke(() => ShowAfterPanel.Visibility = Visibility.Visible);
 			}
 			if(postBegin != 0)
 			{
-				Dispatcher.Invoke(() => ShowBeforePanel.Visibility = Visibility.Visible);
+				//Dispatcher.Invoke(() => ShowBeforePanel.Visibility = Visibility.Visible);
 			}
 		}
 		#endregion
@@ -344,8 +353,8 @@ namespace vkProject
 		/// Итератор на последнюю запись, которая в данный момент отображена
 		/// </summary>
 		private int postEnd = 0;
-		#endregion
-	}
+        #endregion
+    }
 }
 /*
 1. Первая загрузка данных

@@ -163,6 +163,7 @@ namespace VkAPI.Controls
                 user_ico.Height = 40;
                 user_ico_circle.RadiusX = 20;
                 user_ico_circle.RadiusY = 20;
+                user_ico_circle.Rect = new Rect(0, 0, 40, 40);
             }
 			if(Videos != null)
 			{
