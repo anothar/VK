@@ -6,13 +6,82 @@
              xmlns:local="clr-namespace:VkAPI.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Style x:Key="Degradation">
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="Control.MouseLeave">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation To="0.65" Duration="0:0:0.3" Storyboard.TargetProperty="Opacity"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Control.MouseEnter">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Duration="0:0:0.3" Storyboard.TargetProperty="Opacity" To="1"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ShowHideStyle">
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="Control.MouseEnter">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation To="0" Storyboard.TargetProperty="Opacity" Duration="0:0:0.3"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Control.MouseLeave">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation To="1" Storyboard.TargetProperty="Opacity" Duration="0:0:0.3"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ShowHideReverseStyle">
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="Control.MouseEnter">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation To="0.65" Duration="0:0:0.3" Storyboard.TargetProperty="Opacity"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Control.MouseLeave">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Duration="0:0:0.3" Storyboard.TargetProperty="Opacity" To="1"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
     <Grid Margin="5, 5, 5, 0">
-        <StackPanel x:Name="panel" VerticalAlignment="Top" Mouse.MouseEnter="StackPanel_MouseEnter" Mouse.MouseLeave="panel_MouseLeave">
+        <StackPanel x:Name="panel" VerticalAlignment="Top" Style="{StaticResource ShowHideReverseStyle}">
             <Label x:Name="title"/>
             <Label x:Name="views" HorizontalAlignment="Left"/>
         </StackPanel>
-        <TextBlock x:Name="description" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Mouse.MouseEnter="StackPanel_MouseEnter" Mouse.MouseLeave="panel_MouseLeave"/>
+        <TextBlock x:Name="description" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Style="{StaticResource ShowHideReverseStyle}"/>
         <Image x:Name="photo" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-        <Image x:Name="play" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="30" Width="30" Opacity="0.65" Source="http://iconizer.net/files/DefaultIcon_ver_0.11/orig/media-play.png" Mouse.MouseEnter="play_MouseEnter" Mouse.MouseLeave="play_MouseLeave" MouseLeftButtonUp="play_MouseLeftButtonUp"/>
+        <Image x:Name="play" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="30" Width="30" Opacity="0.65" Source="http://iconizer.net/files/DefaultIcon_ver_0.11/orig/media-play.png" MouseLeftButtonUp="play_MouseLeftButtonUp" Style="{StaticResource Degradation}">
+        </Image>
     </Grid>
 </UserControl>

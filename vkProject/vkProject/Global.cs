@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Configuration;
 using System.IO;
 using System.Text;
 using System;
@@ -15,6 +16,10 @@ namespace vkProject
 				++_temp_name;
 				return _temp_name.ToString();
 			}
+		}
+		public static string CacheDirectory
+		{
+			get { return ConfigurationManager.AppSettings["cacheDirectory"]; }
 		}
 		public static List<string> temporary = new List<string>();
 

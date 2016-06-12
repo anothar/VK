@@ -45,7 +45,7 @@ namespace VkAPI.Controls
 			Photo_807		=	photo.Photo_807;
 			Photo_1280		=	photo.Photo_1280;
 			Photo_2560		=	photo.Photo_2560;
-			//-------------------------------------------------------------------------------------------------\\
+			//----------------------------------------------------------------------------------------------------\\
 
 			text.Visibility = Visibility.Hidden;
 			smallImage = photo.Photo_604;
@@ -62,28 +62,11 @@ namespace VkAPI.Controls
 				image.Cursor = Cursors.Hand;
 				image.MouseLeftButtonUp += Image_MouseLeftButtonUp;
 			}
-
 		}
 		private void Image_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
 			vkProject.Browser bIm = new vkProject.Browser(bigImage, "Фотография");
 			bIm.Show();
-		}
-		private void text_MouseEnter(object sender, MouseEventArgs e)
-		{
-			DoubleAnimation da = new DoubleAnimation();
-			da.Duration = new Duration(TimeSpan.FromMilliseconds(200));
-			da.From = 1.0;
-			da.To = 0.0;
-			text.BeginAnimation(OpacityProperty, da);
-		}
-		private void text_MouseLeave(object sender, MouseEventArgs e)
-		{
-			DoubleAnimation da = new DoubleAnimation();
-			da.Duration = new Duration(TimeSpan.FromMilliseconds(200));
-			da.From = 0.0;
-			da.To = 1.0;
-			text.BeginAnimation(OpacityProperty, da);
 		}
 		private string smallImage
 		{

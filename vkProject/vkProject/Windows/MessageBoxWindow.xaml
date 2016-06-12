@@ -1,0 +1,19 @@
+﻿<Window x:Class="vkProject.MessageBoxWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:vkProject"
+        mc:Ignorable="d"
+        Title="MessageBoxWindow" Height="{Binding ElementName=ContentPanel, Path=ActualHeight}" Width="500" WindowStyle="None">
+    <StackPanel x:Name="ContentPanel" VerticalAlignment="Top">
+        <TextBlock Text="" Margin="5" TextWrapping="Wrap" x:Name="_errorText" TextAlignment="Center" FontSize="20"/>
+        <Rectangle Height="2" Fill="#EEEE"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" x:Name="_buttons">
+            <Button Height="20" Width="150" Content="Показать подробности" Margin="5, 2" Click="Button_Click"/>
+            <Button Height="20" Width="80" Content="Закрыть" Margin="5, 2" Click="Button_Click_1"/>
+        </StackPanel>
+        <Rectangle Height="2" Fill="#EEEE"/>
+        <TextBlock TextWrapping="Wrap" x:Name="_errorMess" Margin="5"/>
+    </StackPanel>
+</Window>

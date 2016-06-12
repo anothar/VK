@@ -107,22 +107,6 @@ namespace VkAPI.Controls
 			panel.BeginAnimation(OpacityProperty, da);
 			description.BeginAnimation(OpacityProperty, da);
 		}
-		private void play_MouseEnter(object sender, MouseEventArgs e)
-		{
-			DoubleAnimation da = new DoubleAnimation();
-			da.From = 0.65;
-			da.To = 1.0;
-			da.Duration = new Duration(TimeSpan.FromMilliseconds(200));
-			play.BeginAnimation(OpacityProperty, da);
-		}
-		private void play_MouseLeave(object sender, MouseEventArgs e)
-		{
-			DoubleAnimation da = new DoubleAnimation();
-			da.From = 1.0;
-			da.To = 0.65;
-			da.Duration = new Duration(TimeSpan.FromMilliseconds(200));
-			play.BeginAnimation(OpacityProperty, da);
-		}
 		private void play_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
 			if(Player != null)

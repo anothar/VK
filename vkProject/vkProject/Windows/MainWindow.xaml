@@ -11,35 +11,33 @@
         Title="vkProject" Height="600" Width="800" MinHeight="300" MinWidth="300" MaxWidth="800"
         Loaded="Window_Loaded"
         Closing="mainwindow_Closing">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="160"/>
-            <ColumnDefinition MaxWidth="640"/>
-        </Grid.ColumnDefinitions>
-        <StackPanel x:Name="tabs" Grid.Column="0">
-            <Controls:ctrTabElement x:Name="tb_posts" Text="Стена" Checked="True" MouseLeftButtonUp="tb_posts_MouseLeftButtonUp"/>
-            <Controls:ctrTabElement x:Name="tb_stat" Text="Статистика" MouseLeftButtonUp="tb_stat_MouseLeftButtonUp"/>
-        </StackPanel>
-        <Grid x:Name="postViewer" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-            <ScrollViewer x:Name="postsStroller" Visibility="Visible" Background="#EEEE" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                <StackPanel x:Name="posts">
-                </StackPanel>
-            </ScrollViewer>
-            <StackPanel Height="auto" VerticalAlignment="Top" x:Name="UpperButtons">
-                <StackPanel x:Name="postButton" Margin="5, 5, 5, 0"/>
-                <StackPanel x:Name="ShowBeforePanel" Margin="5, 5, 5, 0"/>
-                <TextBlock HorizontalAlignment="Center" x:Name="countPost"  Text="0/0" Visibility="Hidden" Margin="5, 5, 5, 0"/>
-            </StackPanel>
-            <StackPanel VerticalAlignment="Bottom" Height="auto" x:Name="DownerButtons">
-                <StackPanel x:Name="ShowAfterPanel"/>
-            </StackPanel>
-        </Grid>
-        <ScrollViewer Grid.Column="1" x:Name="statViewer" Visibility="Hidden" Background="#EEEE">
-            <StackPanel x:Name="statistic" Margin="5, 5, 5, 5">
-                <StackPanel x:Name="statButtons">
-                </StackPanel>
-                <Controls:ctrLikersList x:Name="stat"></Controls:ctrLikersList>
-            </StackPanel>
-        </ScrollViewer>
-    </Grid>
+     <StackPanel x:Name="ContentPage">
+        <TabControl x:Name="tabControl" Height="{Binding ElementName=ContentPage, Path=ActualHeight}">
+            <TabItem Header="Записи">
+                <Grid x:Name="postViewer" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <ScrollViewer x:Name="postsStroller" Visibility="Visible" Background="#EEEE" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <StackPanel x:Name="posts">
+                        </StackPanel>
+                    </ScrollViewer>
+                    <StackPanel Height="auto" VerticalAlignment="Top" x:Name="UpperButtons">
+                        <StackPanel x:Name="postButton" Margin="5, 5, 5, 0"/>
+                        <StackPanel x:Name="showBeforePanel" Margin="5, 5, 5, 0"/>
+                        <TextBlock HorizontalAlignment="Center" x:Name="countPost"  Text="0/0" Visibility="Hidden" Margin="5, 5, 5, 0"/>
+                    </StackPanel>
+                    <StackPanel VerticalAlignment="Bottom" Height="auto" x:Name="DownerButtons">
+                        <StackPanel x:Name="showAfterPanel"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Статистика">
+                    <ScrollViewer x:Name="statViewer" Background="#EEEE">
+                        <StackPanel x:Name="statistic" Margin="5, 5, 5, 5">
+                            <StackPanel x:Name="statButtons">
+                            </StackPanel>
+                            <Controls:ctrLikersList x:Name="stat"></Controls:ctrLikersList>
+                        </StackPanel>
+                    </ScrollViewer>
+            </TabItem>
+        </TabControl>
+    </StackPanel>
 </Window>

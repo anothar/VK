@@ -50,21 +50,37 @@ namespace vkProject
 
 			ShowBefore = new HoverButton();
 			ShowBefore.Text = "Показать предыдущие ↑";
-			ShowBeforePanel.Children.Add(ShowBefore);
-			ShowBeforePanel.Visibility = Visibility.Hidden;
+			ShowBeforeButton.Visibility = Visibility.Hidden;
 			ShowBefore.MouseLeftButtonUp += ShowBefore_MouseLeftButtonUp;
 
 			ShowAfter = new HoverButton();
 			ShowAfter.Text = "Показать следуюущие ↓";
-			ShowAfterPanel.Children.Add(ShowAfter);
-			ShowAfterPanel.Visibility = Visibility.Hidden;
+			ShowAfterButton.Visibility = Visibility.Hidden;
 			ShowAfter.MouseLeftButtonUp += ShowAfter_MouseLeftButtonUp;
+
 			defaultcount = Convert.ToInt32(ConfigurationManager.AppSettings["defaultcount"]);
 
-			StatRefreshHB_MouseLeftButtonUp(RefreshHB, null);
+			Directory.CreateDirectory(Environment.CurrentDirectory + Global.CacheDirectory);
 		}
 		#endregion
 		#region События
+		/// <summary>
+		/// Вызывается при загрузке главного окна
+		/// </summary>
+		private void Window_Loaded(object sender, RoutedEventArgs e)
+		{
+            WebGetter brouser = new WebGetter();
+            brouser.ShowDialog();
+
+            access_token = brouser.access_token;
+            user_id = brouser.user_id;
+			Vk = new ParseVkOutput(new vkAPI(access_token, user_id));
+
+			PostButton = RefreshHB;
+			StatButton = StatRefreshHB;
+			ShowBeforeButton = ShowBefore;
+			ShowAfterButton = ShowAfter;
+		}
 		/// <summary>
 		/// Вызывается при нажатии на кнопку "Показать следующие"
 		/// </summary>
@@ -84,29 +100,14 @@ namespace vkProject
 			Task.Factory.StartNew(() => StartShowPosts(begin, end));
 		}
 		/// <summary>
-		/// Вызывается при загрузке главного окна
-		/// </summary>
-		private void Window_Loaded(object sender, RoutedEventArgs e)
-		{
-            WebGetter brouser = new WebGetter();
-            brouser.ShowDialog();
-
-            access_token = brouser.access_token;
-            user_id = brouser.user_id;
-			Vk = new ParseVkOutput(new vkAPI(access_token, user_id));
-
-			postButton.Children.Add(RefreshHB);
-			statButtons.Children.Add(StatRefreshHB);
-		}
-		/// <summary>
 		/// Вызывается при нажатии на кнопку "Обновить" для статистики
 		/// </summary>
 		private void StatRefreshHB_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
-			statButtons.Children.Clear();
+			StatButton = null;
             stat.Clear();
 			StatRefreshingHL.LoadWheelRotateBegin();
-			statButtons.Children.Add(StatRefreshingHL);
+			StatButton = StatRefreshingHL;
 			Task.Factory.StartNew(getStatistic);
 		}
 		/// <summary>
@@ -115,32 +116,12 @@ namespace vkProject
 		private void RefreshBt_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
 			posts.Children.Clear();
-			postButton.Children.Remove(sender as HoverButton);
-			ShowAfterPanel.Visibility = Visibility.Hidden;
-			ShowBeforePanel.Visibility = Visibility.Hidden;
+			PostButton = sender as HoverButton;
+			ShowAfterButton.Visibility = Visibility.Hidden;
+			ShowBeforeButton.Visibility = Visibility.Hidden;
 			RefreshingHL.LoadWheelRotateBegin();
-			postButton.Children.Add(RefreshingHL);
+			PostButton = RefreshingHL;
 			Task.Factory.StartNew(StartPreLoadWall);
-		}
-		/// <summary>
-		/// Вызывается при переходе на вкладку "Статистика"
-		/// </summary>
-		private void tb_stat_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-		{
-			tb_posts.Checked = false;
-			tb_stat.Checked = true;
-			postViewer.Visibility = Visibility.Hidden;
-			statViewer.Visibility = Visibility.Visible;
-		}
-		/// <summary>
-		/// Вызывается при переходе на вкладку "Записи"
-		/// </summary>
-		private void tb_posts_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-		{
-			tb_posts.Checked = true;
-			tb_stat.Checked = false;
-			postViewer.Visibility = Visibility.Visible;
-			statViewer.Visibility = Visibility.Hidden;
 		}
 		/// <summary>
 		/// Вызывается при закрытии окна
@@ -183,8 +164,8 @@ namespace vkProject
 		{
             Dispatcher.Invoke(() =>
             {
-                statButtons.Children.Clear();
-                statButtons.Children.Add(StatRefreshHB);
+				StatRefreshingHL.LaodWheelRotateStop();
+                StatButton = StatRefreshHB;
             });
         }
 
@@ -210,7 +191,7 @@ namespace vkProject
 			Dispatcher.Invoke(() =>
 			{
 				RefreshingHL.LaodWheelRotateStop();
-				postButton.Children.Remove(RefreshingHL);
+				PostButton = null;
 			});
 			Task.Factory.StartNew(() => StartShowPosts(begin, end));
 		}
@@ -224,12 +205,12 @@ namespace vkProject
 		{
 			Dispatcher.Invoke(() => 
 			{
-				postButton.Children.Remove(RefreshHB);
-				ShowAfterPanel.Visibility = Visibility.Hidden;
-				ShowBeforePanel.Visibility = Visibility.Hidden;
+				PostButton = null;
+				ShowAfterButton.Visibility = Visibility.Hidden;
+				ShowBeforeButton.Visibility = Visibility.Hidden;
 
 				RefreshingLayoutHL.LoadWheelRotateBegin();
-				postButton.Children.Add(RefreshingLayoutHL);
+				PostButton = RefreshingLayoutHL;
 				posts.Children.Clear();
 				postsStroller.ScrollToTop();
 			});
@@ -272,8 +253,8 @@ namespace vkProject
 			{
 				countPost.Visibility = Visibility.Hidden;
 				RefreshingLayoutHL.LaodWheelRotateStop();
-				postButton.Children.Remove(RefreshingLayoutHL);
-				postButton.Children.Add(RefreshHB);
+				PostButton = null;
+				PostButton = RefreshHB;
 				postBegin = begin;
 				postEnd = end;
 			});
@@ -281,11 +262,11 @@ namespace vkProject
 
 			if(postEnd != Wall.Count)
 			{
-				Dispatcher.Invoke(() => ShowAfterPanel.Visibility = Visibility.Visible);
+				Dispatcher.Invoke(() => ShowAfterButton.Visibility = Visibility.Visible);
 			}
 			if(postBegin != 0)
 			{
-				Dispatcher.Invoke(() => ShowBeforePanel.Visibility = Visibility.Visible);
+				Dispatcher.Invoke(() => ShowBeforeButton.Visibility = Visibility.Visible);
 			}
 		}
 		#endregion
@@ -344,6 +325,50 @@ namespace vkProject
 		/// Итератор на последнюю запись, которая в данный момент отображена
 		/// </summary>
 		private int postEnd = 0;
+		private UIElement PostButton
+		{
+			get
+			{
+				return postButton.Children[0];
+			}
+			set
+			{
+				postButton.Children[0] = value;
+			}
+		}
+		private UIElement StatButton
+		{
+			get
+			{
+				return statButtons.Children[0];
+			}
+			set
+			{
+				statButtons.Children[0] = value;
+			}
+		}
+		private UIElement ShowBeforeButton
+		{
+			get
+			{
+				return showBeforePanel.Children[0];
+			}
+			set
+			{
+				showBeforePanel.Children[0] = value;
+			}
+		}
+		private UIElement ShowAfterButton
+		{
+			get
+			{
+				return showAfterPanel.Children[0];
+			}
+			set
+			{
+				showAfterPanel.Children[0] = value;
+			}
+		}
 		#endregion
 	}
 }

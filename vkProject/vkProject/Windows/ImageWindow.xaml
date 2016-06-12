@@ -1,0 +1,17 @@
+﻿<Window x:Class="vkProject.ImageWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:vkProject.Windows"
+        mc:Ignorable="d"
+        Title="Фотография" Height="auto" Width="auto">
+    <Grid>
+        <Image x:Name="_image" />
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <MediaElement Height="30" Width="30" Source="712.gif" LoadedBehavior="Manual" x:Name="_loadingAnimation"/>
+            <TextBlock x:Name="_loadingRatio"/>
+        </StackPanel>
+        <TextBlock x:Name="_description" VerticalAlignment="Bottom" TextWrapping="Wrap"/>
+    </Grid>
+</Window>
