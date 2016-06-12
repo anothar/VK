@@ -88,7 +88,7 @@ namespace VkAPI.Controls
 			{
 				return Convert.ToInt32(reposts.Text);
 			}
-			set
+			private set
 			{
 				reposts.Text = value.ToString();
 			}
@@ -205,20 +205,21 @@ namespace VkAPI.Controls
 		{
 			User_photo = user.Photo_50;
 			User_name = String.Format("{0} {1}", user.First_name, user.Last_name);
-		}/// <summary>
+		}
+		/// <summary>
          /// Загружает информацию о дате создания записи
          /// </summary>
-         /// <param name="date">Владелец</param>
+         /// <param name="unix_time">Дата</param>
         private void LoadDate(int unix_time)
         {
             date.Text = (new DateTime(1970, 1, 1, 5, 0, 0)).AddSeconds(unix_time).ToString();
         }
-        #endregion
-        #region Поля
-        /// <summary>
-        /// Путь к иконке пользователя
-        /// </summary>
-        private string user_photo_url;
+		#endregion
+		#region Поля
+		/// <summary>
+		/// Путь к иконке пользователя
+		/// </summary>
+		private string user_photo_url;
 		/// <summary>
 		/// Картинка пользователя
 		/// </summary>
